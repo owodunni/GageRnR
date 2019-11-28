@@ -1,9 +1,10 @@
+#!/usr/bin/env python3
 import unittest
+from generator import *
 
-class TestStringMethods(unittest.TestCase):
+class TestGenerator(unittest.TestCase):
 
     def test_upper(self):
-        self.assertEqual('foo'.upper(), 'FOO')
 
     def test_isupper(self):
         self.assertTrue('FOO'.isupper())
