@@ -28,8 +28,10 @@ class Generator:
         self.data = np.empty(settings.size, dtype=float)
 
         operators = self.settings.operators.batch()
+        print("operators:")
         print(operators)
         parts = self.settings.parts.batch()
+        print("parts:")
         print(parts)
 
         for i in range(0, len(operators)):
@@ -38,7 +40,6 @@ class Generator:
                     operators[i] + \
                     parts[j] +\
                     self.settings.measurments.batch()
-        print(self.data)
                 
 
 
