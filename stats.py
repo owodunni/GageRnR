@@ -14,38 +14,13 @@ class GaugeRnR:
         self.measurements = shape[2]
 
     def calculate(self, data):
-        self.setupShape(data.shape)
-        dof = calculateDoF(data.shape)
-        SS = calculateSS(data)
+        self.dof = self.calculateDoF()
+        self.SS = self.calculateSS(data)
+        
+        self.MS = dict()
 
-        #SStot = np.sum((data-mu)**2)
-        #SSO = np.sum((omu-mu)**2)
-        #SSP = np.sum((pmu-mu)**2)
-
-        #dataE = data.reshape(measurements, operators*parts)
-        #SSE = np.sum((dataE-emu)**2)
-
-        #SSOP = SStot - (SSO + SSP + SSE)
-
-        #print("SS E: ", SSE)
-        #print("SS O: ", SSO)
-        #print("SS OP: ", SSOP)
-        #print("SS P: ", SSP)
-        #print("SS tot", SStot)
-
-        #varTot = SStot/totDof
-
-        #varE = SSE/eDof
-        #varO = SSO/oDoF
-        #varP = SSP/pDoF
-        #varOP = SSOP/opDoF
-
-        #print("Sigma tot: ", sqrt(varTot))
-        #print("Sigma E: ", sqrt(varE))
-        #print("Sigma O: ", sqrt(varO))
-        #print("Sigma OP: ", varOP)
-        #print("Sigma P: ", sqrt(varP))
-        #print("Sigma tot*", sqrt(varE + varO + varP))
+        for key in self.SS:
+            self.MS[key] = self.SS[key]/self.dof[key]
 
     def calculateDoF(self):
         oDoF = self.operators - 1
@@ -101,3 +76,19 @@ class GaugeRnR:
         for key in squares:
             SD[key] = np.sum(squares[key])
         return SD
+
+    def calculateSS(self, data):
+        SS = self.calculateSumOfDeviations(data)
+
+        SS[GaugeRnR.OPERATOR] = \
+            self.parts * self.measurements * \
+            SS[GaugeRnR.OPERATOR]
+        SS[GaugeRnR.PART] = \
+            self.operators * self.measurements * \
+            SS[GaugeRnR.PART]
+        SS[GaugeRnR.OPERATOR_BY_PART] = \
+            SS[GaugeRnR.TOTAL] - (
+                SS[GaugeRnR.OPERATOR] + \
+                SS[GaugeRnR.PART] + \
+                SS[GaugeRnR.MEASUREMENT])
+        return SS

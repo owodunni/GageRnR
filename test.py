@@ -75,6 +75,38 @@ class TestStats(unittest.TestCase):
         self.assertAlmostEqual(
             SD[GaugeRnR.MEASUREMENT], 1.712, 3)
 
+    def test_calculateSS(self):
+        g = GaugeRnR(data.shape)
+        SS = g.calculateSS(data)
+
+        self.assertAlmostEqual(
+            SS[GaugeRnR.TOTAL], 32.317, 3)
+
+        self.assertAlmostEqual(
+            SS[GaugeRnR.OPERATOR], 1.630, 3)
+
+        self.assertAlmostEqual(
+            SS[GaugeRnR.PART], 28.909, 3)
+
+        self.assertAlmostEqual(
+            SS[GaugeRnR.OPERATOR_BY_PART], 0.065, 3)
+
+        self.assertAlmostEqual(
+            SS[GaugeRnR.MEASUREMENT], 1.712, 3)
+
+    def test_calculateMS(self):
+        g = GaugeRnR(data.shape)
+        g.calculate(data)
+
+        self.assertAlmostEqual(
+            g.MS[GaugeRnR.OPERATOR], 0.815, 3)
+        self.assertAlmostEqual(
+            g.MS[GaugeRnR.PART], 7.227, 3)
+        self.assertAlmostEqual(
+            g.MS[GaugeRnR.OPERATOR_BY_PART], 0.008, 3)
+        self.assertAlmostEqual(
+            g.MS[GaugeRnR.MEASUREMENT], 0.057, 3)
+
 
 if __name__ == '__main__':
     unittest.main()
