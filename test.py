@@ -13,11 +13,11 @@ class TestStats(unittest.TestCase):
     def test_calculateDoF(self):
         g = GaugeRnR([3, 5, 3])
         dof = g.calculateDoF()
-        self.assertEqual(dof[0], 2)
-        self.assertEqual(dof[1], 4)
-        self.assertEqual(dof[2], 8)
-        self.assertEqual(dof[3], 30)
-        self.assertEqual(dof[4], 44)
+        self.assertEqual(dof[GaugeRnR.OPERATOR], 2)
+        self.assertEqual(dof[GaugeRnR.PART], 4)
+        self.assertEqual(dof[GaugeRnR.OPERATOR_BY_PART], 8)
+        self.assertEqual(dof[GaugeRnR.MEASUREMENT], 30)
+        self.assertEqual(dof[GaugeRnR.TOTAL], 44)
 
 if __name__ == '__main__':
     unittest.main()

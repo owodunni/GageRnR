@@ -2,6 +2,12 @@ import numpy as np
 from math import sqrt
 
 class GaugeRnR:
+    OPERATOR='operator'
+    PART='part'
+    MEASUREMENT='measurment'
+    OPERATOR_BY_PART='operator by part'
+    TOTAL='total'
+
     def __init__(self, shape):
         self.parts = shape[1]
         self.operators = shape[0]
@@ -10,17 +16,7 @@ class GaugeRnR:
     def calculate(self, data):
         self.setupShape(data.shape)
         self.dof = calculateDoF(data.shape)
-
-        mu = np.mean(data)
-
-        omu = np.mean(data, axis=1)
-        omu = np.mean(omu, axis=1)
-
-        pmu = np.mean(data, axis=0)
-        pmu = np.mean(pmu, axis=1)
-
-        emu = np.mean(data, axis=2)
-        emu = emu.reshape(parts*operators)
+        self.mu = calculateMean(data)
 
         SStot = np.sum((data-mu)**2)
         SSO = np.sum((omu-mu)**2)
@@ -57,4 +53,28 @@ class GaugeRnR:
         opDoF = (self.parts - 1)*(self.operators - 1)
         eDof = self.parts*self.operators*(self.measurements - 1)
         totDof = self.parts*self.operators*self.measurements - 1
-        return (oDoF, pDoF, opDoF, eDof, totDof)
+        return {
+            GaugeRnR.OPERATOR: oDoF,
+            GaugeRnR.PART: pDoF,
+            GaugeRnR.OPERATOR_BY_PART: opDoF,
+            GaugeRnR.MEASUREMENT: eDof,
+            GaugeRnR.TOTAL: totDof}
+
+    def calculateMean(self, data):
+        mu = np.mean(data)
+
+        omu = np.mean(data, axis=1)
+        omu = np.mean(omu, axis=1)
+
+        pmu = np.mean(data, axis=0)
+        pmu = np.mean(pmu, axis=1)
+
+        emu = np.mean(data, axis=2)
+        emu = emu.reshape(parts*operators)
+
+
+        return {
+            GaugeRnR.TOTAL : mu,
+            GaugeRnR.OPERATOR: omu,
+            GaugeRnR.PART: pmu,
+            GaugeRnR.MEASUREMENT: emu}
