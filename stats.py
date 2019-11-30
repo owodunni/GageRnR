@@ -52,9 +52,9 @@ class GaugeRnR:
         #print("Sigma tot*", sqrt(varE + varO + varP))
 
     def calculateDoF(self):
-        oDoF = operators - 1
-        pDoF = parts - 1
-        opDoF = (parts - 1)*(operators - 1)
-        eDof = parts*operators*(measurements - 1)
-        totDof = parts*operators*measurements - 1
-        return (pDoF, oDoF, opDoF, eDof, totDof)
+        oDoF = self.operators - 1
+        pDoF = self.parts - 1
+        opDoF = (self.parts - 1)*(self.operators - 1)
+        eDof = self.parts*self.operators*(self.measurements - 1)
+        totDof = self.parts*self.operators*self.measurements - 1
+        return (oDoF, pDoF, opDoF, eDof, totDof)
