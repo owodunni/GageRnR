@@ -2,62 +2,59 @@ import numpy as np
 from math import sqrt
 
 class GaugeRnR:
-    def __init__(self, parts, measurements, operators, data):
-        pDoF = parts -1
-        oDoF = operators -1
-        eDof = parts*operators*(measurements - 1)
-        totDof = parts*operators*measurements -1
-        if(totDof != data.size-1):
-            raise Exception("DoF dosn't match.")
+    def __init__(self, shape):
+        self.parts = shape[1]
+        self.operators = shape[0]
+        self.measurements = shape[2]
+
+    def calculate(self, data):
+        self.setupShape(data.shape)
+        self.dof = calculateDoF(data.shape)
 
         mu = np.mean(data)
-        print("mu:")
-        print(mu)
 
         omu = np.mean(data, axis=1)
         omu = np.mean(omu, axis=1)
-        print("omu:")
-        print(omu)
 
         pmu = np.mean(data, axis=0)
         pmu = np.mean(pmu, axis=1)
-        print("pmu:")
-        print(pmu)
 
         emu = np.mean(data, axis=2)
         emu = emu.reshape(parts*operators)
-        print("emu:")
-        print(emu)
 
         SStot = np.sum((data-mu)**2)
-
-        print("SStot:")
-        print(SStot)
-
         SSO = np.sum((omu-mu)**2)
-
-        print("SSO:")
-        print(SSO)
-
         SSP = np.sum((pmu-mu)**2)
-
-        print("SSP:")
-        print(SSP)
 
         dataE = data.reshape(measurements, operators*parts)
         SSE = np.sum((dataE-emu)**2)
 
-        print("SSE:")
-        print(SSE)
+        SSOP = SStot - (SSO + SSP + SSE)
 
-        sigmaTot = SStot/totDof
+        #print("SS E: ", SSE)
+        #print("SS O: ", SSO)
+        #print("SS OP: ", SSOP)
+        #print("SS P: ", SSP)
+        #print("SS tot", SStot)
 
-        sigmaE = SSE/eDof
-        sigmaO = SSO/oDoF
-        sigmaP = SSP/pDoF
+        #varTot = SStot/totDof
 
-        print("Sigma tot: ", sqrt(sigmaTot))
-        print("Sigma E: ", sqrt(sigmaE))
-        print("Sigma Op: ", sqrt(sigmaO))
-        print("Sigma P: ", sqrt(sigmaP))
+        #varE = SSE/eDof
+        #varO = SSO/oDoF
+        #varP = SSP/pDoF
+        #varOP = SSOP/opDoF
 
+        #print("Sigma tot: ", sqrt(varTot))
+        #print("Sigma E: ", sqrt(varE))
+        #print("Sigma O: ", sqrt(varO))
+        #print("Sigma OP: ", varOP)
+        #print("Sigma P: ", sqrt(varP))
+        #print("Sigma tot*", sqrt(varE + varO + varP))
+
+    def calculateDoF(self):
+        oDoF = operators - 1
+        pDoF = parts - 1
+        opDoF = (parts - 1)*(operators - 1)
+        eDof = parts*operators*(measurements - 1)
+        totDof = parts*operators*measurements - 1
+        return (pDoF, oDoF, opDoF, eDof, totDof)

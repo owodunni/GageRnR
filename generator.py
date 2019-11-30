@@ -16,9 +16,15 @@ class Distribution:
         return(np.random.normal(self.mean, self.sigma, self.number))
 
 class Settings:
-    def __init__(self, operators, parts, measurments):
+    def __init__(
+        self,
+        operators,
+        parts,
+        partOperator,
+        measurments):
         self.operators = operators
         self.parts = parts
+        self.partOperator = partOperator
         self.measurments = measurments
         self.size = [operators.number, parts.number, measurments.number]
 
@@ -28,17 +34,16 @@ class Generator:
         self.data = np.empty(settings.size, dtype=float)
 
         operators = self.settings.operators.batch()
-        print("operators:")
-        print(operators)
         parts = self.settings.parts.batch()
-        print("parts:")
-        print(parts)
+        partOperator = self.settings.partOperator.batch()
 
         for i in range(0, len(operators)):
             for j in range(0, len(parts)):
+                index = i*len(parts) + j
                 self.data[i,j,:]  = \
                     operators[i] + \
-                    parts[j] +\
+                    parts[j] + \
+                    partOperator[index] + \
                     self.settings.measurments.batch()
                 
 
