@@ -15,17 +15,17 @@ class GaugeRnR:
 
     def calculate(self, data):
         self.setupShape(data.shape)
-        self.dof = calculateDoF(data.shape)
-        self.mu = calculateMean(data)
+        dof = calculateDoF(data.shape)
+        SS = calculateSS(data)
 
-        SStot = np.sum((data-mu)**2)
-        SSO = np.sum((omu-mu)**2)
-        SSP = np.sum((pmu-mu)**2)
+        #SStot = np.sum((data-mu)**2)
+        #SSO = np.sum((omu-mu)**2)
+        #SSP = np.sum((pmu-mu)**2)
 
-        dataE = data.reshape(measurements, operators*parts)
-        SSE = np.sum((dataE-emu)**2)
+        #dataE = data.reshape(measurements, operators*parts)
+        #SSE = np.sum((dataE-emu)**2)
 
-        SSOP = SStot - (SSO + SSP + SSE)
+        #SSOP = SStot - (SSO + SSP + SSE)
 
         #print("SS E: ", SSE)
         #print("SS O: ", SSO)
@@ -70,11 +70,34 @@ class GaugeRnR:
         pmu = np.mean(pmu, axis=1)
 
         emu = np.mean(data, axis=2)
-        emu = emu.reshape(parts*operators)
-
+        emu = emu.reshape(self.parts*self.operators)
 
         return {
             GaugeRnR.TOTAL : mu,
             GaugeRnR.OPERATOR: omu,
             GaugeRnR.PART: pmu,
             GaugeRnR.MEASUREMENT: emu}
+    
+    def calculateSquares(self, data):
+        mean = self.calculateMean(data)
+        tS = (data-mean[GaugeRnR.TOTAL])**2
+        oS = (mean[GaugeRnR.OPERATOR]-mean[GaugeRnR.TOTAL])**2
+        pS = (mean[GaugeRnR.PART]-mean[GaugeRnR.TOTAL])**2
+
+        dataE = data.reshape(self.operators*self.parts, self.measurements)
+        meanMeas = np.repeat(mean[GaugeRnR.MEASUREMENT],self.measurements)
+        meanMeas = meanMeas.reshape(self.operators*self.parts, self.measurements)
+
+        mS = (dataE-meanMeas)**2
+        return {
+            GaugeRnR.TOTAL: tS,
+            GaugeRnR.OPERATOR: oS,
+            GaugeRnR.PART: pS,
+            GaugeRnR.MEASUREMENT: mS}
+
+    def calculateSumOfDeviations(self, data):
+        squares = self.calculateSquares(data)
+        SD = dict()
+        for key in squares:
+            SD[key] = np.sum(squares[key])
+        return SD
