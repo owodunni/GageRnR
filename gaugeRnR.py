@@ -2,13 +2,14 @@ import numpy as np
 import math
 import scipy.stats as stats
 
+
 class GaugeRnR:
-    OPERATOR='operator'
-    PART='part'
-    MEASUREMENT='measurment'
-    OPERATOR_BY_PART='operator by part'
-    TOTAL='total'
-    GRR='GaugeRnR'
+    OPERATOR = 'operator'
+    PART = 'part'
+    MEASUREMENT = 'measurment'
+    OPERATOR_BY_PART = 'operator by part'
+    TOTAL = 'total'
+    GRR = 'GaugeRnR'
 
     def __init__(self, shape):
         self.parts = shape[1]
@@ -17,9 +18,9 @@ class GaugeRnR:
 
     def __str__(self):
         return "GaugeRnR:" + "\n" +\
-                GaugeRnR.OPERATOR + "s " + str(self.operators) + \
-                ", " + GaugeRnR.PART + "s " + str(self.parts) + \
-                ", " + GaugeRnR.MEASUREMENT + "s " + str(self.measurements)
+            GaugeRnR.OPERATOR + "s " + str(self.operators) + \
+            ", " + GaugeRnR.PART + "s " + str(self.parts) + \
+            ", " + GaugeRnR.MEASUREMENT + "s " + str(self.measurements)
 
     def calculate(self, data):
         self.dof = self.calculateDoF()
@@ -33,9 +34,9 @@ class GaugeRnR:
     def calculateDoF(self):
         oDoF = self.operators - 1
         pDoF = self.parts - 1
-        opDoF = (self.parts - 1)*(self.operators - 1)
-        eDof = self.parts*self.operators*(self.measurements - 1)
-        totDof = self.parts*self.operators*self.measurements - 1
+        opDoF = (self.parts - 1) * (self.operators - 1)
+        eDof = self.parts * self.operators * (self.measurements - 1)
+        totDof = self.parts * self.operators * self.measurements - 1
         return {
             GaugeRnR.OPERATOR: oDoF,
             GaugeRnR.PART: pDoF,
@@ -53,25 +54,27 @@ class GaugeRnR:
         pmu = np.mean(pmu, axis=1)
 
         emu = np.mean(data, axis=2)
-        emu = emu.reshape(self.parts*self.operators)
+        emu = emu.reshape(self.parts * self.operators)
 
         return {
-            GaugeRnR.TOTAL : mu,
+            GaugeRnR.TOTAL: mu,
             GaugeRnR.OPERATOR: omu,
             GaugeRnR.PART: pmu,
             GaugeRnR.MEASUREMENT: emu}
-    
+
     def calculateSquares(self, data):
         mean = self.calculateMean(data)
-        tS = (data-mean[GaugeRnR.TOTAL])**2
-        oS = (mean[GaugeRnR.OPERATOR]-mean[GaugeRnR.TOTAL])**2
-        pS = (mean[GaugeRnR.PART]-mean[GaugeRnR.TOTAL])**2
+        tS = (data - mean[GaugeRnR.TOTAL])**2
+        oS = (mean[GaugeRnR.OPERATOR] - mean[GaugeRnR.TOTAL])**2
+        pS = (mean[GaugeRnR.PART] - mean[GaugeRnR.TOTAL])**2
 
-        dataE = data.reshape(self.operators*self.parts, self.measurements)
-        meanMeas = np.repeat(mean[GaugeRnR.MEASUREMENT],self.measurements)
-        meanMeas = meanMeas.reshape(self.operators*self.parts, self.measurements)
+        dataE = data.reshape(self.operators * self.parts, self.measurements)
+        meanMeas = np.repeat(mean[GaugeRnR.MEASUREMENT], self.measurements)
+        meanMeas = meanMeas.reshape(
+            self.operators * self.parts,
+            self.measurements)
 
-        mS = (dataE-meanMeas)**2
+        mS = (dataE - meanMeas)**2
         return {
             GaugeRnR.TOTAL: tS,
             GaugeRnR.OPERATOR: oS,
@@ -96,8 +99,8 @@ class GaugeRnR:
             SS[GaugeRnR.PART]
         SS[GaugeRnR.OPERATOR_BY_PART] = \
             SS[GaugeRnR.TOTAL] - (
-                SS[GaugeRnR.OPERATOR] + \
-                SS[GaugeRnR.PART] + \
+                SS[GaugeRnR.OPERATOR] +
+                SS[GaugeRnR.PART] +
                 SS[GaugeRnR.MEASUREMENT])
         return SS
 
@@ -105,7 +108,7 @@ class GaugeRnR:
         MS = dict()
 
         for key in SS:
-            MS[key] = SS[key]/dof[key]
+            MS[key] = SS[key] / dof[key]
         return MS
 
     def calculateVariance(self, MS):
@@ -113,19 +116,19 @@ class GaugeRnR:
 
         Var[GaugeRnR.MEASUREMENT] = MS[GaugeRnR.MEASUREMENT]
         Var[GaugeRnR.OPERATOR_BY_PART] = ((
-            MS[GaugeRnR.OPERATOR_BY_PART] - MS[GaugeRnR.MEASUREMENT])/
-                self.parts)
+            MS[GaugeRnR.OPERATOR_BY_PART] - MS[GaugeRnR.MEASUREMENT]) /
+            self.parts)
         Var[GaugeRnR.OPERATOR] = ((
-            MS[GaugeRnR.OPERATOR] - MS[GaugeRnR.OPERATOR_BY_PART])/
-                (self.parts*self.measurements))
+            MS[GaugeRnR.OPERATOR] - MS[GaugeRnR.OPERATOR_BY_PART]) /
+            (self.parts * self.measurements))
         Var[GaugeRnR.PART] = ((
-            MS[GaugeRnR.PART] - MS[GaugeRnR.OPERATOR_BY_PART])/
-                (self.operators*self.measurements))
+            MS[GaugeRnR.PART] - MS[GaugeRnR.OPERATOR_BY_PART]) /
+            (self.operators * self.measurements))
 
         for key in Var:
             if Var[key] < 0:
                 Var[key] = 0
-        
+
         Var[GaugeRnR.TOTAL] = \
             Var[GaugeRnR.OPERATOR] + \
             Var[GaugeRnR.PART] + \
@@ -138,31 +141,31 @@ class GaugeRnR:
             Var[GaugeRnR.OPERATOR_BY_PART]
 
         return Var
-    
+
     def calculateStd(self, Var):
         Std = dict()
         for key in Var:
             Std[key] = math.sqrt(Var[key])
-        
+
         return Std
 
     def calculateF(self, MS):
         F = dict()
 
         F[GaugeRnR.OPERATOR] = (
-            MS[GaugeRnR.OPERATOR]/
+            MS[GaugeRnR.OPERATOR] /
             MS[GaugeRnR.OPERATOR_BY_PART])
-        
+
         F[GaugeRnR.PART] = (
-            MS[GaugeRnR.PART]/
+            MS[GaugeRnR.PART] /
             MS[GaugeRnR.OPERATOR_BY_PART])
-        
+
         F[GaugeRnR.OPERATOR_BY_PART] = (
-            MS[GaugeRnR.OPERATOR_BY_PART]/
+            MS[GaugeRnR.OPERATOR_BY_PART] /
             MS[GaugeRnR.MEASUREMENT])
-        
+
         return F
-    
+
     def calculateP(self, dof, F):
         P = dict()
 
