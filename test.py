@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import unittest
-from stats import *
+from gaugeRnR import *
 from data import *
 import numpy as np
 import pprint
@@ -106,7 +106,28 @@ class TestStats(unittest.TestCase):
             g.MS[GaugeRnR.OPERATOR_BY_PART], 0.008, 3)
         self.assertAlmostEqual(
             g.MS[GaugeRnR.MEASUREMENT], 0.057, 3)
+    
+    def test_calculateF(self):
+        g = GaugeRnR(data.shape)
+        g.calculate(data)
 
+        self.assertAlmostEqual(
+            g.F[GaugeRnR.OPERATOR], 100.322, 3)
+        self.assertAlmostEqual(
+            g.F[GaugeRnR.PART], 889.458, 3)
+        self.assertAlmostEqual(
+            g.F[GaugeRnR.OPERATOR_BY_PART], 0.142, 3)
+
+    def test_calculateP(self):
+        g = GaugeRnR(data.shape)
+        g.calculate(data)
+
+        self.assertAlmostEqual(
+            g.P[GaugeRnR.OPERATOR], 0, 3)
+        self.assertAlmostEqual(
+            g.P[GaugeRnR.PART], 0, 3)
+        self.assertAlmostEqual(
+            g.P[GaugeRnR.OPERATOR_BY_PART], 0.9964, 4)
 
 if __name__ == '__main__':
     unittest.main()
