@@ -2,5 +2,5 @@
 from gaugeRnR import GaugeRnR
 from data import data
 
-g = GaugeRnR(data.shape)
-g.calculate(data)
+g = GaugeRnR(data)
+g.calculate()
