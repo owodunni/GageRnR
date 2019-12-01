@@ -1,17 +1,14 @@
 # Gauge RnR
 
+[![GitHub](https://github.com/owodunni/gaugernr/workflows/Python%20package/badge.svg)](https://github.com/owodunni/GaugeRnR)
+[![PyPi](https://img.shields.io/pypi/v/GaugeRnR)](https://pypi.org/project/GaugeRnR/)
 [![License](https://img.shields.io/github/license/owodunni/GaugeRnR)](https://github.com/owodunni/GaugeRnR/blob/master/LICENSE)
-[![License](https://github.com/owodunni/gaugernr/workflows/Python%20package/badge.svg)](https://github.com/owodunni/GaugeRnR)
 
+## Install
 
-
-## Documentations
-
-This GaugeRnR package was built and tested using the resources bellow. If you want to learn more about Gauge RnR and ANOVA they are a great place to start!
-
-* [anova-gage-rr-part-1](https://www.spcforexcel.com/knowledge/measurement-systems-analysis/anova-gage-rr-part-1)
-* [anova-gage-rr-part-2](https://www.spcforexcel.com/knowledge/measurement-systems-analysis/anova-gage-rr-part-2)
-* [Introduction to Statistical Quality Control 6th Edition](https://www.amazon.com/Introduction-Statistical-Quality-Control-Montgomery/dp/0470169923)
+``` console
+pip install GaugeRnR
+```
 
 ## Example
 
@@ -74,3 +71,11 @@ F = result[Result.F]
 ```
 
 For more examples of how to use this library take a look at the [unit tests](https://github.com/owodunni/GaugeRnR/blob/master/tests/test.py)!
+
+## Documentations
+
+This GaugeRnR package was built and tested using the resources bellow. If you want to learn more about Gauge RnR and ANOVA they are a great place to start!
+
+* [anova-gage-rr-part-1](https://www.spcforexcel.com/knowledge/measurement-systems-analysis/anova-gage-rr-part-1)
+* [anova-gage-rr-part-2](https://www.spcforexcel.com/knowledge/measurement-systems-analysis/anova-gage-rr-part-2)
+* [Introduction to Statistical Quality Control 6th Edition](https://www.amazon.com/Introduction-Statistical-Quality-Control-Montgomery/dp/0470169923)
