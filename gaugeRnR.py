@@ -63,7 +63,7 @@ class GaugeRnR:
                 str([self.operators, self.parts, self.measurements])
         return self.toTabulare()
 
-    def toTabulare(self, tableFormat="fancy_grid", precision = '.3f'):
+    def toTabulare(self, tableFormat="fancy_grid", precision='.3f'):
         if not hasattr(self, 'result'):
             raise Exception(
                 'GaugeRnR.calcualte() should be run before calling toTabular()')
