@@ -84,7 +84,7 @@ class GaugeRnR:
 
             table.append(innerTable)
 
-        return tabulate(table, headers=headers)
+        return tabulate(table, headers=headers, tablefmt="fancy_grid")
 
     def calculate(self):
         self.result = dict()
