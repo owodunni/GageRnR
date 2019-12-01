@@ -7,8 +7,15 @@ lint:
 test:
 	python3 tests/test.py
 
-package:
+build:
 	python3 setup.py sdist bdist_wheel
 
 install:
 	python3 setup.py install
+
+clean:
+	rm -rf build
+	rm -rf dist
+
+check:
+	twine check dist/*
