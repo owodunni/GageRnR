@@ -11,10 +11,11 @@ class GaugeRnR:
     TOTAL = 'total'
     GRR = 'GaugeRnR'
 
-    def __init__(self, shape):
-        self.parts = shape[1]
-        self.operators = shape[0]
-        self.measurements = shape[2]
+    def __init__(self, data):
+        self.data = data
+        self.parts = data.shape[1]
+        self.operators = data.shape[0]
+        self.measurements = data.shape[2]
 
     def __str__(self):
         return "GaugeRnR:" + "\n" +\
@@ -22,9 +23,9 @@ class GaugeRnR:
             ", " + GaugeRnR.PART + "s " + str(self.parts) + \
             ", " + GaugeRnR.MEASUREMENT + "s " + str(self.measurements)
 
-    def calculate(self, data):
+    def calculate(self):
         self.dof = self.calculateDoF()
-        self.SS = self.calculateSS(data)
+        self.SS = self.calculateSS()
         self.MS = self.calculateMS(self.dof, self.SS)
         self.Var = self.calculateVariance(self.MS)
         self.Std = self.calculateStd(self.Var)
@@ -44,16 +45,16 @@ class GaugeRnR:
             GaugeRnR.MEASUREMENT: eDof,
             GaugeRnR.TOTAL: totDof}
 
-    def calculateMean(self, data):
-        mu = np.mean(data)
+    def calculateMean(self):
+        mu = np.mean(self.data)
 
-        omu = np.mean(data, axis=1)
+        omu = np.mean(self.data, axis=1)
         omu = np.mean(omu, axis=1)
 
-        pmu = np.mean(data, axis=0)
+        pmu = np.mean(self.data, axis=0)
         pmu = np.mean(pmu, axis=1)
 
-        emu = np.mean(data, axis=2)
+        emu = np.mean(self.data, axis=2)
         emu = emu.reshape(self.parts * self.operators)
 
         return {
@@ -62,13 +63,13 @@ class GaugeRnR:
             GaugeRnR.PART: pmu,
             GaugeRnR.MEASUREMENT: emu}
 
-    def calculateSquares(self, data):
-        mean = self.calculateMean(data)
-        tS = (data - mean[GaugeRnR.TOTAL])**2
+    def calculateSquares(self):
+        mean = self.calculateMean()
+        tS = (self.data - mean[GaugeRnR.TOTAL])**2
         oS = (mean[GaugeRnR.OPERATOR] - mean[GaugeRnR.TOTAL])**2
         pS = (mean[GaugeRnR.PART] - mean[GaugeRnR.TOTAL])**2
 
-        dataE = data.reshape(self.operators * self.parts, self.measurements)
+        dataE = self.data.reshape(self.operators * self.parts, self.measurements)
         meanMeas = np.repeat(mean[GaugeRnR.MEASUREMENT], self.measurements)
         meanMeas = meanMeas.reshape(
             self.operators * self.parts,
@@ -81,15 +82,15 @@ class GaugeRnR:
             GaugeRnR.PART: pS,
             GaugeRnR.MEASUREMENT: mS}
 
-    def calculateSumOfDeviations(self, data):
-        squares = self.calculateSquares(data)
+    def calculateSumOfDeviations(self):
+        squares = self.calculateSquares()
         SD = dict()
         for key in squares:
             SD[key] = np.sum(squares[key])
         return SD
 
-    def calculateSS(self, data):
-        SS = self.calculateSumOfDeviations(data)
+    def calculateSS(self):
+        SS = self.calculateSumOfDeviations()
 
         SS[GaugeRnR.OPERATOR] = \
             self.parts * self.measurements * \

@@ -8,13 +8,13 @@ import numpy as np
 class TestStats(unittest.TestCase):
 
     def test_setupShape(self):
-        g = GaugeRnR([3, 5, 3])
+        g = GaugeRnR(data)
         self.assertEqual(g.operators, 3)
         self.assertEqual(g.parts, 5)
         self.assertEqual(g.measurements, 3)
 
     def test_calculateDoF(self):
-        g = GaugeRnR([3, 5, 3])
+        g = GaugeRnR(data)
         dof = g.calculateDoF()
         self.assertEqual(dof[GaugeRnR.OPERATOR], 2)
         self.assertEqual(dof[GaugeRnR.PART], 4)
@@ -23,8 +23,8 @@ class TestStats(unittest.TestCase):
         self.assertEqual(dof[GaugeRnR.TOTAL], 44)
 
     def test_calculateMean(self):
-        g = GaugeRnR(data.shape)
-        mean = g.calculateMean(data)
+        g = GaugeRnR(data)
+        mean = g.calculateMean()
 
         self.assertAlmostEqual(
             mean[GaugeRnR.TOTAL], 2.9437, 3)
@@ -43,8 +43,8 @@ class TestStats(unittest.TestCase):
              2.927, 1.843, 3.880, 3.150, 1.673], 3)
 
     def test_calculateSquares(self):
-        g = GaugeRnR(data.shape)
-        squares = g.calculateSquares(data)
+        g = GaugeRnR(data)
+        squares = g.calculateSquares()
 
         np.testing.assert_array_almost_equal(
             squares[GaugeRnR.OPERATOR],
@@ -59,8 +59,8 @@ class TestStats(unittest.TestCase):
             squaresMeas, 3)
 
     def test_calculateSumOfDeviations(self):
-        g = GaugeRnR(data.shape)
-        SD = g.calculateSumOfDeviations(data)
+        g = GaugeRnR(data)
+        SD = g.calculateSumOfDeviations()
 
         self.assertAlmostEqual(
             SD[GaugeRnR.TOTAL], 32.317, 3)
@@ -75,8 +75,8 @@ class TestStats(unittest.TestCase):
             SD[GaugeRnR.MEASUREMENT], 1.712, 3)
 
     def test_calculateSS(self):
-        g = GaugeRnR(data.shape)
-        SS = g.calculateSS(data)
+        g = GaugeRnR(data)
+        SS = g.calculateSS()
 
         self.assertAlmostEqual(
             SS[GaugeRnR.TOTAL], 32.317, 3)
@@ -94,8 +94,8 @@ class TestStats(unittest.TestCase):
             SS[GaugeRnR.MEASUREMENT], 1.712, 3)
 
     def test_calculateMS(self):
-        g = GaugeRnR(data.shape)
-        g.calculate(data)
+        g = GaugeRnR(data)
+        g.calculate()
 
         self.assertAlmostEqual(
             g.MS[GaugeRnR.OPERATOR], 0.815, 3)
@@ -107,8 +107,8 @@ class TestStats(unittest.TestCase):
             g.MS[GaugeRnR.MEASUREMENT], 0.057, 3)
 
     def test_calculateF(self):
-        g = GaugeRnR(data.shape)
-        g.calculate(data)
+        g = GaugeRnR(data)
+        g.calculate()
 
         self.assertAlmostEqual(
             g.F[GaugeRnR.OPERATOR], 100.322, 3)
@@ -118,8 +118,8 @@ class TestStats(unittest.TestCase):
             g.F[GaugeRnR.OPERATOR_BY_PART], 0.142, 3)
 
     def test_calculateP(self):
-        g = GaugeRnR(data.shape)
-        g.calculate(data)
+        g = GaugeRnR(data)
+        g.calculate()
 
         self.assertAlmostEqual(
             g.P[GaugeRnR.OPERATOR], 0, 3)
