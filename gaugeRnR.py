@@ -39,11 +39,11 @@ class Result(Enum):
 
 
 ResultNames = {
-    Result.DF: 'Degrees of Freedom',
-    Result.SS: 'Sum of Squares',
-    Result.MS: 'Mean Square',
-    Result.Var: 'Variance',
-    Result.Std: 'Standard deviation',
+    Result.DF: 'DF',
+    Result.SS: 'SS',
+    Result.MS: 'MS',
+    Result.Var: 'Var (\u03C3\u00B2)',
+    Result.Std: 'Std (\u03C3)',
     Result.F: 'F-value',
     Result.P: 'P-value'}
 
@@ -61,9 +61,9 @@ class GaugeRnR:
         if not hasattr(self, 'result'):
             return 'Shape: ' + \
                 str([self.operators, self.parts, self.measurements])
-        return self.toTabulate()
+        return self.toTabulare()
 
-    def toTabulate(self):
+    def toTabulare(self, tableFormat="fancy_grid", precision = '.3f'):
         if not hasattr(self, 'result'):
             raise Exception(
                 'GaugeRnR.calcualte() should be run before calling toTabular()')
@@ -78,13 +78,17 @@ class GaugeRnR:
             innerTable = [ComponentNames[comp]]
             for res in Result:
                 if comp in self.result[res]:
-                    innerTable.append(self.result[res][comp])
+                    innerTable.append(
+                        format(self.result[res][comp], precision))
                 else:
                     innerTable.append('')
 
             table.append(innerTable)
 
-        return tabulate(table, headers=headers, tablefmt="fancy_grid")
+        return tabulate(
+            table,
+            headers=headers,
+            tablefmt=tableFormat)
 
     def calculate(self):
         self.result = dict()
