@@ -1,7 +1,6 @@
 # Gauge RnR
 
 [![License](https://img.shields.io/github/license/owodunni/GaugeRnR)](https://github.com/owodunni/GaugeRnR/blob/master/LICENSE)
-
 [![License](https://github.com/owodunni/gaugernr/workflows/Python%20package/badge.svg)](https://github.com/owodunni/GaugeRnR)
 
 
