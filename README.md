@@ -28,7 +28,6 @@ To test the package run:
 ./test.py
 ```
 
-
 ## Linter
 
 On each commit the CI pipelin runs the flake8 linter.
