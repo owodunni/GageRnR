@@ -1,4 +1,4 @@
-# Gauge RnR
+# Gauge R&R
 
 [![GitHub](https://github.com/owodunni/gaugernr/workflows/Python%20package/badge.svg)](https://github.com/owodunni/GaugeRnR)
 [![PyPi](https://img.shields.io/pypi/v/GaugeRnR)](https://pypi.org/project/GaugeRnR/)
