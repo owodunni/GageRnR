@@ -133,7 +133,7 @@ class TestStats(unittest.TestCase):
 
     def test_toTabular(self):
         g = GaugeRnR(data)
-        self.assertRaises(Exception, g.toTabulate)
+        self.assertRaises(Exception, g.toTabulare)
 
 
 if __name__ == '__main__':
