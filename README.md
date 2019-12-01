@@ -79,5 +79,5 @@ flake8 . --count --max-complexity=10 --max-line-length=127 --statistics
 To lint the code we can use autopep8:
 
 ``` console
- autopep8 --aggressive --in-place <filename>
+autopep8 --aggressive --in-place <filename>
 ```
