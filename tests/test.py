@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import unittest
-from gaugeRnR import GaugeRnR, Component, Result
+from context import GaugeRnR, Component, Result
 from data import data, squaresMeas
 import numpy as np
 
