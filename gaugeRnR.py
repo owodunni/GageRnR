@@ -1,6 +1,7 @@
 import numpy as np
 import math
 import scipy.stats as stats
+from tabulate import tabulate
 from enum import Enum
 
 
@@ -57,12 +58,33 @@ class GaugeRnR:
         self.measurements = data.shape[2]
 
     def __str__(self):
-        return self.tabulateClass()
-
-    def tabulateClass(self):
-        if not hasattr(self, 'dof'):
+        if not hasattr(self, 'result'):
             return 'Shape: ' + \
                 str([self.operators, self.parts, self.measurements])
+        return self.toTabulate()
+
+    def toTabulate(self):
+        if not hasattr(self, 'result'):
+            raise Exception(
+                'GaugeRnR.calcualte() should be run before calling toTabular()')
+
+        headers = ['Sources of Variance']
+
+        for res in Result:
+            headers.append(ResultNames[res])
+
+        table = []
+        for comp in Component:
+            innerTable = [ComponentNames[comp]]
+            for res in Result:
+                if comp in self.result[res]:
+                    innerTable.append(self.result[res][comp])
+                else:
+                    innerTable.append('')
+
+            table.append(innerTable)
+
+        return tabulate(table, headers=headers)
 
     def calculate(self):
         self.result = dict()

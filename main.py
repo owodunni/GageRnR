@@ -4,3 +4,4 @@ from data import data
 
 g = GaugeRnR(data)
 g.calculate()
+print(g)
