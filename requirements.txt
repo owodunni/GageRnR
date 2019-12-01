@@ -1,5 +1,3 @@
 numpy
 scipy
 tabulate
-flake8
-autopep8
