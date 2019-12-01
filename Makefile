@@ -9,3 +9,6 @@ test:
 
 package:
 	python3 setup.py sdist bdist_wheel
+
+install:
+	python3 setup.py install
