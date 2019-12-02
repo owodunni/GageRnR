@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from GaugeRnR import GaugeRnR
+from context import GaugeRnR
 import numpy as np
 
 data = np.array(

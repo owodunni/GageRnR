@@ -19,7 +19,8 @@ from gaugeRnR import GaugeRnR
 import numpy as np
 
 # The input should be structeted in a 3d
-# numpy array with shape [operators parts measurements]
+# numpy array n[i,j,k] where
+# i = operator, j = part, k = measurement
 # Example:
 #       m1    m2    m3
 data = np.array(            #
