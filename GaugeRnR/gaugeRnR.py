@@ -30,20 +30,22 @@ ComponentNames = {
 
 class Result(Enum):
     DF = 0
-    SS = 1
-    MS = 2
-    Var = 3
-    Std = 4
-    F = 5
-    P = 6
+    Mean = 1
+    Std = 2
+    SS = 3
+    MS = 4
+    GaugeVar = 5
+    GaugeStd = 6
+    F = 7
+    P = 8
 
 
 ResultNames = {
     Result.DF: 'DF',
     Result.SS: 'SS',
     Result.MS: 'MS',
-    Result.Var: 'Var (\u03C3\u00B2)',
-    Result.Std: 'Std (\u03C3)',
+    Result.GaugeVar: 'Var (\u03C3\u00B2)',
+    Result.GaugeStd: 'Std (\u03C3)',
     Result.F: 'F-value',
     Result.P: 'P-value'}
 
@@ -70,16 +72,16 @@ class GaugeRnR:
 
         headers = ['Sources of Variance']
 
-        for res in Result:
-            headers.append(ResultNames[res])
+        for key in ResultNames:
+            headers.append(ResultNames[key])
 
         table = []
         for comp in Component:
             innerTable = [ComponentNames[comp]]
-            for res in Result:
-                if comp in self.result[res]:
+            for key in ResultNames:
+                if comp in self.result[key]:
                     innerTable.append(
-                        format(self.result[res][comp], precision))
+                        format(self.result[key][comp], precision))
                 else:
                     innerTable.append('')
 
@@ -93,17 +95,18 @@ class GaugeRnR:
     def calculate(self):
         self.result = dict()
         self.result[Result.DF] = self.calculateDoF()
-
+        self.result[Result.Mean] = self.calculateMean()
+        self.result[Result.Std] = self.calculateStd()
         self.result[Result.SS] = self.calculateSS()
 
         self.result[Result.MS] = self.calculateMS(
             self.result[Result.DF],
             self.result[Result.SS])
 
-        self.result[Result.Var] = self.calculateVariance(
+        self.result[Result.GaugeVar] = self.calculateGaugeVariance(
             self.result[Result.MS])
 
-        self.result[Result.Std] = self.calculateStd(self.result[Result.Var])
+        self.result[Result.GaugeStd] = self.calculateGaugeStd(self.result[Result.GaugeVar])
 
         self.result[Result.F] = self.calculateF(self.result[Result.MS])
 
@@ -143,6 +146,27 @@ class GaugeRnR:
             Component.OPERATOR: omu,
             Component.PART: pmu,
             Component.MEASUREMENT: emu}
+
+    def calculateStd(self):
+        stdTotal = np.std(self.data, ddof=1)
+        stdPerOperator = np.std(
+            self.data.reshape(
+                self.operators,
+                self.parts*self.measurements),
+            axis=1,
+            ddof=1)
+
+        stdPerPart = np.std(
+            self.data.reshape(
+                self.parts,
+                self.operators*self.measurements),
+            axis=1,
+            ddof=1)
+
+        return {
+            Component.TOTAL: stdTotal,
+            Component.OPERATOR: stdPerOperator,
+            Component.PART: stdPerPart}
 
     def calculateSquares(self):
         mean = self.calculateMean()
@@ -195,7 +219,7 @@ class GaugeRnR:
             MS[key] = SS[key] / dof[key]
         return MS
 
-    def calculateVariance(self, MS):
+    def calculateGaugeVariance(self, MS):
         Var = dict()
 
         Var[Component.MEASUREMENT] = MS[Component.MEASUREMENT]
@@ -226,7 +250,7 @@ class GaugeRnR:
 
         return Var
 
-    def calculateStd(self, Var):
+    def calculateGaugeStd(self, Var):
         Std = dict()
         for key in Var:
             Std[key] = math.sqrt(Var[key])

@@ -42,6 +42,20 @@ class TestStats(unittest.TestCase):
              3.133, 2.210, 4.157, 3.413, 1.987,
              2.927, 1.843, 3.880, 3.150, 1.673], 3)
 
+    def test_calculateStd(self):
+        g = GaugeRnR(data)
+        std = g.calculateStd()
+
+        self.assertAlmostEqual(
+            std[Component.TOTAL], 0.857, 3)
+
+        np.testing.assert_array_almost_equal(
+            std[Component.OPERATOR], [0.813, 0.879, 0.87], 3)
+
+        np.testing.assert_array_almost_equal(
+            std[Component.PART],
+            [0.817, 0.624, 0.919, 0.559, 0.986], 3)
+
     def test_calculateSquares(self):
         g = GaugeRnR(data)
         squares = g.calculateSquares()
@@ -107,6 +121,22 @@ class TestStats(unittest.TestCase):
         self.assertAlmostEqual(
             MS[Component.MEASUREMENT], 0.057, 3)
 
+    def test_calculateGaugeVar(self):
+        g = GaugeRnR(data)
+        g.calculate()
+        Var = g.result[Result.GaugeVar]
+
+        self.assertAlmostEqual(
+            Var[Component.TOTAL], 0.9130, 3)
+        self.assertAlmostEqual(
+            Var[Component.OPERATOR], 0.0538, 3)
+        self.assertAlmostEqual(
+            Var[Component.PART], 0.8021, 3)
+        self.assertAlmostEqual(
+            Var[Component.OPERATOR_BY_PART], 0, 3)
+        self.assertAlmostEqual(
+            Var[Component.MEASUREMENT], 0.057, 3)
+
     def test_calculateF(self):
         g = GaugeRnR(data)
         g.calculate()
@@ -131,9 +161,15 @@ class TestStats(unittest.TestCase):
         self.assertAlmostEqual(
             P[Component.OPERATOR_BY_PART], 0.9964, 4)
 
-    def test_toTabular(self):
+    def test_toTabularException(self):
         g = GaugeRnR(data)
         self.assertRaises(Exception, g.toTabulare)
+
+    def test_toTabular(self):
+        g = GaugeRnR(data)
+        g.calculate()
+        g.toTabulare()
+        self.assertTrue(True)
 
 
 if __name__ == '__main__':
