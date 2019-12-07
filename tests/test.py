@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""The GaugeRnR Tests."""
 import unittest
 from context import GaugeRnR, Component, Result
 from data import data, squaresMeas
@@ -6,14 +7,17 @@ import numpy as np
 
 
 class TestStats(unittest.TestCase):
+    """The GaugeRnR Tests."""
 
     def test_setupShape(self):
+        """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         self.assertEqual(g.operators, 3)
         self.assertEqual(g.parts, 5)
         self.assertEqual(g.measurements, 3)
 
     def test_calculateDoF(self):
+        """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         dof = g.calculateDoF()
         self.assertEqual(dof[Component.OPERATOR], 2)
@@ -23,6 +27,7 @@ class TestStats(unittest.TestCase):
         self.assertEqual(dof[Component.TOTAL], 44)
 
     def test_calculateMean(self):
+        """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         mean = g.calculateMean()
 
@@ -43,6 +48,7 @@ class TestStats(unittest.TestCase):
              2.927, 1.843, 3.880, 3.150, 1.673], 3)
 
     def test_calculateStd(self):
+        """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         std = g.calculateStd()
 
@@ -57,6 +63,7 @@ class TestStats(unittest.TestCase):
             [0.817, 0.624, 0.919, 0.559, 0.986], 3)
 
     def test_calculateSquares(self):
+        """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         squares = g.calculateSquares()
 
@@ -73,6 +80,7 @@ class TestStats(unittest.TestCase):
             squaresMeas, 3)
 
     def test_calculateSumOfDeviations(self):
+        """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         SD = g.calculateSumOfDeviations()
 
@@ -89,6 +97,7 @@ class TestStats(unittest.TestCase):
             SD[Component.MEASUREMENT], 1.712, 3)
 
     def test_calculateSS(self):
+        """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         SS = g.calculateSS()
 
@@ -108,6 +117,7 @@ class TestStats(unittest.TestCase):
             SS[Component.MEASUREMENT], 1.712, 3)
 
     def test_calculateMS(self):
+        """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         g.calculate()
         MS = g.result[Result.MS]
@@ -122,6 +132,7 @@ class TestStats(unittest.TestCase):
             MS[Component.MEASUREMENT], 0.057, 3)
 
     def test_calculateGaugeVar(self):
+        """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         g.calculate()
         Var = g.result[Result.GaugeVar]
@@ -138,6 +149,7 @@ class TestStats(unittest.TestCase):
             Var[Component.MEASUREMENT], 0.057, 3)
 
     def test_calculateF(self):
+        """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         g.calculate()
         F = g.result[Result.F]
@@ -150,6 +162,7 @@ class TestStats(unittest.TestCase):
             F[Component.OPERATOR_BY_PART], 0.142, 3)
 
     def test_calculateP(self):
+        """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         g.calculate()
         P = g.result[Result.P]
@@ -162,10 +175,12 @@ class TestStats(unittest.TestCase):
             P[Component.OPERATOR_BY_PART], 0.9964, 4)
 
     def test_toTabularException(self):
+        """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         self.assertRaises(Exception, g.toTabulare)
 
     def test_toTabular(self):
+        """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         g.calculate()
         g.toTabulare()
