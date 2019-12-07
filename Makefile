@@ -2,10 +2,10 @@ init:
 	pip3 install -r requirements.txt
 
 lint:
-	flake8 . 
+	flake8 . --count --statistics
 
 tests:
-	python3 tests/test.py
+	pytest
 
 build:
 	python3 setup.py sdist bdist_wheel

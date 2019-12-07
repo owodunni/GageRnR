@@ -185,7 +185,3 @@ class TestStats(unittest.TestCase):
         g.calculate()
         g.toTabulare()
         self.assertTrue(True)
-
-
-if __name__ == '__main__':
-    unittest.main()
