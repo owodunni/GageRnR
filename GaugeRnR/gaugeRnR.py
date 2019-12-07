@@ -1,3 +1,4 @@
+"""Module containing the algorithm for GaugeRnR."""
 import numpy as np
 import math
 import scipy.stats as stats
@@ -6,6 +7,8 @@ from enum import Enum
 
 
 class Component(Enum):
+    """Enum containing the different Variance parts of GaugeRnR."""
+
     OPERATOR = 0
     PART = 1
     OPERATOR_BY_PART = 2
@@ -29,6 +32,8 @@ ComponentNames = {
 
 
 class Result(Enum):
+    """Enum containing the measurements calculated by GaugeRnR."""
+
     DF = 0
     Mean = 1
     Std = 2
@@ -51,21 +56,32 @@ ResultNames = {
 
 
 class GaugeRnR:
+    """Main class for calculating GaugeRnR."""
+
     GRR = 'GaugeRnR'
 
     def __init__(self, data):
+        """Initialize GaugeRnR algorithm.
+
+        :param numpy.array data:
+            The data tha we want to analyse using GaugeRnR.
+            The input should be structeted in a 3d array
+            n[i,j,k] where i = operator, j = part, k = measurement
+        """
         self.data = data
         self.parts = data.shape[1]
         self.operators = data.shape[0]
         self.measurements = data.shape[2]
 
     def __str__(self):
+        """Enum containing the measurements calculated by GaugeRnR."""
         if not hasattr(self, 'result'):
             return 'Shape: ' + \
                 str([self.operators, self.parts, self.measurements])
         return self.toTabulare()
 
     def toTabulare(self, tableFormat="fancy_grid", precision='.3f'):
+        """Convert result to tabular."""
         if not hasattr(self, 'result'):
             raise Exception(
                 'GaugeRnR.calcualte() should be run before calling toTabular()')
@@ -93,6 +109,7 @@ class GaugeRnR:
             tablefmt=tableFormat)
 
     def calculate(self):
+        """Calculate GaugeRnR."""
         self.result = dict()
         self.result[Result.DF] = self.calculateDoF()
         self.result[Result.Mean] = self.calculateMean()
@@ -117,6 +134,7 @@ class GaugeRnR:
         return self.result
 
     def calculateDoF(self):
+        """Calculate Degrees of freedom."""
         oDoF = self.operators - 1
         pDoF = self.parts - 1
         opDoF = (self.parts - 1) * (self.operators - 1)
@@ -130,6 +148,7 @@ class GaugeRnR:
             Component.TOTAL: totDof}
 
     def calculateMean(self):
+        """Calculate Mean."""
         mu = np.mean(self.data)
 
         omu = np.mean(self.data, axis=1)
@@ -148,6 +167,7 @@ class GaugeRnR:
             Component.MEASUREMENT: emu}
 
     def calculateStd(self):
+        """Calculate Std."""
         stdTotal = np.std(self.data, ddof=1)
         stdPerOperator = np.std(
             self.data.reshape(
@@ -169,6 +189,7 @@ class GaugeRnR:
             Component.PART: stdPerPart}
 
     def calculateSquares(self):
+        """Calculate Squares."""
         mean = self.calculateMean()
         tS = (self.data - mean[Component.TOTAL])**2
         oS = (mean[Component.OPERATOR] - mean[Component.TOTAL])**2
@@ -190,6 +211,7 @@ class GaugeRnR:
             Component.MEASUREMENT: mS}
 
     def calculateSumOfDeviations(self):
+        """Calculate Sum of Deviations."""
         squares = self.calculateSquares()
         SD = dict()
         for key in squares:
@@ -197,6 +219,7 @@ class GaugeRnR:
         return SD
 
     def calculateSS(self):
+        """Calculate Sum of Squares."""
         SS = self.calculateSumOfDeviations()
 
         SS[Component.OPERATOR] = \
@@ -213,6 +236,7 @@ class GaugeRnR:
         return SS
 
     def calculateMS(self, dof, SS):
+        """Calculate Mean of Squares."""
         MS = dict()
 
         for key in SS:
@@ -220,6 +244,7 @@ class GaugeRnR:
         return MS
 
     def calculateGaugeVariance(self, MS):
+        """Calculate GaugeRnR Variances."""
         Var = dict()
 
         Var[Component.MEASUREMENT] = MS[Component.MEASUREMENT]
@@ -251,6 +276,7 @@ class GaugeRnR:
         return Var
 
     def calculateGaugeStd(self, Var):
+        """Calculate GaugeRnR Standard Deviations."""
         Std = dict()
         for key in Var:
             Std[key] = math.sqrt(Var[key])
@@ -258,6 +284,7 @@ class GaugeRnR:
         return Std
 
     def calculateF(self, MS):
+        """Calculate F-Values."""
         F = dict()
 
         F[Component.OPERATOR] = (
@@ -275,6 +302,7 @@ class GaugeRnR:
         return F
 
     def calculateP(self, dof, F):
+        """Calculate P-Values."""
         P = dict()
 
         P[Component.OPERATOR] = \

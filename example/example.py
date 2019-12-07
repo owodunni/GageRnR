@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Example showing how to use GaugeRnR."""
 from context import GaugeRnR
 import numpy as np
 

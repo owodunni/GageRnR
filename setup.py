@@ -1,3 +1,4 @@
+"""Packaging logic for GaugeRnR."""
 from setuptools import setup
 
 with open('requirements.txt') as f:

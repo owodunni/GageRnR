@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Data used by tests."""
 import numpy as np
 
 data = np.array(
