@@ -118,10 +118,10 @@ class GaugeRnR:
             self.result[Result.DF],
             self.result[Result.SS])
 
-        self.result[Result.Var] = self.calculateGaugeVariance(
+        self.result[Result.Var] = self.calculateVar(
             self.result[Result.MS])
 
-        self.result[Result.Std] = self.calculateGaugeStd(self.result[Result.Var])
+        self.result[Result.Std] = self.calculateStd(self.result[Result.Var])
 
         self.result[Result.F] = self.calculateF(self.result[Result.MS])
 
@@ -163,28 +163,6 @@ class GaugeRnR:
             Component.OPERATOR: omu,
             Component.PART: pmu,
             Component.MEASUREMENT: emu}
-
-    def calculateStd(self):
-        """Calculate Std."""
-        stdTotal = np.std(self.data, ddof=1)
-        stdPerOperator = np.std(
-            self.data.reshape(
-                self.operators,
-                self.parts*self.measurements),
-            axis=1,
-            ddof=1)
-
-        stdPerPart = np.std(
-            self.data.reshape(
-                self.parts,
-                self.operators*self.measurements),
-            axis=1,
-            ddof=1)
-
-        return {
-            Component.TOTAL: stdTotal,
-            Component.OPERATOR: stdPerOperator,
-            Component.PART: stdPerPart}
 
     def calculateSquares(self):
         """Calculate Squares."""
@@ -241,7 +219,7 @@ class GaugeRnR:
             MS[key] = SS[key] / dof[key]
         return MS
 
-    def calculateGaugeVariance(self, MS):
+    def calculateVar(self, MS):
         """Calculate GaugeRnR Variances."""
         Var = dict()
 
@@ -273,7 +251,7 @@ class GaugeRnR:
 
         return Var
 
-    def calculateGaugeStd(self, Var):
+    def calculateStd(self, Var):
         """Calculate GaugeRnR Standard Deviations."""
         Std = dict()
         for key in Var:

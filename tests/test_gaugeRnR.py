@@ -6,7 +6,7 @@ from data import data, squaresMeas
 import numpy as np
 
 
-class TestStats(unittest.TestCase):
+class TestGaugeRnR(unittest.TestCase):
     """The GaugeRnR Tests."""
 
     def test_setupShape(self):
@@ -46,21 +46,6 @@ class TestStats(unittest.TestCase):
             [3.447, 2.393, 4.260, 3.537, 2.147,
              3.133, 2.210, 4.157, 3.413, 1.987,
              2.927, 1.843, 3.880, 3.150, 1.673], 3)
-
-    def test_calculateStd(self):
-        """The GaugeRnR Tests."""
-        g = GaugeRnR(data)
-        std = g.calculateStd()
-
-        self.assertAlmostEqual(
-            std[Component.TOTAL], 0.857, 3)
-
-        np.testing.assert_array_almost_equal(
-            std[Component.OPERATOR], [0.813, 0.879, 0.87], 3)
-
-        np.testing.assert_array_almost_equal(
-            std[Component.PART],
-            [0.817, 0.624, 0.919, 0.559, 0.986], 3)
 
     def test_calculateSquares(self):
         """The GaugeRnR Tests."""
