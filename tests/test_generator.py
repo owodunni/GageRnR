@@ -4,7 +4,6 @@ import unittest
 from context import Distribution, Settings, Generator
 from context import GaugeRnR, Component, Result
 from math import sqrt
-import numpy as np
 
 
 class TestGaugeRnR(unittest.TestCase):
@@ -20,10 +19,10 @@ class TestGaugeRnR(unittest.TestCase):
         numbP = 400
         numbMeas = 100
 
-        operator = Distribution(numbO,0,self.sigmaOp)
-        parts = Distribution(numbP,100,self.sigmaP)
-        partOperator = Distribution(numbO*numbP,0,self.sigmaOp)
-        measurements = Distribution(numbMeas,0,self.sigmaMeas)
+        operator = Distribution(numbO, 0, self.sigmaOp)
+        parts = Distribution(numbP, 100, self.sigmaP)
+        partOperator = Distribution(numbO*numbP, 0, self.sigmaOp)
+        measurements = Distribution(numbMeas, 0, self.sigmaMeas)
 
         settings = Settings(
             operators=operator,
@@ -40,4 +39,5 @@ class TestGaugeRnR(unittest.TestCase):
         g.calculate()
 
         sigmaTot = sqrt(self.sigmaOp**2 + self.sigmaP**2 + self.sigmaMeas**2 + self.sigmaPOP**2)
-        self.assertLess(sigmaTot- g.result[Result.Std][Component.TOTAL],0.2)
+        sigmaEst = g.result[Result.Std][Component.TOTAL]
+        self.assertLess(sigmaTot - sigmaEst, 0.2)

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Module for generating GaugeRnR data."""
 import numpy as np
 
 # y_ijk = u + pi + oj +(PO)ij+eijk
@@ -7,6 +8,7 @@ import numpy as np
 
 
 class Distribution:
+    """Distribution settings used to generate data."""
     def __init__(self, number, mean, sigma):
         self.number = number
         self.mean = mean
