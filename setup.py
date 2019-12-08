@@ -7,7 +7,7 @@ with open('pip/requirements.txt') as f:
 setup(
     packages=['GaugeRnR'],
     install_requires=requirements,
-    entry_points = {
+    entry_points={
         'console_scripts': [
             'GaugeRnR = GaugeRnR.__main__:main'
         ]
