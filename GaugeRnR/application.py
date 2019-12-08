@@ -60,7 +60,8 @@ class Application():
 
     def run(self):
         loader = DataLoader()
-        data = loader.load(file=self.file,
+        data = loader.load(
+            file=self.file,
             structure=self.structure,
             axes=self.axes,
             delimiter=self.delimiter)
