@@ -29,7 +29,6 @@ class MainTest(unittest.TestCase):
               '-s', "3,5,11"])
         self.assertTrue(True)
 
-
     def test_AxesToManyArguments(self):
         self.assertRaises(
             AttributeError,
@@ -45,10 +44,9 @@ class MainTest(unittest.TestCase):
             ['-f', "data/data_mXop.csv",
              "-s", "3,5,11",
              "-a", "3,5,-11"])
-    
+
     def test_OkAxesArguments(self):
-        main(
-            ['-f', "data/data_mXop.csv",
-             "-s", "3,5,11",
-             "-a", "3,5,11"])
+        main(['-f', "data/data_mXop.csv",
+              "-s", "3,5,11",
+              "-a", "3,5,11"])
         self.assertTrue(True)

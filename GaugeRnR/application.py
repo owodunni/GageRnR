@@ -23,20 +23,24 @@ import os.path
 
 import GaugeRnR
 
+
 def toInt(values):
-  return [int(s) for s in values.split(',')]
+    return [int(s) for s in values.split(',')]
+
 
 def positiveIntegers(values):
-  for value in values:
-    if value < 0:
-      return False
-  return True
+    for value in values:
+        if value < 0:
+            return False
+    return True
+
 
 def checkIntegerList(name, values):
-  if(len(values) != 3):
-    raise AttributeError(name, " can only have three values.")
-  if(not positiveIntegers(values)):
-    raise AttributeError(name, " can only be positive integers.")
+    if(len(values) != 3):
+        raise AttributeError(name, " can only have three values.")
+    if(not positiveIntegers(values)):
+        raise AttributeError(name, " can only be positive integers.")
+
 
 class Application():
 
