@@ -98,7 +98,7 @@ F = result[Result.F]
 100.322
 ```
 
-For more examples of how to use this library take a look at the [unit tests](https://github.com/owodunni/GaugeRnR/blob/master/tests/test.py)!
+For more examples of how to use this library take a look at the [unit tests](https://github.com/owodunni/GaugeRnR/tree/master/tests)!
 
 ## Documentations
 
