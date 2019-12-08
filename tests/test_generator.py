@@ -2,7 +2,8 @@
 """The GaugeRnR Tests."""
 import unittest
 from context import Distribution, Settings, Generator
-from context import GaugeRnR, Component, Result
+from context import GaugeRnR
+from context import Statistics as st
 from math import sqrt
 from numpy.random import seed
 
@@ -41,5 +42,5 @@ class TestGaugeRnR(unittest.TestCase):
         g.calculate()
 
         sigmaTot = sqrt(self.sigmaOp**2 + self.sigmaP**2 + self.sigmaMeas**2 + self.sigmaPOP**2)
-        sigmaEst = g.result[Result.Std][Component.TOTAL]
+        sigmaEst = g.result[st.Result.Std][st.Component.TOTAL]
         self.assertLess(sigmaTot - sigmaEst, 0.1)

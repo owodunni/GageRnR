@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """The GaugeRnR Tests."""
 import unittest
-from context import GaugeRnR, Component, Result
+from context import GaugeRnR
+from context import Statistics as st
 from data import data, squaresMeas
 import numpy as np
 
@@ -20,11 +21,11 @@ class TestGaugeRnR(unittest.TestCase):
         """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         dof = g.calculateDoF()
-        self.assertEqual(dof[Component.OPERATOR], 2)
-        self.assertEqual(dof[Component.PART], 4)
-        self.assertEqual(dof[Component.OPERATOR_BY_PART], 8)
-        self.assertEqual(dof[Component.MEASUREMENT], 30)
-        self.assertEqual(dof[Component.TOTAL], 44)
+        self.assertEqual(dof[st.Component.OPERATOR], 2)
+        self.assertEqual(dof[st.Component.PART], 4)
+        self.assertEqual(dof[st.Component.OPERATOR_BY_PART], 8)
+        self.assertEqual(dof[st.Component.MEASUREMENT], 30)
+        self.assertEqual(dof[st.Component.TOTAL], 44)
 
     def test_calculateMean(self):
         """The GaugeRnR Tests."""
@@ -32,17 +33,17 @@ class TestGaugeRnR(unittest.TestCase):
         mean = g.calculateMean()
 
         self.assertAlmostEqual(
-            mean[Component.TOTAL], 2.9437, 3)
+            mean[st.Component.TOTAL], 2.9437, 3)
 
         np.testing.assert_array_almost_equal(
-            mean[Component.OPERATOR], [3.1567, 2.98, 2.6947], 3)
+            mean[st.Component.OPERATOR], [3.1567, 2.98, 2.6947], 3)
 
         np.testing.assert_array_almost_equal(
-            mean[Component.PART],
+            mean[st.Component.PART],
             [3.1689, 2.1489, 4.0989, 3.3667, 1.9356], 3)
 
         np.testing.assert_array_almost_equal(
-            mean[Component.MEASUREMENT],
+            mean[st.Component.MEASUREMENT],
             [3.447, 2.393, 4.260, 3.537, 2.147,
              3.133, 2.210, 4.157, 3.413, 1.987,
              2.927, 1.843, 3.880, 3.150, 1.673], 3)
@@ -53,15 +54,15 @@ class TestGaugeRnR(unittest.TestCase):
         squares = g.calculateSquares()
 
         np.testing.assert_array_almost_equal(
-            squares[Component.OPERATOR],
+            squares[st.Component.OPERATOR],
             [0.0453, 0.0013, 0.0621], 3)
 
         np.testing.assert_array_almost_equal(
-            squares[Component.PART],
+            squares[st.Component.PART],
             [0.0507, 0.6318, 1.3343, 0.1788, 1.0165], 3)
 
         np.testing.assert_array_almost_equal(
-            squares[Component.MEASUREMENT],
+            squares[st.Component.MEASUREMENT],
             squaresMeas, 3)
 
     def test_calculateSumOfDeviations(self):
@@ -70,16 +71,16 @@ class TestGaugeRnR(unittest.TestCase):
         SD = g.calculateSumOfDeviations()
 
         self.assertAlmostEqual(
-            SD[Component.TOTAL], 32.317, 3)
+            SD[st.Component.TOTAL], 32.317, 3)
 
         self.assertAlmostEqual(
-            SD[Component.OPERATOR], 0.1087, 3)
+            SD[st.Component.OPERATOR], 0.1087, 3)
 
         self.assertAlmostEqual(
-            SD[Component.PART], 3.2122, 3)
+            SD[st.Component.PART], 3.2122, 3)
 
         self.assertAlmostEqual(
-            SD[Component.MEASUREMENT], 1.712, 3)
+            SD[st.Component.MEASUREMENT], 1.712, 3)
 
     def test_calculateSS(self):
         """The GaugeRnR Tests."""
@@ -87,77 +88,77 @@ class TestGaugeRnR(unittest.TestCase):
         SS = g.calculateSS()
 
         self.assertAlmostEqual(
-            SS[Component.TOTAL], 32.317, 3)
+            SS[st.Component.TOTAL], 32.317, 3)
 
         self.assertAlmostEqual(
-            SS[Component.OPERATOR], 1.630, 3)
+            SS[st.Component.OPERATOR], 1.630, 3)
 
         self.assertAlmostEqual(
-            SS[Component.PART], 28.909, 3)
+            SS[st.Component.PART], 28.909, 3)
 
         self.assertAlmostEqual(
-            SS[Component.OPERATOR_BY_PART], 0.065, 3)
+            SS[st.Component.OPERATOR_BY_PART], 0.065, 3)
 
         self.assertAlmostEqual(
-            SS[Component.MEASUREMENT], 1.712, 3)
+            SS[st.Component.MEASUREMENT], 1.712, 3)
 
     def test_calculateMS(self):
         """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         g.calculate()
-        MS = g.result[Result.MS]
+        MS = g.result[st.Result.MS]
 
         self.assertAlmostEqual(
-            MS[Component.OPERATOR], 0.815, 3)
+            MS[st.Component.OPERATOR], 0.815, 3)
         self.assertAlmostEqual(
-            MS[Component.PART], 7.227, 3)
+            MS[st.Component.PART], 7.227, 3)
         self.assertAlmostEqual(
-            MS[Component.OPERATOR_BY_PART], 0.008, 3)
+            MS[st.Component.OPERATOR_BY_PART], 0.008, 3)
         self.assertAlmostEqual(
-            MS[Component.MEASUREMENT], 0.057, 3)
+            MS[st.Component.MEASUREMENT], 0.057, 3)
 
     def test_calculateVar(self):
         """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         g.calculate()
-        Var = g.result[Result.Var]
+        Var = g.result[st.Result.Var]
 
         self.assertAlmostEqual(
-            Var[Component.TOTAL], 0.9130, 3)
+            Var[st.Component.TOTAL], 0.9130, 3)
         self.assertAlmostEqual(
-            Var[Component.OPERATOR], 0.0538, 3)
+            Var[st.Component.OPERATOR], 0.0538, 3)
         self.assertAlmostEqual(
-            Var[Component.PART], 0.8021, 3)
+            Var[st.Component.PART], 0.8021, 3)
         self.assertAlmostEqual(
-            Var[Component.OPERATOR_BY_PART], 0, 3)
+            Var[st.Component.OPERATOR_BY_PART], 0, 3)
         self.assertAlmostEqual(
-            Var[Component.MEASUREMENT], 0.057, 3)
+            Var[st.Component.MEASUREMENT], 0.057, 3)
 
     def test_calculateF(self):
         """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         g.calculate()
-        F = g.result[Result.F]
+        F = g.result[st.Result.F]
 
         self.assertAlmostEqual(
-            F[Component.OPERATOR], 100.322, 3)
+            F[st.Component.OPERATOR], 100.322, 3)
         self.assertAlmostEqual(
-            F[Component.PART], 889.458, 3)
+            F[st.Component.PART], 889.458, 3)
         self.assertAlmostEqual(
-            F[Component.OPERATOR_BY_PART], 0.142, 3)
+            F[st.Component.OPERATOR_BY_PART], 0.142, 3)
 
     def test_calculateP(self):
         """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         g.calculate()
-        P = g.result[Result.P]
+        P = g.result[st.Result.P]
 
         self.assertAlmostEqual(
-            P[Component.OPERATOR], 0, 3)
+            P[st.Component.OPERATOR], 0, 3)
         self.assertAlmostEqual(
-            P[Component.PART], 0, 3)
+            P[st.Component.PART], 0, 3)
         self.assertAlmostEqual(
-            P[Component.OPERATOR_BY_PART], 0.9964, 4)
+            P[st.Component.OPERATOR_BY_PART], 0.9964, 4)
 
     def test_str(self):
         """The GaugeRnR Tests."""

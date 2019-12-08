@@ -3,74 +3,16 @@ import numpy as np
 import math
 import scipy.stats as stats
 from tabulate import tabulate
-from enum import Enum
+from .statistics import Statistics as st
 
 
-class Component(Enum):
-    """Enum containing the different Variance parts of GaugeRnR."""
-
-    OPERATOR = 0
-    PART = 1
-    OPERATOR_BY_PART = 2
-    MEASUREMENT = 3
-    TOTAL = 4
-
-
-ComponentNames = {
-    Component.OPERATOR: 'Operator',
-    Component.PART: 'Part',
-    Component.OPERATOR_BY_PART: 'Operator by Part',
-    Component.MEASUREMENT: 'Measurment',
-    Component.TOTAL: 'Total'}
-
-ComponentNames = {
-    Component.OPERATOR: 'Operator',
-    Component.PART: 'Part',
-    Component.OPERATOR_BY_PART: 'Operator by Part',
-    Component.MEASUREMENT: 'Measurment',
-    Component.TOTAL: 'Total'}
-
-
-class Result(Enum):
-    """Enum containing the measurements calculated by GaugeRnR."""
-
-    DF = 0
-    Mean = 1
-    SS = 3
-    MS = 4
-    Var = 5
-    Std = 6
-    F = 7
-    P = 8
-
-
-ResultNames = {
-    Result.DF: 'DF',
-    Result.SS: 'SS',
-    Result.MS: 'MS',
-    Result.Var: 'Var (\u03C3\u00B2)',
-    Result.Std: 'Std (\u03C3)',
-    Result.F: 'F-value',
-    Result.P: 'P-value'}
-
-
-class GaugeRnR:
+class GaugeRnR(st):
     """Main class for calculating GaugeRnR."""
 
     GRR = 'GaugeRnR'
 
     def __init__(self, data):
-        """Initialize GaugeRnR algorithm.
-
-        :param numpy.array data:
-            The data tha we want to analyse using GaugeRnR.
-            The input should be structeted in a 3d array
-            n[i,j,k] where i = operator, j = part, k = measurement
-        """
-        self.data = data
-        self.parts = data.shape[1]
-        self.operators = data.shape[0]
-        self.measurements = data.shape[2]
+        st.__init__(self, data)
 
     def __str__(self):
         """Enum containing the measurements calculated by GaugeRnR."""
@@ -87,13 +29,13 @@ class GaugeRnR:
 
         headers = ['Sources of Variance']
 
-        for key in ResultNames:
-            headers.append(ResultNames[key])
+        for key in st.ResultNames:
+            headers.append(st.ResultNames[key])
 
         table = []
-        for comp in Component:
-            innerTable = [ComponentNames[comp]]
-            for key in ResultNames:
+        for comp in st.Component:
+            innerTable = [st.ComponentNames[comp]]
+            for key in st.ResultNames:
                 if comp in self.result[key]:
                     innerTable.append(
                         format(self.result[key][comp], precision))
@@ -110,24 +52,24 @@ class GaugeRnR:
     def calculate(self):
         """Calculate GaugeRnR."""
         self.result = dict()
-        self.result[Result.DF] = self.calculateDoF()
-        self.result[Result.Mean] = self.calculateMean()
-        self.result[Result.SS] = self.calculateSS()
+        self.result[st.Result.DF] = self.calculateDoF()
+        self.result[st.Result.Mean] = self.calculateMean()
+        self.result[st.Result.SS] = self.calculateSS()
 
-        self.result[Result.MS] = self.calculateMS(
-            self.result[Result.DF],
-            self.result[Result.SS])
+        self.result[st.Result.MS] = self.calculateMS(
+            self.result[st.Result.DF],
+            self.result[st.Result.SS])
 
-        self.result[Result.Var] = self.calculateVar(
-            self.result[Result.MS])
+        self.result[st.Result.Var] = self.calculateVar(
+            self.result[st.Result.MS])
 
-        self.result[Result.Std] = self.calculateStd(self.result[Result.Var])
+        self.result[st.Result.Std] = self.calculateStd(self.result[st.Result.Var])
 
-        self.result[Result.F] = self.calculateF(self.result[Result.MS])
+        self.result[st.Result.F] = self.calculateF(self.result[st.Result.MS])
 
-        self.result[Result.P] = self.calculateP(
-            self.result[Result.DF],
-            self.result[Result.F])
+        self.result[st.Result.P] = self.calculateP(
+            self.result[st.Result.DF],
+            self.result[st.Result.F])
 
         return self.result
 
@@ -139,11 +81,11 @@ class GaugeRnR:
         eDof = self.parts * self.operators * (self.measurements - 1)
         totDof = self.parts * self.operators * self.measurements - 1
         return {
-            Component.OPERATOR: oDoF,
-            Component.PART: pDoF,
-            Component.OPERATOR_BY_PART: opDoF,
-            Component.MEASUREMENT: eDof,
-            Component.TOTAL: totDof}
+            st.Component.OPERATOR: oDoF,
+            st.Component.PART: pDoF,
+            st.Component.OPERATOR_BY_PART: opDoF,
+            st.Component.MEASUREMENT: eDof,
+            st.Component.TOTAL: totDof}
 
     def calculateMean(self):
         """Calculate Mean."""
@@ -159,32 +101,32 @@ class GaugeRnR:
         emu = emu.reshape(self.parts * self.operators)
 
         return {
-            Component.TOTAL: mu,
-            Component.OPERATOR: omu,
-            Component.PART: pmu,
-            Component.MEASUREMENT: emu}
+            st.Component.TOTAL: mu,
+            st.Component.OPERATOR: omu,
+            st.Component.PART: pmu,
+            st.Component.MEASUREMENT: emu}
 
     def calculateSquares(self):
         """Calculate Squares."""
         mean = self.calculateMean()
-        tS = (self.data - mean[Component.TOTAL])**2
-        oS = (mean[Component.OPERATOR] - mean[Component.TOTAL])**2
-        pS = (mean[Component.PART] - mean[Component.TOTAL])**2
+        tS = (self.data - mean[st.Componen.TOTAL])**2
+        oS = (mean[st.Componen.OPERATOR] - mean[st.Componen.TOTAL])**2
+        pS = (mean[st.Componen.PART] - mean[st.Componen.TOTAL])**2
 
         dataE = self.data.reshape(
             self.operators * self.parts,
             self.measurements)
-        meanMeas = np.repeat(mean[Component.MEASUREMENT], self.measurements)
+        meanMeas = np.repeat(mean[st.Componen.MEASUREMENT], self.measurements)
         meanMeas = meanMeas.reshape(
             self.operators * self.parts,
             self.measurements)
 
         mS = (dataE - meanMeas)**2
         return {
-            Component.TOTAL: tS,
-            Component.OPERATOR: oS,
-            Component.PART: pS,
-            Component.MEASUREMENT: mS}
+            st.Componen.TOTAL: tS,
+            st.Componen.OPERATOR: oS,
+            st.Componen.PART: pS,
+            st.Componen.MEASUREMENT: mS}
 
     def calculateSumOfDeviations(self):
         """Calculate Sum of Deviations."""
@@ -198,17 +140,17 @@ class GaugeRnR:
         """Calculate Sum of Squares."""
         SS = self.calculateSumOfDeviations()
 
-        SS[Component.OPERATOR] = \
+        SS[st.Componen.OPERATOR] = \
             self.parts * self.measurements * \
-            SS[Component.OPERATOR]
-        SS[Component.PART] = \
+            SS[st.Componen.OPERATOR]
+        SS[st.Componen.PART] = \
             self.operators * self.measurements * \
-            SS[Component.PART]
-        SS[Component.OPERATOR_BY_PART] = \
-            SS[Component.TOTAL] - (
-                SS[Component.OPERATOR] +
-                SS[Component.PART] +
-                SS[Component.MEASUREMENT])
+            SS[st.Componen.PART]
+        SS[st.Componen.OPERATOR_BY_PART] = \
+            SS[st.Componen.TOTAL] - (
+                SS[st.Componen.OPERATOR] +
+                SS[st.Componen.PART] +
+                SS[st.Componen.MEASUREMENT])
         return SS
 
     def calculateMS(self, dof, SS):
@@ -223,31 +165,31 @@ class GaugeRnR:
         """Calculate GaugeRnR Variances."""
         Var = dict()
 
-        Var[Component.MEASUREMENT] = MS[Component.MEASUREMENT]
-        Var[Component.OPERATOR_BY_PART] = ((
-            MS[Component.OPERATOR_BY_PART] - MS[Component.MEASUREMENT]) /
+        Var[st.Componen.MEASUREMENT] = MS[st.Componen.MEASUREMENT]
+        Var[st.Componen.OPERATOR_BY_PART] = ((
+            MS[st.Componen.OPERATOR_BY_PART] - MS[st.Componen.MEASUREMENT]) /
             self.parts)
-        Var[Component.OPERATOR] = ((
-            MS[Component.OPERATOR] - MS[Component.OPERATOR_BY_PART]) /
+        Var[st.Componen.OPERATOR] = ((
+            MS[st.Componen.OPERATOR] - MS[st.Componen.OPERATOR_BY_PART]) /
             (self.parts * self.measurements))
-        Var[Component.PART] = ((
-            MS[Component.PART] - MS[Component.OPERATOR_BY_PART]) /
+        Var[st.Componen.PART] = ((
+            MS[st.Componen.PART] - MS[st.Componen.OPERATOR_BY_PART]) /
             (self.operators * self.measurements))
 
         for key in Var:
             if Var[key] < 0:
                 Var[key] = 0
 
-        Var[Component.TOTAL] = \
-            Var[Component.OPERATOR] + \
-            Var[Component.PART] + \
-            Var[Component.OPERATOR_BY_PART] + \
-            Var[Component.MEASUREMENT]
+        Var[st.Componen.TOTAL] = \
+            Var[st.Componen.OPERATOR] + \
+            Var[st.Componen.PART] + \
+            Var[st.Componen.OPERATOR_BY_PART] + \
+            Var[st.Componen.MEASUREMENT]
 
         Var[GaugeRnR.GRR] = \
-            Var[Component.MEASUREMENT] + \
-            Var[Component.OPERATOR] + \
-            Var[Component.OPERATOR_BY_PART]
+            Var[st.Componen.MEASUREMENT] + \
+            Var[st.Componen.OPERATOR] + \
+            Var[st.Componen.OPERATOR_BY_PART]
 
         return Var
 
@@ -263,17 +205,17 @@ class GaugeRnR:
         """Calculate F-Values."""
         F = dict()
 
-        F[Component.OPERATOR] = (
-            MS[Component.OPERATOR] /
-            MS[Component.OPERATOR_BY_PART])
+        F[st.Componen.OPERATOR] = (
+            MS[st.Componen.OPERATOR] /
+            MS[st.Componen.OPERATOR_BY_PART])
 
-        F[Component.PART] = (
-            MS[Component.PART] /
-            MS[Component.OPERATOR_BY_PART])
+        F[st.Componen.PART] = (
+            MS[st.Componen.PART] /
+            MS[st.Componen.OPERATOR_BY_PART])
 
-        F[Component.OPERATOR_BY_PART] = (
-            MS[Component.OPERATOR_BY_PART] /
-            MS[Component.MEASUREMENT])
+        F[st.Componen.OPERATOR_BY_PART] = (
+            MS[st.Componen.OPERATOR_BY_PART] /
+            MS[st.Componen.MEASUREMENT])
 
         return F
 
@@ -281,21 +223,21 @@ class GaugeRnR:
         """Calculate P-Values."""
         P = dict()
 
-        P[Component.OPERATOR] = \
+        P[st.Componen.OPERATOR] = \
             stats.f.sf(
-            F[Component.OPERATOR],
-            dof[Component.OPERATOR],
-            dof[Component.OPERATOR_BY_PART])
+            F[st.Componen.OPERATOR],
+            dof[st.Componen.OPERATOR],
+            dof[st.Componen.OPERATOR_BY_PART])
 
-        P[Component.PART] = \
+        P[st.Componen.PART] = \
             stats.f.sf(
-            F[Component.PART],
-            dof[Component.PART],
-            dof[Component.OPERATOR_BY_PART])
+            F[st.Componen.PART],
+            dof[st.Componen.PART],
+            dof[st.Componen.OPERATOR_BY_PART])
 
-        P[Component.OPERATOR_BY_PART] = \
+        P[st.Componen.OPERATOR_BY_PART] = \
             stats.f.sf(
-            F[Component.OPERATOR_BY_PART],
-            dof[Component.OPERATOR_BY_PART],
-            dof[Component.MEASUREMENT])
+            F[st.Componen.OPERATOR_BY_PART],
+            dof[st.Componen.OPERATOR_BY_PART],
+            dof[st.Componen.MEASUREMENT])
         return P
