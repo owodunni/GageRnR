@@ -40,4 +40,4 @@ class TestGaugeRnR(unittest.TestCase):
 
         sigmaTot = sqrt(self.sigmaOp**2 + self.sigmaP**2 + self.sigmaMeas**2 + self.sigmaPOP**2)
         sigmaEst = g.result[Result.Std][Component.TOTAL]
-        self.assertLess(sigmaTot - sigmaEst, 0.2)
+        self.assertLess(sigmaTot - sigmaEst, 0.3)
