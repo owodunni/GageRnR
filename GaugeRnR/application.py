@@ -19,13 +19,22 @@ Options:
   -v --version  Show version.
 """
 from docopt import docopt
+import os.path
 
+import GaugeRnR
+
+def toInt(value):
+  return [int(s) for s in value.split(',')]
 
 class Application():
 
     def __init__(self, argv=None):
-        arguments = docopt(__doc__, argv)
-        print(arguments)
+        arguments = docopt(__doc__, argv, version=GaugeRnR.__version__)
+        self.file = str(arguments["--file"])
+        self.delimiter = str(arguments["--delimiter"])
+        self.structure = toInt(arguments["--structure"])
+        self.axes = toInt(arguments["--structure"])
 
-    def run(self):
-        print("running")
+    def check(self):
+        if not os.path.isfile(self.file):
+            raise FileNotFoundError(self.file)
