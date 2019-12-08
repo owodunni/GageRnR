@@ -17,8 +17,8 @@ from docopt import docopt
 
 class Application():
 
-    def __init__(self):
-        arguments = docopt(__doc__)
+    def __init__(self, argv=None):
+        arguments = docopt(__doc__, argv)
         print(arguments)
     
     def run(self):

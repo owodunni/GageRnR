@@ -1,8 +1,5 @@
 from .application import Application
 
-def main():
-    app = Application()
+def main(argv=None):
+    app = Application(argv)
     app.run()
-
-if __name__ == '__main__':
-    main()
