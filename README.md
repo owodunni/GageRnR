@@ -9,7 +9,34 @@
 ``` console
 pip install GaugeRnR
 ```
+## CLI
+The package can be used from CLI:
 
+```
+GaugeRnR -f data/data_mXop.csv -s 3,5,11
+```
+
+```
+GaugeRnR.
+
+Usage:
+    GaugeRnR -f FILE -s STRUCTURE [-a <AXES>] [-d <DELIMITER>]
+    GaugeRnR -h | --help
+    GaugeRnR -v | --version
+
+Examples:
+    GaugeRnR -f data.csv -s5,7,11
+    GaugeRnR -f data.csv -s5,7,11 --a 1,0,2 --d ,
+
+Options:
+    -f --file=FILE Load input data.
+    -s --structure=STRUCTURE Data structure.
+        Order should be operators, parts, measurements.
+    -a --axes=<AXES>  Order of data axes [default: 0,1,2].
+    -d --delimiter=<DELIMITER>  Order of data axes [default: ;].
+    -h --help     Show this screen.
+    -v --version  Show version.
+```
 ## Example
 
 The package can be used in the following way:
@@ -42,7 +69,7 @@ data = np.array(            #
 
 g = GaugeRnR(data)
 g.calculate()
-print(g.toTabulare())
+print(g.summary())
 ```
 
 This will result in the following table:
