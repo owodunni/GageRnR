@@ -131,11 +131,11 @@ class TestStats(unittest.TestCase):
         self.assertAlmostEqual(
             MS[Component.MEASUREMENT], 0.057, 3)
 
-    def test_calculateGaugeVar(self):
+    def test_calculateVar(self):
         """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         g.calculate()
-        Var = g.result[Result.GaugeVar]
+        Var = g.result[Result.Var]
 
         self.assertAlmostEqual(
             Var[Component.TOTAL], 0.9130, 3)
