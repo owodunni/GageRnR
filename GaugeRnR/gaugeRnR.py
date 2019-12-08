@@ -304,19 +304,19 @@ class GaugeRnR:
         P = dict()
 
         P[Component.OPERATOR] = \
-            1 - stats.f.cdf(
+            stats.f.sf(
             F[Component.OPERATOR],
             dof[Component.OPERATOR],
             dof[Component.OPERATOR_BY_PART])
 
         P[Component.PART] = \
-            1 - stats.f.cdf(
+            stats.f.sf(
             F[Component.PART],
             dof[Component.PART],
             dof[Component.OPERATOR_BY_PART])
 
         P[Component.OPERATOR_BY_PART] = \
-            1 - stats.f.cdf(
+            stats.f.sf(
             F[Component.OPERATOR_BY_PART],
             dof[Component.OPERATOR_BY_PART],
             dof[Component.MEASUREMENT])
