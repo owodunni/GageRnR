@@ -78,13 +78,13 @@ class GaugeRnR:
         if not hasattr(self, 'result'):
             return 'Shape: ' + \
                 str([self.operators, self.parts, self.measurements])
-        return self.toTabulare()
+        return self.summary()
 
-    def toTabulare(self, tableFormat="fancy_grid", precision='.3f'):
+    def summary(self, tableFormat="fancy_grid", precision='.3f'):
         """Convert result to tabular."""
         if not hasattr(self, 'result'):
             raise Exception(
-                'GaugeRnR.calcualte() should be run before calling toTabular()')
+                'GaugeRnR.calcualte() should be run before calling summary()')
 
         headers = ['Sources of Variance']
 
