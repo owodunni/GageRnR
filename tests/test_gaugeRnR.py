@@ -174,6 +174,19 @@ class TestStats(unittest.TestCase):
         self.assertAlmostEqual(
             P[Component.OPERATOR_BY_PART], 0.9964, 4)
 
+    def test_str(self):
+        """The GaugeRnR Tests."""
+        g = GaugeRnR(data)
+        g.__str__()
+        self.assertTrue(True)
+
+    def test_strAfterCalculated(self):
+        """The GaugeRnR Tests."""
+        g = GaugeRnR(data)
+        g.calculate()
+        g.__str__()
+        self.assertTrue(True)
+
     def test_summaryException(self):
         """The GaugeRnR Tests."""
         g = GaugeRnR(data)
