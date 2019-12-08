@@ -36,11 +36,10 @@ class Result(Enum):
 
     DF = 0
     Mean = 1
-    Std = 2
     SS = 3
     MS = 4
-    GaugeVar = 5
-    GaugeStd = 6
+    Var = 5
+    Std = 6
     F = 7
     P = 8
 
@@ -49,8 +48,8 @@ ResultNames = {
     Result.DF: 'DF',
     Result.SS: 'SS',
     Result.MS: 'MS',
-    Result.GaugeVar: 'Var (\u03C3\u00B2)',
-    Result.GaugeStd: 'Std (\u03C3)',
+    Result.Var: 'Var (\u03C3\u00B2)',
+    Result.Std: 'Std (\u03C3)',
     Result.F: 'F-value',
     Result.P: 'P-value'}
 
@@ -113,17 +112,16 @@ class GaugeRnR:
         self.result = dict()
         self.result[Result.DF] = self.calculateDoF()
         self.result[Result.Mean] = self.calculateMean()
-        self.result[Result.Std] = self.calculateStd()
         self.result[Result.SS] = self.calculateSS()
 
         self.result[Result.MS] = self.calculateMS(
             self.result[Result.DF],
             self.result[Result.SS])
 
-        self.result[Result.GaugeVar] = self.calculateGaugeVariance(
+        self.result[Result.Var] = self.calculateGaugeVariance(
             self.result[Result.MS])
 
-        self.result[Result.GaugeStd] = self.calculateGaugeStd(self.result[Result.GaugeVar])
+        self.result[Result.Std] = self.calculateGaugeStd(self.result[Result.Var])
 
         self.result[Result.F] = self.calculateF(self.result[Result.MS])
 

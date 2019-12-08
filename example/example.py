@@ -22,4 +22,4 @@ data = np.array(
 
 g = GaugeRnR(data)
 g.calculate()
-print(g.toTabulare())
+print(g.summary())
