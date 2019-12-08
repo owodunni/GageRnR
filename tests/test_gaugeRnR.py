@@ -174,16 +174,16 @@ class TestStats(unittest.TestCase):
         self.assertAlmostEqual(
             P[Component.OPERATOR_BY_PART], 0.9964, 4)
 
-    def test_toTabularException(self):
+    def test_summaryException(self):
         """The GaugeRnR Tests."""
         g = GaugeRnR(data)
-        self.assertRaises(Exception, g.toTabulare)
+        self.assertRaises(Exception, g.summary)
 
-    def test_toTabular(self):
+    def test_summary(self):
         """The GaugeRnR Tests."""
         g = GaugeRnR(data)
         g.calculate()
-        g.toTabulare()
+        g.summary()
         self.assertTrue(True)
 
 
