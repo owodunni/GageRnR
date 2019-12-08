@@ -3,9 +3,39 @@ from context import main
 
 
 class MainTest(unittest.TestCase):
-    def test_main(self):
+    def test_FileNotFoundError(self):
         self.assertRaises(
             FileNotFoundError,
             main,
             ['-f', "giberishFile.csv",
              "-s", "3,5,11"])
+
+    def test_StructureToManyArguments(self):
+        self.assertRaises(
+            AttributeError,
+            main,
+            ['-f', "data/data_mXop.csv",
+             "-s", "3,5,11,12"])
+
+    def test_StructureNegativeArguments(self):
+        self.assertRaises(
+            AttributeError,
+            main,
+            ['-f', "data/data_mXop.csv",
+             "-s", "-3,5,11"])
+
+    def test_AxesToManyArguments(self):
+        self.assertRaises(
+            AttributeError,
+            main,
+            ['-f', "data/data_mXop.csv",
+             "-s", "3,5,11",
+             "-a", "3,5,11,3"])
+
+    def test_AxesNegativeArguments(self):
+        self.assertRaises(
+            AttributeError,
+            main,
+            ['-f', "data/data_mXop.csv",
+             "-s", "3,5,11",
+             "-a", "3,5,-11"])
