@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Example showing how to use GaugeRnR."""
+"""Example showing how to use generate gauge RnR data."""
 from math import sqrt
 from context import Distribution, Settings, Generator
 from context import GaugeRnR
