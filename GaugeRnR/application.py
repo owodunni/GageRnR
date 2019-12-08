@@ -22,6 +22,7 @@ from docopt import docopt
 import os.path
 
 import GaugeRnR
+from .dataLoader import DataLoader
 
 
 def toInt(values):
@@ -47,12 +48,22 @@ class Application():
     def __init__(self, argv=None):
         arguments = docopt(__doc__, argv, version=GaugeRnR.__version__)
         self.file = str(arguments["--file"])
-        self.delimiter = str(arguments["--delimiter"])
         self.structure = toInt(arguments["--structure"])
         self.axes = toInt(arguments["--axes"])
+        self.delimiter = str(arguments["--delimiter"])
 
     def check(self):
         if not os.path.isfile(self.file):
             raise FileNotFoundError(self.file)
         checkIntegerList("Strucuture", self.structure)
         checkIntegerList("Axes", self.axes)
+
+    def run(self):
+        loader = DataLoader()
+        data = loader.load(file=self.file,
+            structure=self.structure,
+            axes=self.axes,
+            delimiter=self.delimiter)
+        g = GaugeRnR.GaugeRnR(data)
+        g.calculate()
+        print(g)
