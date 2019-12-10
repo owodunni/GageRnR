@@ -4,6 +4,7 @@ import math
 import scipy.stats as stats
 from tabulate import tabulate
 from enum import Enum
+from .statistics import Statistics
 
 
 class Component(Enum):
@@ -54,7 +55,7 @@ ResultNames = {
     Result.P: 'P-value'}
 
 
-class GaugeRnR:
+class GaugeRnR(Statistics):
     """Main class for calculating GaugeRnR."""
 
     GRR = 'GaugeRnR'
@@ -67,10 +68,7 @@ class GaugeRnR:
             The input should be structeted in a 3d array
             n[i,j,k] where i = operator, j = part, k = measurement
         """
-        self.data = data
-        self.parts = data.shape[1]
-        self.operators = data.shape[0]
-        self.measurements = data.shape[2]
+        super().__init__(data)
 
     def __str__(self):
         """Enum containing the measurements calculated by GaugeRnR."""
