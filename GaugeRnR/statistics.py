@@ -1,4 +1,5 @@
 from enum import Enum
+import numpy as np
 
 
 class Component(Enum):
@@ -47,3 +48,41 @@ class Statistics(object):
         self.parts = data.shape[1]
         self.operators = data.shape[0]
         self.measurements = data.shape[2]
+
+    def calculateMean(self):
+        """Calculate Mean."""
+        mu = np.mean(self.data)
+
+        omu = np.mean(self.data, axis=1)
+        omu = np.mean(omu, axis=1)
+
+        pmu = np.mean(self.data, axis=0)
+        pmu = np.mean(pmu, axis=1)
+
+        emu = np.mean(self.data, axis=2)
+        emu = emu.reshape(self.parts * self.operators)
+
+        return {
+            Component.TOTAL: mu,
+            Component.OPERATOR: omu,
+            Component.PART: pmu,
+            Component.MEASUREMENT: emu}
+
+    def calculateStd(self):
+        std = np.std(self.data, ddof=1)
+        stdo = np.std(self.data.reshape(
+                        self.operators,
+                        self.measurements*self.parts),
+                axis=1,
+                ddof=1)
+        data = np.transpose(self.data, axes=(1,0,2))
+        stdp = np.std(data.reshape(
+                        self.parts,
+                        self.measurements*self.operators),
+                axis=1,
+                ddof=1)
+        return {
+            Component.TOTAL: std,
+            Component.OPERATOR: stdo,
+            Component.PART: stdp
+        }

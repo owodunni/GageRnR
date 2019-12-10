@@ -94,25 +94,6 @@ class GaugeRnR(Statistics):
             Component.MEASUREMENT: eDof,
             Component.TOTAL: totDof}
 
-    def calculateMean(self):
-        """Calculate Mean."""
-        mu = np.mean(self.data)
-
-        omu = np.mean(self.data, axis=1)
-        omu = np.mean(omu, axis=1)
-
-        pmu = np.mean(self.data, axis=0)
-        pmu = np.mean(pmu, axis=1)
-
-        emu = np.mean(self.data, axis=2)
-        emu = emu.reshape(self.parts * self.operators)
-
-        return {
-            Component.TOTAL: mu,
-            Component.OPERATOR: omu,
-            Component.PART: pmu,
-            Component.MEASUREMENT: emu}
-
     def calculateSquares(self):
         """Calculate Squares."""
         mean = self.calculateMean()
