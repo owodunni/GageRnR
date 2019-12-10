@@ -42,6 +42,7 @@ ResultNames = {
     Result.F: 'F-value',
     Result.P: 'P-value'}
 
+
 class Statistics(object):
     def __init__(self, data):
         self.data = data
@@ -70,17 +71,19 @@ class Statistics(object):
 
     def calculateStd(self):
         std = np.std(self.data, ddof=1)
-        stdo = np.std(self.data.reshape(
-                        self.operators,
-                        self.measurements*self.parts),
-                axis=1,
-                ddof=1)
-        data = np.transpose(self.data, axes=(1,0,2))
-        stdp = np.std(data.reshape(
-                        self.parts,
-                        self.measurements*self.operators),
-                axis=1,
-                ddof=1)
+        stdo = np.std(
+            self.data.reshape(
+                self.operators,
+                self.measurements*self.parts),
+            axis=1,
+            ddof=1)
+        data = np.transpose(self.data, axes=(1, 0, 2))
+        stdp = np.std(
+            data.reshape(
+                self.parts,
+                self.measurements*self.operators),
+            axis=1,
+            ddof=1)
         return {
             Component.TOTAL: std,
             Component.OPERATOR: stdo,
