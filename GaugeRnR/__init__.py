@@ -3,10 +3,11 @@
 This module
 - contains Gauge RnR logic
 """
-from .gaugeRnR import GaugeRnR, Component, Result
+from .gaugeRnR import GaugeRnR
 from .generator import Distribution, Settings, Generator
 from .__main__ import main
 from .dataLoader import DataLoader
+from .statistics import Result, Component
 
 __all__ = ['GaugeRnR',
            'Component',
