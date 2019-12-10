@@ -183,7 +183,3 @@ class TestGaugeRnR(unittest.TestCase):
         g.calculate()
         g.summary()
         self.assertTrue(True)
-
-
-if __name__ == '__main__':
-    unittest.main()
