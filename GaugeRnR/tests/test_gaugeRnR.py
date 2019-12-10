@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """The GaugeRnR Tests."""
 import unittest
-from context import GaugeRnR, Component, Result
-from data import data, squaresMeas
+from GaugeRnR import GaugeRnR, Component, Result
+from .data import data, squaresMeas
 import numpy as np
 
 
@@ -183,7 +183,3 @@ class TestGaugeRnR(unittest.TestCase):
         g.calculate()
         g.summary()
         self.assertTrue(True)
-
-
-if __name__ == '__main__':
-    unittest.main()

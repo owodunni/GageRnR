@@ -1,5 +1,5 @@
 import unittest
-from context import main
+from GaugeRnR import main
 
 
 class MainTest(unittest.TestCase):

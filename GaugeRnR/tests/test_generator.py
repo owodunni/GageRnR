@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """The GaugeRnR Tests."""
 import unittest
-from context import Distribution, Settings, Generator
-from context import GaugeRnR, Component, Result
+from GaugeRnR import Distribution, Settings, Generator
+from GaugeRnR import GaugeRnR, Component, Result
 from math import sqrt
+from numpy.random import seed
 
 
 class TestGaugeRnR(unittest.TestCase):
@@ -30,6 +31,7 @@ class TestGaugeRnR(unittest.TestCase):
             partOperator=partOperator,
             measurments=measurements)
 
+        seed(1)
         self.gen = Generator(settings)
 
     def test_generatorTotalStd(self):
@@ -40,4 +42,4 @@ class TestGaugeRnR(unittest.TestCase):
 
         sigmaTot = sqrt(self.sigmaOp**2 + self.sigmaP**2 + self.sigmaMeas**2 + self.sigmaPOP**2)
         sigmaEst = g.result[Result.Std][Component.TOTAL]
-        self.assertLess(sigmaTot - sigmaEst, 0.3)
+        self.assertLess(sigmaTot - sigmaEst, 0.1)
