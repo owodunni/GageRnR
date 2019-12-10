@@ -27,4 +27,4 @@ jobs:
         flake8 . --count --statistics
     - name: Test with unittest
       run: |
-        pytest --cov-report html --cov=GaugeRnR --cov-fail-under 100 tests/ --junit-xml=build/test_results.xml
+        pytest --pyargs GaugeRnR --cov-report html --cov=GaugeRnR --cov-fail-under 100 tests/ --junit-xml=build/test_results.xml

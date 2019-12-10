@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """The GaugeRnR Tests."""
 import unittest
-from context import Distribution, Settings, Generator
-from context import GaugeRnR, Component, Result
+from GaugeRnR import Distribution, Settings, Generator
+from GaugeRnR import GaugeRnR, Component, Result
 from math import sqrt
 
 
