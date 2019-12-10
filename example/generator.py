@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Example showing how to use GaugeRnR."""
 from math import sqrt
-from context import Distribution, Settings, Generator
-from context import GaugeRnR
+from GaugeRnR import Distribution, Settings, Generator
+from GaugeRnR import GaugeRnR
 from numpy import savetxt
 
 sigmaOp = 0.5
