@@ -83,12 +83,12 @@ class Statistics(object):
                 name += ' ' + str(i)
             row = [name]
             for result in results:
-                row.append(self.result[result][component])
+                row.append(self.result[result][component][i])
             table.append(row)
 
     def calculateMean(self):
         """Calculate Mean."""
-        mu = np.mean(self.data)
+        mu = np.array([np.mean(self.data)])
 
         omu = np.mean(self.data, axis=1)
         omu = np.mean(omu, axis=1)
@@ -106,7 +106,7 @@ class Statistics(object):
             Component.MEASUREMENT: emu}
 
     def calculateStd(self):
-        std = np.std(self.data, ddof=1)
+        std = np.array([np.std(self.data, ddof=1)])
         stdo = np.std(
             self.data.reshape(
                 self.operators,

@@ -70,3 +70,6 @@ class Application():
         s = GaugeRnR.Statistics(data)
         s.calculate()
         print(s)
+        n = GaugeRnR.Normality(data)
+        n.calculate()
+        print(n)

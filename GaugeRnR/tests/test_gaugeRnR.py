@@ -31,8 +31,8 @@ class TestGaugeRnR(unittest.TestCase):
         g = GaugeRnR(data)
         mean = g.calculateMean()
 
-        self.assertAlmostEqual(
-            mean[Component.TOTAL], 2.9437, 3)
+        np.testing.assert_array_almost_equal(
+            mean[Component.TOTAL], [2.9437], 3)
 
         np.testing.assert_array_almost_equal(
             mean[Component.OPERATOR], [3.1567, 2.98, 2.6947], 3)

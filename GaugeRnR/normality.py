@@ -58,7 +58,7 @@ class Normality(Statistics):
     def shapiro(self, axis=-1):
         if(axis < 0):
             W, P = shapiro(self.data)
-            return np.array(W), np.array(P)
+            return np.array([W]), np.array([P])
 
         if(axis > len(self.data.shape)):
             raise AttributeError("Axis larger then dimensionality of data.")
