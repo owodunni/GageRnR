@@ -33,6 +33,8 @@ class Result(Enum):
     F = 7
     P = 8
     W = 9
+    K = 10
+    Bias = 11
 
 
 ResultNames = {

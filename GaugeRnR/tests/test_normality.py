@@ -4,8 +4,8 @@ from .data import data
 import numpy as np
 
 
-class TestStatistics(unittest.TestCase):
-    """The Statistics Tests."""
+class TestNormality(unittest.TestCase):
+    """The Normality Tests."""
 
     def test_normalityShape(self):
         n = Normality(data)
