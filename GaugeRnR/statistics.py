@@ -1,5 +1,6 @@
 from enum import Enum
 import numpy as np
+from tabulate import tabulate
 
 
 class Component(Enum):
@@ -34,13 +35,8 @@ class Result(Enum):
 
 
 ResultNames = {
-    Result.DF: 'DF',
-    Result.SS: 'SS',
-    Result.MS: 'MS',
-    Result.Var: 'Var (\u03C3\u00B2)',
-    Result.Std: 'Std (\u03C3)',
-    Result.F: 'F-value',
-    Result.P: 'P-value'}
+    Result.Mean: 'Mean',
+    Result.Std: 'Std (\u03C3)'}
 
 
 class Statistics(object):
@@ -49,6 +45,48 @@ class Statistics(object):
         self.parts = data.shape[1]
         self.operators = data.shape[0]
         self.measurements = data.shape[2]
+
+    def __str__(self):
+        """Enum containing the measurements calculated by Statistics."""
+        if not hasattr(self, 'result'):
+            return 'Shape: ' + \
+                str([self.operators, self.parts, self.measurements])
+        return self.summary()
+
+    def summary(self, tableFormat="fancy_grid", precision='.3f'):
+        """Convert result to tabular."""
+        if not hasattr(self, 'result'):
+            raise Exception(
+                'Statistics.calcualte() should be run before calling summary()')
+
+        headers = ['Sources of Variance',
+                   ResultNames[Result.Mean],
+                   ResultNames[Result.Std]]
+
+        table = []
+
+        self.addToTable(Component.TOTAL, table)
+        self.addToTable(Component.OPERATOR, table)
+        self.addToTable(Component.PART, table)
+
+        return tabulate(
+            table,
+            headers=headers,
+            tablefmt=tableFormat)
+
+    def addToTable(self, component, table):
+        if(self.result[Result.Mean][component].size == 1):
+            row = [ComponentNames[component],
+                   self.result[Result.Mean][component],
+                   self.result[Result.Std][component]]
+            table.append(row)
+            return
+
+        for i in range(0, self.result[Result.Mean][component].size):
+            row = [ComponentNames[component] + ' ' + str(i),
+                   self.result[Result.Mean][component][i],
+                   self.result[Result.Std][component][i]]
+            table.append(row)
 
     def calculateMean(self):
         """Calculate Mean."""
@@ -89,3 +127,8 @@ class Statistics(object):
             Component.OPERATOR: stdo,
             Component.PART: stdp
         }
+
+    def calculate(self):
+        self.result = dict()
+        self.result[Result.Mean] = self.calculateMean()
+        self.result[Result.Std] = self.calculateStd()
