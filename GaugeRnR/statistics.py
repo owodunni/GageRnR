@@ -115,11 +115,8 @@ class Statistics(object):
                 self.measurements*self.parts),
             axis=1,
             ddof=1)
-        data = np.transpose(self.data, axes=(1, 0, 2))
         stdp = np.std(
-            data.reshape(
-                self.parts,
-                self.measurements*self.operators),
+            self.dataToParts(),
             axis=1,
             ddof=1)
         return {
@@ -132,3 +129,9 @@ class Statistics(object):
         self.result = dict()
         self.result[Result.Mean] = self.calculateMean()
         self.result[Result.Std] = self.calculateStd()
+
+    def dataToParts(self):
+        data = np.transpose(self.data, axes=(1, 0, 2))
+        return data.reshape(
+                self.parts,
+                self.measurements*self.operators)

@@ -1,11 +1,43 @@
 import unittest
 from GaugeRnR import Linearity, Component
-from .data import data
+from .data import data, linearityData
 import numpy as np
 
 
 class TestLinearity(unittest.TestCase):
     """The Statistics Tests."""
+
+    def test_Linearity(self):
+        n = Linearity(data)
+        K, Bias, P = n.calculateLinearity()
+
+        self.assertAlmostEqual(K[Component.TOTAL], 0)
+        self.assertAlmostEqual(Bias[Component.TOTAL], 0)
+
+    def test_LinearityGt(self):
+        n = Linearity(linearityData)
+        K, Bias, P = n.calculateLinearity(partGt=np.array([0, 1]))
+
+        self.assertAlmostEqual(K[Component.TOTAL], 1)
+        self.assertAlmostEqual(Bias[Component.TOTAL], 0)
+
+    def test_EstimateCoef(self):
+        n = Linearity(data)
+        x = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+        y = np.array([1, 3, 2, 5, 7, 8, 8, 9, 10, 12])
+        K, Bias = n.estimateCoef(x, y)
+
+        self.assertAlmostEqual(K, 1.1696969696969697)
+        self.assertAlmostEqual(Bias, 1.2363636363636363)
+
+    def test_EstimateCoefOffset(self):
+        n = Linearity(data)
+        x = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+        y = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+        K, Bias = n.estimateCoef(x, y)
+
+        self.assertAlmostEqual(K, 1)
+        self.assertAlmostEqual(Bias, 1)
 
     def test_str(self):
         n = Linearity(data)
