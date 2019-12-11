@@ -32,6 +32,7 @@ class Result(Enum):
     Std = 6
     F = 7
     P = 8
+    W = 9
 
 
 ResultNames = {
@@ -64,28 +65,25 @@ class Statistics(object):
                    ResultNames[Result.Std]]
 
         table = []
-
-        self.addToTable(Component.TOTAL, table)
-        self.addToTable(Component.OPERATOR, table)
-        self.addToTable(Component.PART, table)
+        results = [Result.Mean, Result.Std]
+        self.addToTable(results, Component.TOTAL, table)
+        self.addToTable(results, Component.OPERATOR, table)
+        self.addToTable(results, Component.PART, table)
 
         return tabulate(
             table,
             headers=headers,
             tablefmt=tableFormat)
 
-    def addToTable(self, component, table):
-        if(self.result[Result.Mean][component].size == 1):
-            row = [ComponentNames[component],
-                   self.result[Result.Mean][component],
-                   self.result[Result.Std][component]]
-            table.append(row)
-            return
-
-        for i in range(0, self.result[Result.Mean][component].size):
-            row = [ComponentNames[component] + ' ' + str(i),
-                   self.result[Result.Mean][component][i],
-                   self.result[Result.Std][component][i]]
+    def addToTable(self, results, component, table):
+        size = self.result[results[0]][component].size
+        for i in range(0, self.result[results[0]][component].size):
+            name = ComponentNames[component]
+            if(size > 1):
+                name += ' ' + str(i)
+            row = [name]
+            for result in results:
+                row.append(self.result[result][component])
             table.append(row)
 
     def calculateMean(self):
