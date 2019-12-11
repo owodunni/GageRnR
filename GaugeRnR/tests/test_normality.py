@@ -41,6 +41,10 @@ class TestStatistics(unittest.TestCase):
             W[Component.PART],
             [0.952, 0.904, 0.919, 0.896, 0.953], 3)
 
+    def test_axisError(self):
+        n = Normality(data)
+        self.assertRaises(AttributeError, n.shapiro, 4)
+
     def test_str(self):
         n = Normality(data)
         n.__str__()
