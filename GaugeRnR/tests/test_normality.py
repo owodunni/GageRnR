@@ -3,6 +3,7 @@ from GaugeRnR import Normality, Component
 from .data import data
 import numpy as np
 
+
 class TestStatistics(unittest.TestCase):
     """The Statistics Tests."""
 
