@@ -22,24 +22,23 @@ from docopt import docopt
 import os.path
 
 import GaugeRnR
-from .dataLoader import DataLoader
 
 
 def toInt(values):
     return [int(s) for s in values.split(',')]
 
 
-def positiveIntegers(values):
+def positiveIntegers(values, minValue):
     for value in values:
-        if value < 0:
+        if value < minValue:
             return False
     return True
 
 
-def checkIntegerList(name, values):
+def checkIntegerList(name, values, minValue=0):
     if(len(values) != 3):
         raise AttributeError(name, " can only have three values.")
-    if(not positiveIntegers(values)):
+    if(not positiveIntegers(values, minValue)):
         raise AttributeError(name, " can only be positive integers.")
 
 
@@ -55,11 +54,11 @@ class Application():
     def check(self):
         if not os.path.isfile(self.file):
             raise FileNotFoundError(self.file)
-        checkIntegerList("Strucuture", self.structure)
+        checkIntegerList("Strucuture", self.structure, 1)
         checkIntegerList("Axes", self.axes)
 
     def run(self):
-        loader = DataLoader()
+        loader = GaugeRnR.DataLoader()
         data = loader.load(
             file=self.file,
             structure=self.structure,
@@ -68,3 +67,6 @@ class Application():
         g = GaugeRnR.GaugeRnR(data)
         g.calculate()
         print(g)
+        s = GaugeRnR.Statistics(data)
+        s.calculate()
+        print(s)

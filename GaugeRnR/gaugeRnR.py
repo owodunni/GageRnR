@@ -3,7 +3,16 @@ import numpy as np
 import math
 import scipy.stats as stats
 from tabulate import tabulate
-from .statistics import Statistics, Result, Component, ComponentNames, ResultNames
+from .statistics import Statistics, Result, Component, ComponentNames
+
+ResultNames = {
+    Result.DF: 'DF',
+    Result.SS: 'SS',
+    Result.MS: 'MS',
+    Result.Var: 'Var (\u03C3\u00B2)',
+    Result.Std: 'Std (\u03C3)',
+    Result.F: 'F-value',
+    Result.P: 'P-value'}
 
 
 class GaugeRnR(Statistics):
@@ -20,13 +29,6 @@ class GaugeRnR(Statistics):
             n[i,j,k] where i = operator, j = part, k = measurement
         """
         super().__init__(data)
-
-    def __str__(self):
-        """Enum containing the measurements calculated by GaugeRnR."""
-        if not hasattr(self, 'result'):
-            return 'Shape: ' + \
-                str([self.operators, self.parts, self.measurements])
-        return self.summary()
 
     def summary(self, tableFormat="fancy_grid", precision='.3f'):
         """Convert result to tabular."""
