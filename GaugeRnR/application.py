@@ -73,3 +73,6 @@ class Application():
         n = GaugeRnR.Normality(data)
         n.calculate()
         print(n)
+        lin = GaugeRnR.Linearity(data)
+        lin.calculate()
+        print(lin)

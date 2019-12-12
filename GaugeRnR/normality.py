@@ -32,9 +32,9 @@ class Normality(Statistics):
 
         table = []
         results = [Result.W, Result.P]
-        self.addToTable(results, Component.TOTAL, table)
-        self.addToTable(results, Component.OPERATOR, table)
-        self.addToTable(results, Component.PART, table)
+        self.addToTable(results, Component.TOTAL, table, precision)
+        self.addToTable(results, Component.OPERATOR, table, precision)
+        self.addToTable(results, Component.PART, table, precision)
 
         return tabulate(
             table,

@@ -32,6 +32,8 @@ class Linearity(Statistics):
                    ResultNames[Result.P]]
 
         table = []
+        results = [Result.K, Result.Bias]
+        self.addToTable(results, Component.TOTAL, table, precision)
 
         return tabulate(
             table,
@@ -59,7 +61,6 @@ class Linearity(Statistics):
         means_ = means_.flatten()
         residuals = residuals.flatten()
 
-        print("Hello")
         K[Component.TOTAL], Bias[Component.TOTAL] = self.estimateCoef(means_, residuals)
         return K, Bias, P
 
@@ -78,4 +79,4 @@ class Linearity(Statistics):
         K = SS_xy / SS_xx
         bias = m_y - K*m_x
 
-        return(K, bias)
+        return(np.array([K]), np.array([bias]))

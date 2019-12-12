@@ -11,8 +11,12 @@ class TestLinearity(unittest.TestCase):
         n = Linearity(data)
         K, Bias, P = n.calculateLinearity()
 
-        self.assertAlmostEqual(K[Component.TOTAL], 0)
-        self.assertAlmostEqual(Bias[Component.TOTAL], 0)
+        np.testing.assert_array_almost_equal(
+            K[Component.TOTAL],
+            0, 3)
+        np.testing.assert_array_almost_equal(
+            Bias[Component.TOTAL],
+            0, 3)
 
     def test_LinearityGt(self):
         n = Linearity(linearityData)

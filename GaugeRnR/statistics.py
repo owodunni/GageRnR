@@ -68,16 +68,16 @@ class Statistics(object):
 
         table = []
         results = [Result.Mean, Result.Std]
-        self.addToTable(results, Component.TOTAL, table)
-        self.addToTable(results, Component.OPERATOR, table)
-        self.addToTable(results, Component.PART, table)
+        self.addToTable(results, Component.TOTAL, table, precision)
+        self.addToTable(results, Component.OPERATOR, table, precision)
+        self.addToTable(results, Component.PART, table, precision)
 
         return tabulate(
             table,
             headers=headers,
             tablefmt=tableFormat)
 
-    def addToTable(self, results, component, table):
+    def addToTable(self, results, component, table, precision='.3f'):
         size = self.result[results[0]][component].size
         for i in range(0, self.result[results[0]][component].size):
             name = ComponentNames[component]
@@ -85,7 +85,7 @@ class Statistics(object):
                 name += ' ' + str(i)
             row = [name]
             for result in results:
-                row.append(self.result[result][component][i])
+                row.append(format(self.result[result][component][i], precision))
             table.append(row)
 
     def calculateMean(self):
