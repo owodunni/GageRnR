@@ -26,7 +26,7 @@ class Linearity(Statistics):
             raise Exception(
                 'Linearity.calcualte() should be run before calling summary()')
 
-        headers = ['Sources of Normality',
+        headers = ['Linearity Estimate',
                    ResultNames[Result.K],
                    ResultNames[Result.Bias],
                    ResultNames[Result.P]]
