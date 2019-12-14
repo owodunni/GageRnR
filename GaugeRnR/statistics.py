@@ -33,6 +33,8 @@ class Result(Enum):
     F = 7
     P = 8
     W = 9
+    K = 10
+    Bias = 11
 
 
 ResultNames = {
@@ -66,16 +68,16 @@ class Statistics(object):
 
         table = []
         results = [Result.Mean, Result.Std]
-        self.addToTable(results, Component.TOTAL, table)
-        self.addToTable(results, Component.OPERATOR, table)
-        self.addToTable(results, Component.PART, table)
+        self.addToTable(results, Component.TOTAL, table, precision)
+        self.addToTable(results, Component.OPERATOR, table, precision)
+        self.addToTable(results, Component.PART, table, precision)
 
         return tabulate(
             table,
             headers=headers,
             tablefmt=tableFormat)
 
-    def addToTable(self, results, component, table):
+    def addToTable(self, results, component, table, precision='.3f'):
         size = self.result[results[0]][component].size
         for i in range(0, self.result[results[0]][component].size):
             name = ComponentNames[component]
@@ -83,7 +85,7 @@ class Statistics(object):
                 name += ' ' + str(i)
             row = [name]
             for result in results:
-                row.append(self.result[result][component][i])
+                row.append(format(self.result[result][component][i], precision))
             table.append(row)
 
     def calculateMean(self):
@@ -113,11 +115,8 @@ class Statistics(object):
                 self.measurements*self.parts),
             axis=1,
             ddof=1)
-        data = np.transpose(self.data, axes=(1, 0, 2))
         stdp = np.std(
-            data.reshape(
-                self.parts,
-                self.measurements*self.operators),
+            self.dataToParts(),
             axis=1,
             ddof=1)
         return {
@@ -130,3 +129,9 @@ class Statistics(object):
         self.result = dict()
         self.result[Result.Mean] = self.calculateMean()
         self.result[Result.Std] = self.calculateStd()
+
+    def dataToParts(self):
+        data = np.transpose(self.data, axes=(1, 0, 2))
+        return data.reshape(
+                self.parts,
+                self.measurements*self.operators)

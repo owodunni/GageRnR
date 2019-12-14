@@ -9,6 +9,7 @@ from .__main__ import main
 from .dataLoader import DataLoader
 from .statistics import Statistics, Result, Component
 from .normality import Normality
+from .linearity import Linearity
 
 __all__ = ['GaugeRnR',
            'Component',
@@ -19,7 +20,8 @@ __all__ = ['GaugeRnR',
            'main',
            'DataLoader',
            'Statistics',
-           'Normality', ]
+           'Normality',
+           'Linearity', ]
 
 __version__ = "0.3.2"
 __version_info__ = tuple(
