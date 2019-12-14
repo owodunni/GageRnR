@@ -34,7 +34,6 @@ class Linearity(Statistics):
 
         table = []
         results = [Result.K, Result.Bias, Result.P]
-        print(self.result[Result.K])
         self.addToTable(results, Component.TOTAL, table, precision)
 
         return tabulate(

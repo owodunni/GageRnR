@@ -64,15 +64,12 @@ class Application():
             structure=self.structure,
             axes=self.axes,
             delimiter=self.delimiter)
-        g = GaugeRnR.GaugeRnR(data)
-        g.calculate()
-        print(g)
+        
         s = GaugeRnR.Statistics(data)
         s.calculate()
-        print(s)
-        n = GaugeRnR.Normality(data)
-        n.calculate()
-        print(n)
-        lin = GaugeRnR.Linearity(data)
-        lin.calculate()
-        print(lin)
+        fig = s.creatOperatorsBoxPlot()
+        fig.show()
+        fig = s.creatPartsBoxPlot()
+        fig.show()
+        fig = s.create3DPlot()
+        fig.show()

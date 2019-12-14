@@ -1,6 +1,7 @@
 from enum import Enum
 import numpy as np
 from tabulate import tabulate
+import plotly.graph_objects as go
 
 
 class Component(Enum):
@@ -76,6 +77,30 @@ class Statistics(object):
             table,
             headers=headers,
             tablefmt=tableFormat)
+
+    def creatOperatorsBoxPlot(self):
+        fig = go.Figure()
+
+        for i in range(0,self.operators):
+            fig.add_trace(go.Box(
+                y=self.data[i,:,:].flatten(),
+                boxpoints='all',
+                name="Operator " + str(i),
+                boxmean='sd',
+                notched=True))
+        return fig
+
+    def creatPartsBoxPlot(self):
+        fig = go.Figure()
+
+        for i in range(0,self.parts):
+            fig.add_trace(go.Box(
+                y=self.data[:,i,:].flatten(),
+                boxpoints='all',
+                name="Part " + str(i),
+                boxmean='sd',
+                notched=True))
+        return fig
 
     def addToTable(self, results, component, table, precision='.3f'):
         size = self.result[results[0]][component].size
