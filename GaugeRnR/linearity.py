@@ -1,6 +1,7 @@
 import numpy as np
 from tabulate import tabulate
 from .statistics import Statistics, Result, Component
+import statsmodels.api as sm
 
 ResultNames = {
     Result.K: 'Linearity',
@@ -32,7 +33,8 @@ class Linearity(Statistics):
                    ResultNames[Result.P]]
 
         table = []
-        results = [Result.K, Result.Bias]
+        results = [Result.K, Result.Bias, Result.P]
+        print(self.result[Result.K])
         self.addToTable(results, Component.TOTAL, table, precision)
 
         return tabulate(
@@ -61,22 +63,15 @@ class Linearity(Statistics):
         means_ = means_.flatten()
         residuals = residuals.flatten()
 
-        K[Component.TOTAL], Bias[Component.TOTAL] = self.estimateCoef(means_, residuals)
+        K[Component.TOTAL], Bias[Component.TOTAL], P[Component.TOTAL] = self.estimateCoef(means_, residuals)
         return K, Bias, P
 
     def estimateCoef(self, x, y):
-        # number of observations/points
-        n = np.size(x)
+        x = sm.add_constant(x, prepend=False)
+        mod = sm.OLS(y, x)
+        res = mod.fit()
 
-        # mean of x and y vector
-        m_x, m_y = np.mean(x), np.mean(y)
-
-        # calculating cross-deviation and deviation about x
-        SS_xy = np.sum(y*x) - n*m_y*m_x
-        SS_xx = np.sum(x*x) - n*m_x*m_x
-
-        # calculating regression coefficients
-        K = SS_xy / SS_xx
-        bias = m_y - K*m_x
-
-        return(np.array([K]), np.array([bias]))
+        return (
+            np.array([float(res.params[0])]),
+            np.array([float(res.params[1])]),
+            np.array([float(res.pvalues[0])]))

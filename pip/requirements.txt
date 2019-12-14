@@ -2,3 +2,4 @@ numpy
 scipy
 tabulate
 docopt
+statsmodels
