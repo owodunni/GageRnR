@@ -51,7 +51,7 @@ class MainTest(unittest.TestCase):
               "-a", "0,1,2"])
         self.assertTrue(True)
 
-    def test_OkAxesArguments(self):
+    def test_DifferentAxes(self):
         main(['-f', "data/data_demoGRnR.csv",
               "-s", "3,10,3",
               "-a", "0,2,1"])
