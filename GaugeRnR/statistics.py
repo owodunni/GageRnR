@@ -89,7 +89,6 @@ class Statistics(object):
                 y=self.data[i,:,:].flatten(),
                 boxpoints='all',
                 name="Operator " + str(i),
-                boxmean='sd',
                 notched=True))
         return fig
 
@@ -101,7 +100,6 @@ class Statistics(object):
                 y=self.data[:,i,:].flatten(),
                 boxpoints='all',
                 name="Part " + str(i),
-                boxmean='sd',
                 notched=True))
         return fig
 

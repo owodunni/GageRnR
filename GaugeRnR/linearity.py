@@ -10,6 +10,9 @@ ResultNames = {
 
 
 class Linearity(Statistics):
+
+    title = "Linearity and Bias"
+
     def __init__(self, data):
         super().__init__(data)
 

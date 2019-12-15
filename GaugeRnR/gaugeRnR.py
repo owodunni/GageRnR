@@ -19,6 +19,7 @@ class GaugeRnR(Statistics):
     """Main class for calculating GaugeRnR."""
 
     GRR = 'GaugeRnR'
+    title = "Gauge R&R"
 
     def __init__(self, data):
         """Initialize GaugeRnR algorithm.

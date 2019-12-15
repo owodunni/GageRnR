@@ -1,7 +1,7 @@
 """GaugeRnR.
 
 Usage:
-    GaugeRnR -f FILE -s STRUCTURE [-a <AXES>] [-d <DELIMITER>] [-o <FOLDER>]
+    GaugeRnR -f FILE -s STRUCTURE [-a <AXES>] [-d <DELIMITER>] [-o <FOLDER>] [-g <PARTS>]
     GaugeRnR -h | --help
     GaugeRnR -v | --version
 
@@ -71,24 +71,36 @@ class Application():
             axes=self.axes,
             delimiter=self.delimiter)
 
+        g = GaugeRnR.GaugeRnR(data)
+        g.calculate()
+
         s = GaugeRnR.Statistics(data)
         s.calculate()
+
+        n = GaugeRnR.Normality(data)
+        n.calculate()
+
+        l = GaugeRnR.Linearity(data)
+        l.calculate()
 
         if not hasattr(self, 'outputFolder'):
             return
         
         rg = ReportGenerator(self.outputFolder)
+
+        rg.addTitle(g.title)
+        rg.addTable(g.summary(tableFormat="html"))
+
+
         rg.addTitle(s.title)
         rg.addTable(s.summary(tableFormat="html"))
-        rg.addPlot(s.creatPartsBoxPlot(), 'partsBoxPlot')
+        rg.addPlot(s.creatPartsBoxPlot(), 'Parts Box Plot')
+        rg.addPlot(s.creatOperatorsBoxPlot(), 'Operators Box Plot')
+
+        rg.addTitle(n.title)
+        rg.addTable(n.summary(tableFormat="html"))
+
+        rg.addTitle(l.title)
+        rg.addTable(l.summary(tableFormat="html"))
+
         rg.generateReport()
-
-
-        
-        
-        #fig = s.creatOperatorsBoxPlot()
-        #fig.show()
-        #fig = s.creatPartsBoxPlot()
-        #fig.show()
-        #fig = s.create3DPlot()
-        #fig.show()

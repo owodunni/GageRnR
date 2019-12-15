@@ -12,6 +12,8 @@ class Normality(Statistics):
     def __init__(self, data):
         super().__init__(data)
 
+    title = "Normality"
+
     def calculate(self):
         """Calculate Normality."""
         self.result = dict()

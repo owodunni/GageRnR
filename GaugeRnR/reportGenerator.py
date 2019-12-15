@@ -28,6 +28,7 @@ class ReportGenerator():
         self.report += '\n' + table
     
     def addPlot(self, plot, name):
+        self.report += '\n        <h2>' + name + '</h2>'
         plotUrl = name + '.html'
         plotly.offline.plot(
             plot,
