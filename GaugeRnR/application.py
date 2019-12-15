@@ -54,7 +54,7 @@ class Application():
         self.structure = toInt(arguments["--structure"])
         self.axes = toInt(arguments["--axes"])
         self.delimiter = str(arguments["--delimiter"])
-        if("--output" in arguments):
+        if(arguments["--output"] is not None):
             self.outputFolder = arguments["--output"]
 
     def check(self):
@@ -102,5 +102,6 @@ class Application():
 
         rg.addTitle(l.title)
         rg.addTable(l.summary(tableFormat="html"))
+        rg.addPlot(l.creatLinearityPlot(), 'Residual Linearity Plot')
 
         rg.generateReport()
