@@ -67,7 +67,7 @@ class MainTest(unittest.TestCase):
         self.assertTrue(os.path.exists('build/Operators Box Plot.html'))
         self.assertTrue(os.path.exists('build/Parts Box Plot.html'))
         self.assertTrue(os.path.exists('build/Residual Linearity Plot.html'))
-        self.assertTrue(os.path.exists('build/report/bootstrap.min.css'))
+        self.assertTrue(os.path.exists('build/bootstrap.min.css'))
 
     def test_GenerateReportInNewFolder(self):
         main(['-f', "data/data_demoGRnR.csv",
