@@ -6,8 +6,8 @@ Usage:
     GaugeRnR -v | --version
 
 Examples:
-    GaugeRnR -f data.csv -s5,7,11
-    GaugeRnR -f data.csv -s5,7,11 --a 1,0,2 --d ,
+    GaugeRnR -f data.csv -s5,7,11 -o report
+    GaugeRnR -f data.csv -s5,7,11 -a 1,0,2 -d ,
 
 Options:
     -f --file=FILE Load input data.
