@@ -83,8 +83,8 @@ class MainTest(unittest.TestCase):
     def test_FailToGenerateReport(self):
         self.assertRaises(
             PermissionError,
-            main,
-            ['-f', "data/data_demoGRnR.csv",
-              "-s", "3,10,3",
-              "-a", "0,2,1",
-              "-o", '/build'])
+            main, [
+                '-f', "data/data_demoGRnR.csv",
+                "-s", "3,10,3",
+                "-a", "0,2,1",
+                "-o", '/build'])

@@ -135,7 +135,8 @@ class Statistics(object):
 
     def calculateStd(self):
         std = np.array([np.std(self.data, ddof=1)])
-        stdo = np.std(self.dataToOperators(),
+        stdo = np.std(
+            self.dataToOperators(),
             axis=1,
             ddof=1)
         stdp = np.std(
