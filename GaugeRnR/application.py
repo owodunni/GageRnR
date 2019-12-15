@@ -1,7 +1,7 @@
 """GaugeRnR.
 
 Usage:
-    GaugeRnR -f FILE -s STRUCTURE [-a <AXES>] [-d <DELIMITER>]
+    GaugeRnR -f FILE -s STRUCTURE [-a <AXES>] [-d <DELIMITER>] [-o <FOLDER>]
     GaugeRnR -h | --help
     GaugeRnR -v | --version
 
@@ -15,6 +15,8 @@ Options:
         Order should be operators, parts, measurements.
     -a --axes=<AXES>  Order of data axes [default: 0,1,2].
     -d --delimiter=<DELIMITER>  Order of data axes [default: ;].
+    -o --output=<FOLDER> Report output directory
+    -g --groundTruth=<PARTS> Ground Truth data for parts
     -h --help     Show this screen.
     -v --version  Show version.
 """
@@ -22,6 +24,7 @@ from docopt import docopt
 import os.path
 
 import GaugeRnR
+from .reportGenerator import ReportGenerator
 
 
 def toInt(values):
@@ -46,10 +49,13 @@ class Application():
 
     def __init__(self, argv=None):
         arguments = docopt(__doc__, argv, version=GaugeRnR.__version__)
+        print(arguments)
         self.file = str(arguments["--file"])
         self.structure = toInt(arguments["--structure"])
         self.axes = toInt(arguments["--axes"])
         self.delimiter = str(arguments["--delimiter"])
+        if("--output" in arguments):
+            self.outputFolder = arguments["--output"]
 
     def check(self):
         if not os.path.isfile(self.file):
@@ -64,12 +70,25 @@ class Application():
             structure=self.structure,
             axes=self.axes,
             delimiter=self.delimiter)
-        
+
         s = GaugeRnR.Statistics(data)
         s.calculate()
-        fig = s.creatOperatorsBoxPlot()
-        fig.show()
-        fig = s.creatPartsBoxPlot()
-        fig.show()
-        fig = s.create3DPlot()
-        fig.show()
+
+        if not hasattr(self, 'outputFolder'):
+            return
+        
+        rg = ReportGenerator(self.outputFolder)
+        rg.addTitle(s.title)
+        rg.addTable(s.summary(tableFormat="html"))
+        rg.addPlot(s.creatPartsBoxPlot(), 'partsBoxPlot')
+        rg.generateReport()
+
+
+        
+        
+        #fig = s.creatOperatorsBoxPlot()
+        #fig.show()
+        #fig = s.creatPartsBoxPlot()
+        #fig.show()
+        #fig = s.create3DPlot()
+        #fig.show()

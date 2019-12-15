@@ -44,6 +44,9 @@ ResultNames = {
 
 
 class Statistics(object):
+
+    title = "Statistics"
+
     def __init__(self, data):
         self.data = data
         self.parts = data.shape[1]
