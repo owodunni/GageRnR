@@ -49,7 +49,7 @@ class Linearity(Statistics):
             headers=headers,
             tablefmt=tableFormat)
 
-    def calculateXY(self):
+    def calculatePartResiduals(self):
         means = np.repeat(
             self.gt,
             self.measurements*self.operators)
@@ -64,7 +64,7 @@ class Linearity(Statistics):
         P = dict()
         means = None
 
-        means, residuals = self.calculateXY()
+        means, residuals = self.calculatePartResiduals()
 
         K[Component.TOTAL], Bias[Component.TOTAL], P[Component.TOTAL] = self.estimateCoef(means, residuals)
         return K, Bias, P
@@ -81,7 +81,7 @@ class Linearity(Statistics):
 
     def creatLinearityPlot(self):
 
-        X, Y = self.calculateXY()
+        X, Y = self.calculatePartResiduals()
         min = np.amin(X)
         max = np.amax(X)
         range = max - min
