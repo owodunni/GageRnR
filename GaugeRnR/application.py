@@ -104,4 +104,4 @@ class Application():
 
         rg.generateReport()
 
-        print("Report writen to:\n" +self.outputFolder)
+        print("Report writen to + self.outputFolder")
