@@ -1,13 +1,13 @@
 """GaugeRnR.
 
 Usage:
-    GaugeRnR -f FILE -s STRUCTURE [-a <AXES>] [-d <DELIMITER>]
+    GaugeRnR -f FILE -s STRUCTURE [-a <AXES>] [-d <DELIMITER>] [-o <FOLDER>] [-g <PARTS>]
     GaugeRnR -h | --help
     GaugeRnR -v | --version
 
 Examples:
-    GaugeRnR -f data.csv -s5,7,11
-    GaugeRnR -f data.csv -s5,7,11 --a 1,0,2 --d ,
+    GaugeRnR -f data.csv -s5,7,11 -o report
+    GaugeRnR -f data.csv -s5,7,11 -a 1,0,2 -d ,
 
 Options:
     -f --file=FILE Load input data.
@@ -15,6 +15,8 @@ Options:
         Order should be operators, parts, measurements.
     -a --axes=<AXES>  Order of data axes [default: 0,1,2].
     -d --delimiter=<DELIMITER>  Order of data axes [default: ;].
+    -o --output=<FOLDER> Report output directory
+    -g --groundTruth=<PARTS> Ground Truth data for parts
     -h --help     Show this screen.
     -v --version  Show version.
 """
@@ -22,6 +24,7 @@ from docopt import docopt
 import os.path
 
 import GaugeRnR
+from .reportGenerator import ReportGenerator
 
 
 def toInt(values):
@@ -50,6 +53,8 @@ class Application():
         self.structure = toInt(arguments["--structure"])
         self.axes = toInt(arguments["--axes"])
         self.delimiter = str(arguments["--delimiter"])
+        if(arguments["--output"] is not None):
+            self.outputFolder = arguments["--output"]
 
     def check(self):
         if not os.path.isfile(self.file):
@@ -64,15 +69,39 @@ class Application():
             structure=self.structure,
             axes=self.axes,
             delimiter=self.delimiter)
+
         g = GaugeRnR.GaugeRnR(data)
         g.calculate()
-        print(g)
+
         s = GaugeRnR.Statistics(data)
         s.calculate()
-        print(s)
+
         n = GaugeRnR.Normality(data)
         n.calculate()
-        print(n)
+
         lin = GaugeRnR.Linearity(data)
         lin.calculate()
-        print(lin)
+
+        if not hasattr(self, 'outputFolder'):
+            return
+
+        rg = ReportGenerator(self.outputFolder)
+
+        rg.addTitle(g.title)
+        rg.addTable(g.summary(tableFormat="html"))
+
+        rg.addTitle(s.title)
+        rg.addTable(s.summary(tableFormat="html"))
+        rg.addPlot(s.creatPartsBoxPlot(), 'Parts Box Plot')
+        rg.addPlot(s.creatOperatorsBoxPlot(), 'Operators Box Plot')
+
+        rg.addTitle(n.title)
+        rg.addTable(n.summary(tableFormat="html"))
+
+        rg.addTitle(lin.title)
+        rg.addTable(lin.summary(tableFormat="html"))
+        rg.addPlot(lin.creatLinearityPlot(), 'Residual Linearity Plot')
+
+        rg.generateReport()
+
+        print("Report writen to + self.outputFolder")

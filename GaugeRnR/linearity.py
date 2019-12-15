@@ -2,6 +2,7 @@ import numpy as np
 from tabulate import tabulate
 from .statistics import Statistics, Result, Component
 import statsmodels.api as sm
+import plotly.graph_objects as go
 
 ResultNames = {
     Result.K: 'Linearity',
@@ -10,8 +11,15 @@ ResultNames = {
 
 
 class Linearity(Statistics):
-    def __init__(self, data):
+
+    title = "Linearity and Bias"
+
+    def __init__(self, data, partGt=None):
         super().__init__(data)
+        if(partGt is None):
+            self.gt = self.calculateMean()[Component.PART]
+        else:
+            self.gt = partGt
 
     def calculate(self):
         """Calculate Linearity."""
@@ -34,7 +42,6 @@ class Linearity(Statistics):
 
         table = []
         results = [Result.K, Result.Bias, Result.P]
-        print(self.result[Result.K])
         self.addToTable(results, Component.TOTAL, table, precision)
 
         return tabulate(
@@ -42,28 +49,24 @@ class Linearity(Statistics):
             headers=headers,
             tablefmt=tableFormat)
 
-    def calculateLinearity(self, partGt=None):
+    def calculatePartResiduals(self):
+        means = np.repeat(
+            self.gt,
+            self.measurements*self.operators)
+        means = means.reshape(self.parts, self.measurements*self.operators)
+        residuals = self.dataToParts() - means
+        return (means.flatten(), residuals.flatten())
+
+    def calculateLinearity(self):
         """Least square test"""
         K = dict()
         Bias = dict()
         P = dict()
         means = None
 
-        if(partGt is None):
-            means = self.calculateMean()[Component.PART]
-        else:
-            means = partGt
+        means, residuals = self.calculatePartResiduals()
 
-        means_ = np.repeat(
-            means,
-            self.measurements*self.operators)
-        means_ = means_.reshape(self.parts, self.measurements*self.operators)
-        residuals = self.dataToParts() - means_
-
-        means_ = means_.flatten()
-        residuals = residuals.flatten()
-
-        K[Component.TOTAL], Bias[Component.TOTAL], P[Component.TOTAL] = self.estimateCoef(means_, residuals)
+        K[Component.TOTAL], Bias[Component.TOTAL], P[Component.TOTAL] = self.estimateCoef(means, residuals)
         return K, Bias, P
 
     def estimateCoef(self, x, y):
@@ -75,3 +78,29 @@ class Linearity(Statistics):
             np.array([float(res.params[0])]),
             np.array([float(res.params[1])]),
             np.array([float(res.pvalues[0])]))
+
+    def creatLinearityPlot(self):
+
+        X, Y = self.calculatePartResiduals()
+        min = np.amin(X)
+        max = np.amax(X)
+        range = max - min
+        x = np.linspace(0 - 10*range, max + 10*range, 2)
+        y = self.result[Result.K][Component.TOTAL]*x + self.result[Result.Bias][Component.TOTAL]
+
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(
+            x=X, y=Y,
+            mode='markers',
+            name='residuals'))
+        fig.add_trace(go.Scatter(
+            x=x, y=y,
+            mode='lines',
+            name='linearity'))
+        fig.update_layout(
+            title="Part Residual vs Part Mean",
+            xaxis_title="Part Mean",
+            yaxis_title="Part Residula",
+            xaxis=dict(range=[min - range/4, max + range/4])
+        )
+        return fig

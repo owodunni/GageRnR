@@ -1,5 +1,6 @@
 import unittest
 from GaugeRnR import main
+import os
 
 
 class MainTest(unittest.TestCase):
@@ -56,3 +57,34 @@ class MainTest(unittest.TestCase):
               "-s", "3,10,3",
               "-a", "0,2,1"])
         self.assertTrue(True)
+
+    def test_GenerateReport(self):
+        main(['-f', "data/data_demoGRnR.csv",
+              "-s", "3,10,3",
+              "-a", "0,2,1",
+              "-o", 'build'])
+        self.assertTrue(os.path.exists('build/index.html'))
+        self.assertTrue(os.path.exists('build/Operators Box Plot.html'))
+        self.assertTrue(os.path.exists('build/Parts Box Plot.html'))
+        self.assertTrue(os.path.exists('build/Residual Linearity Plot.html'))
+        self.assertTrue(os.path.exists('build/bootstrap.min.css'))
+
+    def test_GenerateReportInNewFolder(self):
+        main(['-f', "data/data_demoGRnR.csv",
+              "-s", "3,10,3",
+              "-a", "0,2,1",
+              "-o", 'build/report'])
+        self.assertTrue(os.path.exists('build/report/index.html'))
+        self.assertTrue(os.path.exists('build/report/Operators Box Plot.html'))
+        self.assertTrue(os.path.exists('build/report/Parts Box Plot.html'))
+        self.assertTrue(os.path.exists('build/report/Residual Linearity Plot.html'))
+        self.assertTrue(os.path.exists('build/report/bootstrap.min.css'))
+
+    def test_FailToGenerateReport(self):
+        self.assertRaises(
+            PermissionError,
+            main, [
+                '-f', "data/data_demoGRnR.csv",
+                "-s", "3,10,3",
+                "-a", "0,2,1",
+                "-o", '/build'])

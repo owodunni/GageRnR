@@ -3,3 +3,4 @@ scipy
 tabulate
 docopt
 statsmodels
+plotly

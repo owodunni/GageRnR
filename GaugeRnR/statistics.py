@@ -1,6 +1,7 @@
 from enum import Enum
 import numpy as np
 from tabulate import tabulate
+import plotly.graph_objects as go
 
 
 class Component(Enum):
@@ -43,6 +44,9 @@ ResultNames = {
 
 
 class Statistics(object):
+
+    title = "Statistics"
+
     def __init__(self, data):
         self.data = data
         self.parts = data.shape[1]
@@ -77,6 +81,28 @@ class Statistics(object):
             headers=headers,
             tablefmt=tableFormat)
 
+    def creatOperatorsBoxPlot(self):
+        fig = go.Figure()
+
+        for i in range(0, self.operators):
+            fig.add_trace(go.Box(
+                y=self.data[i, :, :].flatten(),
+                boxpoints='all',
+                name="Operator " + str(i),
+                notched=True))
+        return fig
+
+    def creatPartsBoxPlot(self):
+        fig = go.Figure()
+
+        for i in range(0, self.parts):
+            fig.add_trace(go.Box(
+                y=self.data[:, i, :].flatten(),
+                boxpoints='all',
+                name="Part " + str(i),
+                notched=True))
+        return fig
+
     def addToTable(self, results, component, table, precision='.3f'):
         size = self.result[results[0]][component].size
         for i in range(0, self.result[results[0]][component].size):
@@ -110,9 +136,7 @@ class Statistics(object):
     def calculateStd(self):
         std = np.array([np.std(self.data, ddof=1)])
         stdo = np.std(
-            self.data.reshape(
-                self.operators,
-                self.measurements*self.parts),
+            self.dataToOperators(),
             axis=1,
             ddof=1)
         stdp = np.std(
@@ -135,3 +159,8 @@ class Statistics(object):
         return data.reshape(
                 self.parts,
                 self.measurements*self.operators)
+
+    def dataToOperators(self):
+        return self.data.reshape(
+            self.operators,
+            self.measurements*self.parts)
