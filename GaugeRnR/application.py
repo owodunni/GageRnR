@@ -49,7 +49,6 @@ class Application():
 
     def __init__(self, argv=None):
         arguments = docopt(__doc__, argv, version=GaugeRnR.__version__)
-        print(arguments)
         self.file = str(arguments["--file"])
         self.structure = toInt(arguments["--structure"])
         self.axes = toInt(arguments["--axes"])
@@ -104,3 +103,5 @@ class Application():
         rg.addPlot(lin.creatLinearityPlot(), 'Residual Linearity Plot')
 
         rg.generateReport()
+
+        print("Report writen to:\n" +self.outputFolder)
