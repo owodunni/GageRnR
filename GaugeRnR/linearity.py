@@ -78,7 +78,7 @@ class Linearity(Statistics):
             np.array([float(res.params[0])]),
             np.array([float(res.params[1])]),
             np.array([float(res.pvalues[0])]))
-    
+
     def creatLinearityPlot(self):
 
         X, Y = self.calculateXY()

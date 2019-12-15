@@ -84,9 +84,9 @@ class Statistics(object):
     def creatOperatorsBoxPlot(self):
         fig = go.Figure()
 
-        for i in range(0,self.operators):
+        for i in range(0, self.operators):
             fig.add_trace(go.Box(
-                y=self.data[i,:,:].flatten(),
+                y=self.data[i, :, :].flatten(),
                 boxpoints='all',
                 name="Operator " + str(i),
                 notched=True))
@@ -95,9 +95,9 @@ class Statistics(object):
     def creatPartsBoxPlot(self):
         fig = go.Figure()
 
-        for i in range(0,self.parts):
+        for i in range(0, self.parts):
             fig.add_trace(go.Box(
-                y=self.data[:,i,:].flatten(),
+                y=self.data[:, i, :].flatten(),
                 boxpoints='all',
                 name="Part " + str(i),
                 notched=True))

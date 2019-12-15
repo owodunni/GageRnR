@@ -80,17 +80,16 @@ class Application():
         n = GaugeRnR.Normality(data)
         n.calculate()
 
-        l = GaugeRnR.Linearity(data)
-        l.calculate()
+        lin = GaugeRnR.Linearity(data)
+        lin.calculate()
 
         if not hasattr(self, 'outputFolder'):
             return
-        
+
         rg = ReportGenerator(self.outputFolder)
 
         rg.addTitle(g.title)
         rg.addTable(g.summary(tableFormat="html"))
-
 
         rg.addTitle(s.title)
         rg.addTable(s.summary(tableFormat="html"))
@@ -100,8 +99,8 @@ class Application():
         rg.addTitle(n.title)
         rg.addTable(n.summary(tableFormat="html"))
 
-        rg.addTitle(l.title)
-        rg.addTable(l.summary(tableFormat="html"))
-        rg.addPlot(l.creatLinearityPlot(), 'Residual Linearity Plot')
+        rg.addTitle(lin.title)
+        rg.addTable(lin.summary(tableFormat="html"))
+        rg.addPlot(lin.creatLinearityPlot(), 'Residual Linearity Plot')
 
         rg.generateReport()
