@@ -46,14 +46,17 @@ from .reportGenerator import ReportGenerator
 def toInt(values):
     return [int(v) for v in values.split(',')]
 
+
 def toFloat(values):
     return [float(v) for v in values.split(',')]
+
 
 def positiveIntegers(values, minValue):
     for value in values:
         if value < minValue:
             return False
     return True
+
 
 def checkIntegerList(name, values, minValue=0):
     if(len(values) != 3):
@@ -101,7 +104,7 @@ class Application():
         n.calculate()
 
         if hasattr(self, 'gt'):
-            lin = GaugeRnR.Linearity(data=data,partGt=self.gt)
+            lin = GaugeRnR.Linearity(data=data, partGt=self.gt)
             lin.calculate()
 
         if not hasattr(self, 'outputFolder'):
