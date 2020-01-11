@@ -10,23 +10,46 @@
 pip install GaugeRnR
 ```
 ## CLI
-The package can be used from CLI:
+The package can be used to generate reports from CLI:
 
 ```
-GaugeRnR -f data/data_mXop.csv -s 3,5,11
+GaugeRnR -f data/data_mXop.csv -s 3,5,11 -o outDir
+```
+This generates a html report that is stored in the outDir folder.
+
+Setting the axes parameter is usefull if the data is not structured correct:
+```
+GaugeRnR -f data/data_opXm.csv -s 5,7,11 -a 2,1,0 -o outDir
 ```
 
 ```
+GaugeRnR -h
+
 GaugeRnR.
 
+The input data should be structeted
+in a 3d array n[i,j,k] where
+i = operator, j = part, k = measurement
+Stored to file this data would look:
+m1    m2    m3
+3.29; 3.41; 3.64  # p1 | o1
+2.44; 2.32; 2.42  # p2
+3.08; 3.25; 3.07  # p1 | o2
+2.53; 1.78; 2.32  # p2
+3.04; 2.89; 2.85  # p1 | o3
+1.62; 1.87; 2.04  # p2
+
+More info: https://pypi.org/project/GaugeRnR/
+
 Usage:
-    GaugeRnR -f FILE -s STRUCTURE [-a <AXES>] [-d <DELIMITER>]
+    GaugeRnR -f FILE -s STRUCTURE [-a <AXES>] [-d <DELIMITER>] [-o <FOLDER>] [-g <PARTS>]
     GaugeRnR -h | --help
     GaugeRnR -v | --version
 
 Examples:
-    GaugeRnR -f data.csv -s5,7,11
-    GaugeRnR -f data.csv -s5,7,11 --a 1,0,2 --d ,
+    GaugeRnR -f data.csv -s5,7,11 -o report
+    GaugeRnR -f data.csv -s5,7,11 -a 1,0,2 -d ,
+    GaugeRnR -f data/data_opXm.csv -s 5,7,11 -a 2,1,0 -o outDir
 
 Options:
     -f --file=FILE Load input data.
@@ -34,6 +57,8 @@ Options:
         Order should be operators, parts, measurements.
     -a --axes=<AXES>  Order of data axes [default: 0,1,2].
     -d --delimiter=<DELIMITER>  Order of data axes [default: ;].
+    -o --output=<FOLDER> Report output directory
+    -g --groundTruth=<PARTS> Ground Truth data for parts
     -h --help     Show this screen.
     -v --version  Show version.
 ```

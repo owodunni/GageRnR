@@ -1,5 +1,19 @@
 """GaugeRnR.
 
+The input data should be structeted
+in a 3d array n[i,j,k] where
+i = operator, j = part, k = measurement
+Stored to file this data would look:
+m1    m2    m3
+3.29; 3.41; 3.64  # p1 | o1
+2.44; 2.32; 2.42  # p2
+3.08; 3.25; 3.07  # p1 | o2
+2.53; 1.78; 2.32  # p2
+3.04; 2.89; 2.85  # p1 | o3
+1.62; 1.87; 2.04  # p2
+
+More info: https://pypi.org/project/GaugeRnR/
+
 Usage:
     GaugeRnR -f FILE -s STRUCTURE [-a <AXES>] [-d <DELIMITER>] [-o <FOLDER>] [-g <PARTS>]
     GaugeRnR -h | --help
@@ -8,6 +22,7 @@ Usage:
 Examples:
     GaugeRnR -f data.csv -s5,7,11 -o report
     GaugeRnR -f data.csv -s5,7,11 -a 1,0,2 -d ,
+    GaugeRnR -f data/data_opXm.csv -s 5,7,11 -a 2,1,0 -o outDir
 
 Options:
     -f --file=FILE Load input data.
