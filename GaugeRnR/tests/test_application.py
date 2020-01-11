@@ -86,11 +86,11 @@ class MainTest(unittest.TestCase):
               "-a", "0,2,1",
               "-o", 'build/gtReport',
               "-g", "40,42,30,43,29,45,27.5,42,26,35"])
-        self.assertTrue(os.path.exists('build/report/index.html'))
-        self.assertTrue(os.path.exists('build/report/Operators Box Plot.html'))
-        self.assertTrue(os.path.exists('build/report/Parts Box Plot.html'))
-        self.assertTrue(os.path.exists('build/report/Residual Linearity Plot.html'))
-        self.assertTrue(os.path.exists('build/report/bootstrap.min.css'))
+        self.assertTrue(os.path.exists('build/gtReport/index.html'))
+        self.assertTrue(os.path.exists('build/gtReport/Operators Box Plot.html'))
+        self.assertTrue(os.path.exists('build/gtReport/Parts Box Plot.html'))
+        self.assertTrue(os.path.exists('build/gtReport/Residual Linearity Plot.html'))
+        self.assertTrue(os.path.exists('build/gtReport/bootstrap.min.css'))
 
     def test_FailToGenerateReport(self):
         self.assertRaises(
