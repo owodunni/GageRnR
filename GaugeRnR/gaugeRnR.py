@@ -9,14 +9,16 @@ ResultNames = {
     Result.DF: 'DF',
     Result.SS: 'SS',
     Result.MS: 'MS',
-    Result.Var: 'Var (\u03C3\u00B2)',
-    Result.Std: 'Std (\u03C3)',
+    Result.Var: 'Var',
+    Result.Std: 'Std',
     Result.F: 'F-value',
     Result.P: 'P-value'}
 
 
 class GaugeRnR(Statistics):
-    """Main class for calculating GaugeRnR."""
+    """Gauge R&R, which stands for gage repeatability and reproducibility,
+    is a statistical tool that measures the amount of variation in the measurement
+    system arising from the measurement device and the people taking the measurement."""
 
     GRR = 'GaugeRnR'
     title = "Gauge R&R"

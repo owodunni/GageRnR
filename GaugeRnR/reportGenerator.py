@@ -10,7 +10,9 @@ class ReportGenerator():
         <link rel="stylesheet" href="bootstrap.min.css">
         <style>body{ margin:0 100; background:whitesmoke; }</style>
     </head>
-    <body>'''
+    <body>
+        <div class="container">
+            <div class="col-md-9">'''
 
     def __init__(self, outputFolder):
         if not os.path.isdir(outputFolder):
@@ -21,7 +23,11 @@ class ReportGenerator():
         self.outputFolder = outputFolder
 
     def addTitle(self, title):
-        self.report += '\n        <h1>' + title + '</h1>'
+        self.report += '\n<h1>' + title + '</h1>'
+
+    def addDoc(self, doc):
+        self.report += '\n<p style = "font-family:\"Segoe UI\",Arial,sans-serif;font-size:16px;">' +\
+            str(doc) + '</p>'
 
     def addTable(self, table):
         table = table.replace('<table>', '<table class="table table-striped">')
@@ -40,6 +46,8 @@ src="''' + plotUrl + '''"></iframe>'''
 
     def generateReport(self):
         self.report += '''
+            </div>
+        </div>
     </body>
 </html>'''
         self.write('index.html', self.report)

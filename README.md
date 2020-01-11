@@ -145,7 +145,7 @@ For more examples of how to use this library take a look at the [unit tests](htt
 
 ## Documentations
 
-This GaugeRnR package was built and tested using the resources bellow. If you want to learn more about Gauge RnR and ANOVA they are a great place to start!
+This package was built and tested using the resources bellow. If you want to learn more about Gauge RnR and ANOVA this is a great place to start:
 
 * [anova-gage-rr-part-1](https://www.spcforexcel.com/knowledge/measurement-systems-analysis/anova-gage-rr-part-1)
 * [anova-gage-rr-part-2](https://www.spcforexcel.com/knowledge/measurement-systems-analysis/anova-gage-rr-part-2)
