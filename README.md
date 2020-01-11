@@ -4,6 +4,15 @@
 [![PyPi](https://img.shields.io/pypi/v/GaugeRnR)](https://pypi.org/project/GaugeRnR/)
 [![License](https://img.shields.io/github/license/owodunni/GaugeRnR)](https://github.com/owodunni/GaugeRnR/blob/master/LICENSE)
 
+## Statistics
+
+The pacakge can generate the following statistics:
+
+1. GaugeRnR
+2. Mean and Standard Deviation
+3. Normality test
+4. Linearity and Bias
+
 ## Install
 
 ``` console
