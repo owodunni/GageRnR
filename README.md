@@ -12,20 +12,23 @@ pip install GaugeRnR
 ## CLI
 The package can be used to generate reports from CLI:
 
-```
+```vim
 GaugeRnR -f data/data_mXop.csv -s 3,5,11 -o outDir
 ```
 This generates a html report that is stored in the outDir folder.
 
 Setting the axes parameter is usefull if the data is not structured correct:
-```
+```vim
 GaugeRnR -f data/data_opXm.csv -s 5,7,11 -a 2,1,0 -o outDir
 ```
 
-For more help:
+For more help run:
+
+```vim
+GaugeRnR -h
+```
 
 ```
-GaugeRnR -h
 
 GaugeRnR.
 
