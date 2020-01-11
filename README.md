@@ -11,7 +11,7 @@ The pacakge can generate the following statistics:
 1. GaugeRnR
 2. Mean and Standard Deviation
 3. Normality test
-4. Linearity and Bias
+4. Linearity and Bias - requires ground truth data
 
 ## Install
 
@@ -30,6 +30,10 @@ Setting the axes parameter is usefull if the data is not structured correct:
 ```vim
 GaugeRnR -f data/data_opXm.csv -s 5,7,11 -a 2,1,0 -o outDir
 ```
+To calculate linearity and bias ground truth is required:
+```vim
+GaugeRnR -f data/data_demoGRnR.csv -s 3,10,3 -a 0,2,1 -g 40,42,30,43,29,45,27.5,42,26,35 -o outDir
+```
 
 For more help run:
 
@@ -38,7 +42,6 @@ GaugeRnR -h
 ```
 
 ```
-
 GaugeRnR.
 
 The input data should be structeted
@@ -53,7 +56,7 @@ m1    m2    m3
 3.04; 2.89; 2.85  # p1 | o3
 1.62; 1.87; 2.04  # p2
 
-More info: https://pypi.org/project/GaugeRnR/
+More info: https://github.com/owodunni/GaugeRnR
 
 Usage:
     GaugeRnR -f FILE -s STRUCTURE [-a <AXES>] [-d <DELIMITER>] [-o <FOLDER>] [-g <PARTS>]
@@ -62,8 +65,9 @@ Usage:
 
 Examples:
     GaugeRnR -f data.csv -s5,7,11 -o report
-    GaugeRnR -f data.csv -s5,7,11 -a 1,0,2 -d ,
+    GaugeRnR -f data/data_mXop.csv -s 3,5,11 -o outDir
     GaugeRnR -f data/data_opXm.csv -s 5,7,11 -a 2,1,0 -o outDir
+    GaugeRnR -f data/data_demoGRnR.csv -s 3,10,3 -a 0,2,1 -g 40,42,30,43,29,45,27.5,42,26,35 -o outDir
 
 Options:
     -f --file=FILE Load input data.

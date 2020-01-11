@@ -12,7 +12,7 @@ m1    m2    m3
 3.04; 2.89; 2.85  # p1 | o3
 1.62; 1.87; 2.04  # p2
 
-More info: https://pypi.org/project/GaugeRnR/
+More info: https://github.com/owodunni/GaugeRnR
 
 Usage:
     GaugeRnR -f FILE -s STRUCTURE [-a <AXES>] [-d <DELIMITER>] [-o <FOLDER>] [-g <PARTS>]
@@ -21,8 +21,9 @@ Usage:
 
 Examples:
     GaugeRnR -f data.csv -s5,7,11 -o report
-    GaugeRnR -f data.csv -s5,7,11 -a 1,0,2 -d ,
+    GaugeRnR -f data/data_mXop.csv -s 3,5,11 -o outDir
     GaugeRnR -f data/data_opXm.csv -s 5,7,11 -a 2,1,0 -o outDir
+    GaugeRnR -f data/data_demoGRnR.csv -s 3,10,3 -a 0,2,1 -g 40,42,30,43,29,45,27.5,42,26,35 -o outDir
 
 Options:
     -f --file=FILE Load input data.
@@ -43,15 +44,16 @@ from .reportGenerator import ReportGenerator
 
 
 def toInt(values):
-    return [int(s) for s in values.split(',')]
+    return [int(v) for v in values.split(',')]
 
+def toFloat(values):
+    return [float(v) for v in values.split(',')]
 
 def positiveIntegers(values, minValue):
     for value in values:
         if value < minValue:
             return False
     return True
-
 
 def checkIntegerList(name, values, minValue=0):
     if(len(values) != 3):
@@ -68,6 +70,10 @@ class Application():
         self.structure = toInt(arguments["--structure"])
         self.axes = toInt(arguments["--axes"])
         self.delimiter = str(arguments["--delimiter"])
+
+        if(arguments["--groundTruth"] is not None):
+            self.gt = toFloat(arguments["--groundTruth"])
+
         if(arguments["--output"] is not None):
             self.outputFolder = arguments["--output"]
 
@@ -94,8 +100,9 @@ class Application():
         n = GaugeRnR.Normality(data)
         n.calculate()
 
-        lin = GaugeRnR.Linearity(data)
-        lin.calculate()
+        if hasattr(self, 'gt'):
+            lin = GaugeRnR.Linearity(data=data,partGt=self.gt)
+            lin.calculate()
 
         if not hasattr(self, 'outputFolder'):
             return
@@ -113,10 +120,11 @@ class Application():
         rg.addTitle(n.title)
         rg.addTable(n.summary(tableFormat="html"))
 
-        rg.addTitle(lin.title)
-        rg.addTable(lin.summary(tableFormat="html"))
-        rg.addPlot(lin.creatLinearityPlot(), 'Residual Linearity Plot')
+        if hasattr(self, 'gt'):
+            rg.addTitle(lin.title)
+            rg.addTable(lin.summary(tableFormat="html"))
+            rg.addPlot(lin.creatLinearityPlot(), 'Residual Linearity Plot')
 
         rg.generateReport()
 
-        print("Report writen to + self.outputFolder")
+        print("Report writen to: " + self.outputFolder)
