@@ -32,4 +32,4 @@ g = GaugeRnR(gen.data)
 g.calculate()
 print(g.summary())
 
-savetxt('data/data_mXop.csv', gen.data.reshape(numbMeas, numbO*numbP), delimiter=';')
+np.savetxt('data/data_opXm.csv', gen.data.reshape(numbMeas, numbO*numbP), delimiter=';')

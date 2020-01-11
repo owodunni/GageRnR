@@ -22,6 +22,8 @@ Setting the axes parameter is usefull if the data is not structured correct:
 GaugeRnR -f data/data_opXm.csv -s 5,7,11 -a 2,1,0 -o outDir
 ```
 
+For more help:
+
 ```
 GaugeRnR -h
 
