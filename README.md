@@ -1,8 +1,8 @@
-# Gauge R&R
+# Gage R&R
 
 [![GitHub](https://github.com/owodunni/gageRnR/workflows/Python%20package/badge.svg)](https://github.com/owodunni/GageRnR)
 [![PyPi](https://img.shields.io/pypi/v/GageRnR)](https://pypi.org/project/GageRnR/)
-[![License](https://img.shields.io/github/license/owodunni/GageRnR)](https://github.com/owodunni/GageRnR/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/owodunni/GaugeRnR)](https://github.com/owodunni/GageRnR/blob/master/LICENSE)
 
 ## Table of Contents
 1. [Install](#Install)
