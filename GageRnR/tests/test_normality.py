@@ -1,5 +1,5 @@
 import unittest
-from GaugeRnR import Normality, Component
+from GageRnR import Normality, Component
 from .data import data
 import numpy as np
 

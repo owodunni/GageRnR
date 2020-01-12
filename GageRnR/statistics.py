@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 
 
 class Component(Enum):
-    """Enum containing the different Variance parts of GaugeRnR."""
+    """Enum containing the different Variance parts of GageRnR."""
 
     OPERATOR = 0
     PART = 1
@@ -23,7 +23,7 @@ ComponentNames = {
 
 
 class Result(Enum):
-    """Enum containing the measurements calculated by GaugeRnR."""
+    """Enum containing the measurements calculated by GageRnR."""
 
     DF = 0
     Mean = 1

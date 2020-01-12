@@ -1,8 +1,8 @@
 # Gauge R&R
 
-[![GitHub](https://github.com/owodunni/gaugernr/workflows/Python%20package/badge.svg)](https://github.com/owodunni/GaugeRnR)
-[![PyPi](https://img.shields.io/pypi/v/GaugeRnR)](https://pypi.org/project/GaugeRnR/)
-[![License](https://img.shields.io/github/license/owodunni/GaugeRnR)](https://github.com/owodunni/GaugeRnR/blob/master/LICENSE)
+[![GitHub](https://github.com/owodunni/gageRnR/workflows/Python%20package/badge.svg)](https://github.com/owodunni/GageRnR)
+[![PyPi](https://img.shields.io/pypi/v/GageRnR)](https://pypi.org/project/GageRnR/)
+[![License](https://img.shields.io/github/license/owodunni/GageRnR)](https://github.com/owodunni/GageRnR/blob/master/LICENSE)
 
 ## Table of Contents
 1. [Install](#Install)
@@ -14,7 +14,7 @@
 
 From PyPi:
 ``` vim
-pip install GaugeRnR
+pip install GageRnR
 ```
 
 From source:
@@ -33,27 +33,27 @@ pip install -r pip/requirements-dev.txt
 The package can be used to generate reports from CLI:
 
 ```vim
-GaugeRnR -f data/data_mXop.csv -s 3,5,11 -o outDir
+GageRnR -f data/data_mXop.csv -s 3,5,11 -o outDir
 ```
 This generates a html report that is stored in the outDir folder.
 
 Setting the axes parameter is usefull if the data is not structured correct:
 ```vim
-GaugeRnR -f data/data_opXm.csv -s 5,7,11 -a 2,1,0 -o outDir
+GageRnR -f data/data_opXm.csv -s 5,7,11 -a 2,1,0 -o outDir
 ```
 To calculate linearity and bias ground truth is required:
 ```vim
-GaugeRnR -f data/data_demoGRnR.csv -s 3,10,3 -a 0,2,1 -g 40,42,30,43,29,45,27.5,42,26,35 -o outDir
+GageRnR -f data/data_demoGRnR.csv -s 3,10,3 -a 0,2,1 -g 40,42,30,43,29,45,27.5,42,26,35 -o outDir
 ```
 
 For more help run:
 
 ```vim
-GaugeRnR -h
+GageRnR -h
 ```
 
 ```
-GaugeRnR.
+GageRnR.
 
 The input data should be structeted
 in a 3d array n[i,j,k] where
@@ -67,18 +67,18 @@ m1    m2    m3
 3.04; 2.89; 2.85  # p1 | o3
 1.62; 1.87; 2.04  # p2
 
-More info: https://github.com/owodunni/GaugeRnR
+More info: https://github.com/owodunni/GageRnR
 
 Usage:
-    GaugeRnR -f FILE -s STRUCTURE [-a <AXES>] [-d <DELIMITER>] [-o <FOLDER>] [-g <PARTS>]
-    GaugeRnR -h | --help
-    GaugeRnR -v | --version
+    GageRnR -f FILE -s STRUCTURE [-a <AXES>] [-d <DELIMITER>] [-o <FOLDER>] [-g <PARTS>]
+    GageRnR -h | --help
+    GageRnR -v | --version
 
 Examples:
-    GaugeRnR -f data.csv -s5,7,11 -o report
-    GaugeRnR -f data/data_mXop.csv -s 3,5,11 -o outDir
-    GaugeRnR -f data/data_opXm.csv -s 5,7,11 -a 2,1,0 -o outDir
-    GaugeRnR -f data/data_demoGRnR.csv -s 3,10,3 -a 0,2,1 -g 40,42,30,43,29,45,27.5,42,26,35 -o outDir
+    GageRnR -f data.csv -s5,7,11 -o report
+    GageRnR -f data/data_mXop.csv -s 3,5,11 -o outDir
+    GageRnR -f data/data_opXm.csv -s 5,7,11 -a 2,1,0 -o outDir
+    GageRnR -f data/data_demoGRnR.csv -s 3,10,3 -a 0,2,1 -g 40,42,30,43,29,45,27.5,42,26,35 -o outDir
 
 Options:
     -f --file=FILE Load input data.
@@ -96,7 +96,7 @@ Options:
 The package can be used in the following way:
 
 ``` python
-from gaugeRnR import GaugeRnR
+from gageRnR import GageRnR
 import numpy as np
 
 # The input should be structeted in a 3d
@@ -121,7 +121,7 @@ data = np.array(            #
       [3.14, 3.2, 3.11],    # p4
       [1.54, 1.93, 1.55]]]) # p5
 
-g = GaugeRnR(data)
+g = GageRnR(data)
 g.calculate()
 print(g.summary())
 ```
@@ -139,26 +139,26 @@ This will result in the following table:
 To access the result from the Gauge RnR data directly:
 
 ``` python
-from gaugeRnR import GaugeRnR, Component, Result
+from gageRnR import GageRnR, Component, Result
 
 .
 .
 .
 
-g = GaugeRnR(data)
+g = GageRnR(data)
 result = g.calculate()
 F = result[Result.F]
 >>> print(F[Component.OPERATOR])
 100.322
 ```
 
-For more examples of how to use this library take a look at the [unit tests](https://github.com/owodunni/GaugeRnR/tree/master/tests)!
+For more examples of how to use this library take a look at the [unit tests](https://github.com/owodunni/GageRnR/tree/master/tests)!
 
 ## Statistics
 
 The pacakge can generate the following statistics:
 
-* GaugeRnR
+* GageRnR
 
     Gauge R&R, which stands for gage repeatability and reproducibility, is a statistical tool that measures the amount of variation in the measurement system arising from the measurement device and the people taking the measurement. 
 

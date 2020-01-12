@@ -56,7 +56,7 @@ src="''' + plotUrl + '''"></iframe>'''
         self.write('index.html', self.report)
         self.write(
             'bootstrap.min.css',
-            resource_string('GaugeRnR.resources', 'bootstrap.min.css').decode("utf-8"))
+            resource_string('GageRnR.resources', 'bootstrap.min.css').decode("utf-8"))
 
     def write(self, filename, data):
         f = open(self.outputFolder + '/' + filename, 'w')
@@ -64,4 +64,4 @@ src="''' + plotUrl + '''"></iframe>'''
         f.close()
 
     def readResource(self, filename):
-        return resource_string('GaugeRnR.resources', filename).decode("utf-8")
+        return resource_string('GageRnR.resources', filename).decode("utf-8")

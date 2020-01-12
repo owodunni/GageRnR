@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import unittest
-from GaugeRnR import DataLoader
+from GageRnR import DataLoader
 
 
 class TestDataLoader(unittest.TestCase):

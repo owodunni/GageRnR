@@ -1,5 +1,5 @@
 import unittest
-from GaugeRnR import Linearity, Component
+from GageRnR import Linearity, Component
 from .data import data, linearityData
 import numpy as np
 
