@@ -1,4 +1,4 @@
-"""GaugeRnR.
+"""GageRnR.
 
 The input data should be structeted
 in a 3d array n[i,j,k] where
@@ -12,18 +12,18 @@ m1    m2    m3
 3.04; 2.89; 2.85  # p1 | o3
 1.62; 1.87; 2.04  # p2
 
-More info: https://github.com/owodunni/GaugeRnR
+More info: https://github.com/owodunni/GageRnR
 
 Usage:
-    GaugeRnR -f FILE -s STRUCTURE [-a <AXES>] [-d <DELIMITER>] [-o <FOLDER>] [-g <PARTS>]
-    GaugeRnR -h | --help
-    GaugeRnR -v | --version
+    GageRnR -f FILE -s STRUCTURE [-a <AXES>] [-d <DELIMITER>] [-o <FOLDER>] [-g <PARTS>]
+    GageRnR -h | --help
+    GageRnR -v | --version
 
 Examples:
-    GaugeRnR -f data.csv -s5,7,11 -o report
-    GaugeRnR -f data/data_mXop.csv -s 3,5,11 -o outDir
-    GaugeRnR -f data/data_opXm.csv -s 5,7,11 -a 2,1,0 -o outDir
-    GaugeRnR -f data/data_demoGRnR.csv -s 3,10,3 -a 0,2,1 -g 40,42,30,43,29,45,27.5,42,26,35 -o outDir
+    GageRnR -f data.csv -s5,7,11 -o report
+    GageRnR -f data/data_mXop.csv -s 3,5,11 -o outDir
+    GageRnR -f data/data_opXm.csv -s 5,7,11 -a 2,1,0 -o outDir
+    GageRnR -f data/data_demoGRnR.csv -s 3,10,3 -a 0,2,1 -g 40,42,30,43,29,45,27.5,42,26,35 -o outDir
 
 Options:
     -f --file=FILE Load input data.
@@ -39,7 +39,7 @@ Options:
 from docopt import docopt
 import os.path
 
-import GaugeRnR
+import GageRnR
 from .reportGenerator import ReportGenerator
 
 
@@ -68,7 +68,7 @@ def checkIntegerList(name, values, minValue=0):
 class Application():
 
     def __init__(self, argv=None):
-        arguments = docopt(__doc__, argv, version=GaugeRnR.__version__)
+        arguments = docopt(__doc__, argv, version=GageRnR.__version__)
         self.file = str(arguments["--file"])
         self.structure = toInt(arguments["--structure"])
         self.axes = toInt(arguments["--axes"])
@@ -87,24 +87,24 @@ class Application():
         checkIntegerList("Axes", self.axes)
 
     def run(self):
-        loader = GaugeRnR.DataLoader()
+        loader = GageRnR.DataLoader()
         data = loader.load(
             file=self.file,
             structure=self.structure,
             axes=self.axes,
             delimiter=self.delimiter)
 
-        g = GaugeRnR.GaugeRnR(data)
+        g = GageRnR.GageRnR(data)
         g.calculate()
 
-        s = GaugeRnR.Statistics(data)
+        s = GageRnR.Statistics(data)
         s.calculate()
 
-        n = GaugeRnR.Normality(data)
+        n = GageRnR.Normality(data)
         n.calculate()
 
         if hasattr(self, 'gt'):
-            lin = GaugeRnR.Linearity(data=data, partGt=self.gt)
+            lin = GageRnR.Linearity(data=data, partGt=self.gt)
             lin.calculate()
 
         if not hasattr(self, 'outputFolder'):

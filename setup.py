@@ -1,4 +1,4 @@
-"""Packaging logic for GaugeRnR."""
+"""Packaging logic for GageRnR."""
 from setuptools import setup, find_packages
 
 with open('pip/requirements.txt') as f:
@@ -10,6 +10,6 @@ setup(
     install_requires=requirements,
     entry_points={
         'console_scripts': [
-            'GaugeRnR = GaugeRnR.__main__:main'
+            'GageRnR = GageRnR.__main__:main'
         ]
     })

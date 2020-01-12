@@ -1,5 +1,5 @@
 import unittest
-from GaugeRnR import main
+from GageRnR import main
 import os
 
 

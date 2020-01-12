@@ -1,24 +1,24 @@
 #!/usr/bin/env python3
-"""The GaugeRnR Tests."""
+"""The GageRnR Tests."""
 import unittest
-from GaugeRnR import GaugeRnR, Component, Result
+from GageRnR import GageRnR, Component, Result
 from .data import data, squaresMeas
 import numpy as np
 
 
-class TestGaugeRnR(unittest.TestCase):
-    """The GaugeRnR Tests."""
+class TestGageRnR(unittest.TestCase):
+    """The GageRnR Tests."""
 
     def test_setupShape(self):
-        """The GaugeRnR Tests."""
-        g = GaugeRnR(data)
+        """The GageRnR Tests."""
+        g = GageRnR(data)
         self.assertEqual(g.operators, 3)
         self.assertEqual(g.parts, 5)
         self.assertEqual(g.measurements, 3)
 
     def test_calculateDoF(self):
-        """The GaugeRnR Tests."""
-        g = GaugeRnR(data)
+        """The GageRnR Tests."""
+        g = GageRnR(data)
         dof = g.calculateDoF()
         self.assertEqual(dof[Component.OPERATOR], 2)
         self.assertEqual(dof[Component.PART], 4)
@@ -27,8 +27,8 @@ class TestGaugeRnR(unittest.TestCase):
         self.assertEqual(dof[Component.TOTAL], 44)
 
     def test_calculateMean(self):
-        """The GaugeRnR Tests."""
-        g = GaugeRnR(data)
+        """The GageRnR Tests."""
+        g = GageRnR(data)
         mean = g.calculateMean()
 
         np.testing.assert_array_almost_equal(
@@ -48,8 +48,8 @@ class TestGaugeRnR(unittest.TestCase):
              2.927, 1.843, 3.880, 3.150, 1.673], 3)
 
     def test_calculateSquares(self):
-        """The GaugeRnR Tests."""
-        g = GaugeRnR(data)
+        """The GageRnR Tests."""
+        g = GageRnR(data)
         squares = g.calculateSquares()
 
         np.testing.assert_array_almost_equal(
@@ -65,8 +65,8 @@ class TestGaugeRnR(unittest.TestCase):
             squaresMeas, 3)
 
     def test_calculateSumOfDeviations(self):
-        """The GaugeRnR Tests."""
-        g = GaugeRnR(data)
+        """The GageRnR Tests."""
+        g = GageRnR(data)
         SD = g.calculateSumOfDeviations()
 
         self.assertAlmostEqual(
@@ -82,8 +82,8 @@ class TestGaugeRnR(unittest.TestCase):
             SD[Component.MEASUREMENT], 1.712, 3)
 
     def test_calculateSS(self):
-        """The GaugeRnR Tests."""
-        g = GaugeRnR(data)
+        """The GageRnR Tests."""
+        g = GageRnR(data)
         SS = g.calculateSS()
 
         self.assertAlmostEqual(
@@ -102,8 +102,8 @@ class TestGaugeRnR(unittest.TestCase):
             SS[Component.MEASUREMENT], 1.712, 3)
 
     def test_calculateMS(self):
-        """The GaugeRnR Tests."""
-        g = GaugeRnR(data)
+        """The GageRnR Tests."""
+        g = GageRnR(data)
         g.calculate()
         MS = g.result[Result.MS]
 
@@ -117,8 +117,8 @@ class TestGaugeRnR(unittest.TestCase):
             MS[Component.MEASUREMENT], 0.057, 3)
 
     def test_calculateVar(self):
-        """The GaugeRnR Tests."""
-        g = GaugeRnR(data)
+        """The GageRnR Tests."""
+        g = GageRnR(data)
         g.calculate()
         Var = g.result[Result.Var]
 
@@ -134,8 +134,8 @@ class TestGaugeRnR(unittest.TestCase):
             Var[Component.MEASUREMENT], 0.057, 3)
 
     def test_calculateF(self):
-        """The GaugeRnR Tests."""
-        g = GaugeRnR(data)
+        """The GageRnR Tests."""
+        g = GageRnR(data)
         g.calculate()
         F = g.result[Result.F]
 
@@ -147,8 +147,8 @@ class TestGaugeRnR(unittest.TestCase):
             F[Component.OPERATOR_BY_PART], 0.142, 3)
 
     def test_calculateP(self):
-        """The GaugeRnR Tests."""
-        g = GaugeRnR(data)
+        """The GageRnR Tests."""
+        g = GageRnR(data)
         g.calculate()
         P = g.result[Result.P]
 
@@ -160,26 +160,26 @@ class TestGaugeRnR(unittest.TestCase):
             P[Component.OPERATOR_BY_PART], 0.9964, 4)
 
     def test_str(self):
-        """The GaugeRnR Tests."""
-        g = GaugeRnR(data)
+        """The GageRnR Tests."""
+        g = GageRnR(data)
         g.__str__()
         self.assertTrue(True)
 
     def test_strAfterCalculated(self):
-        """The GaugeRnR Tests."""
-        g = GaugeRnR(data)
+        """The GageRnR Tests."""
+        g = GageRnR(data)
         g.calculate()
         g.__str__()
         self.assertTrue(True)
 
     def test_summaryException(self):
-        """The GaugeRnR Tests."""
-        g = GaugeRnR(data)
+        """The GageRnR Tests."""
+        g = GageRnR(data)
         self.assertRaises(Exception, g.summary)
 
     def test_summary(self):
-        """The GaugeRnR Tests."""
-        g = GaugeRnR(data)
+        """The GageRnR Tests."""
+        g = GageRnR(data)
         g.calculate()
         g.summary()
         self.assertTrue(True)

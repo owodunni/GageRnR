@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Example showing how to use GaugeRnR."""
-from GaugeRnR import GaugeRnR
+"""Example showing how to use GageRnR."""
+from GageRnR import GageRnR
 import numpy as np
 
 data = np.array(
@@ -20,6 +20,6 @@ data = np.array(
       [3.14, 3.2, 3.11],
       [1.54, 1.93, 1.55]]])
 
-g = GaugeRnR(data)
+g = GageRnR(data)
 g.calculate()
 print(g.summary())

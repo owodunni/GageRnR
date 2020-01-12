@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""The GaugeRnR Tests."""
+"""The GageRnR Tests."""
 import unittest
-from GaugeRnR import Distribution, Settings, Generator
-from GaugeRnR import GaugeRnR, Component, Result
+from GageRnR import Distribution, Settings, Generator
+from GageRnR import GageRnR, Component, Result
 from math import sqrt
 from numpy.random import seed
 
 
-class TestGaugeRnR(unittest.TestCase):
-    """The GaugeRnR Tests."""
+class TestGageRnR(unittest.TestCase):
+    """The GageRnR Tests."""
 
     def setUp(self):
         self.sigmaOp = 0.5
@@ -35,9 +35,9 @@ class TestGaugeRnR(unittest.TestCase):
         self.gen = Generator(settings)
 
     def test_generatorTotalStd(self):
-        """The GaugeRnR Tests."""
+        """The GageRnR Tests."""
 
-        g = GaugeRnR(self.gen.data)
+        g = GageRnR(self.gen.data)
         g.calculate()
 
         sigmaTot = sqrt(self.sigmaOp**2 + self.sigmaP**2 + self.sigmaMeas**2 + self.sigmaPOP**2)

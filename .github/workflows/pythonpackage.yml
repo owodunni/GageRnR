@@ -24,7 +24,7 @@ jobs:
         pip install -r pip/requirements-dev.txt
     - name: Test with pytest
       run: |
-        pytest --pyargs GaugeRnR --cov-report html --cov=GaugeRnR --cov-fail-under 100 GaugeRnR/tests/ --junit-xml=build/test_results.xml
+        pytest --pyargs GageRnR --cov-report html --cov=GageRnR --cov-fail-under 100 GageRnR/tests/ --junit-xml=build/test_results.xml
     - name: Lint with flake8
       run: |
         flake8 . --count --statistics

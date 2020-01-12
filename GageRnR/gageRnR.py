@@ -1,4 +1,4 @@
-"""Module containing the algorithm for GaugeRnR."""
+"""Module containing the algorithm for GageRnR."""
 import numpy as np
 import math
 import scipy.stats as stats
@@ -15,17 +15,17 @@ ResultNames = {
     Result.P: 'P-value'}
 
 
-class GaugeRnR(Statistics):
-    """Main class for calculating GaugeRnR."""
+class GageRnR(Statistics):
+    """Main class for calculating GageRnR."""
 
-    GRR = 'GaugeRnR'
+    GRR = 'GageRnR'
     title = "Gauge R&R"
 
     def __init__(self, data):
-        """Initialize GaugeRnR algorithm.
+        """Initialize GageRnR algorithm.
 
         :param numpy.array data:
-            The data tha we want to analyse using GaugeRnR.
+            The data tha we want to analyse using GageRnR.
             The input should be structeted in a 3d array
             n[i,j,k] where i = operator, j = part, k = measurement
         """
@@ -35,7 +35,7 @@ class GaugeRnR(Statistics):
         """Convert result to tabular."""
         if not hasattr(self, 'result'):
             raise Exception(
-                'GaugeRnR.calcualte() should be run before calling summary()')
+                'GageRnR.calcualte() should be run before calling summary()')
 
         headers = ['Sources of Variance']
 
@@ -60,7 +60,7 @@ class GaugeRnR(Statistics):
             tablefmt=tableFormat)
 
     def calculate(self):
-        """Calculate GaugeRnR."""
+        """Calculate GageRnR."""
         self.result = dict()
         self.result[Result.DF] = self.calculateDoF()
         self.result[Result.Mean] = self.calculateMean()
@@ -153,7 +153,7 @@ class GaugeRnR(Statistics):
         return MS
 
     def calculateVar(self, MS):
-        """Calculate GaugeRnR Variances."""
+        """Calculate GageRnR Variances."""
         Var = dict()
 
         Var[Component.MEASUREMENT] = MS[Component.MEASUREMENT]
@@ -177,7 +177,7 @@ class GaugeRnR(Statistics):
             Var[Component.OPERATOR_BY_PART] + \
             Var[Component.MEASUREMENT]
 
-        Var[GaugeRnR.GRR] = \
+        Var[GageRnR.GRR] = \
             Var[Component.MEASUREMENT] + \
             Var[Component.OPERATOR] + \
             Var[Component.OPERATOR_BY_PART]
@@ -185,7 +185,7 @@ class GaugeRnR(Statistics):
         return Var
 
     def calculateStd(self, Var):
-        """Calculate GaugeRnR Standard Deviations."""
+        """Calculate GageRnR Standard Deviations."""
         Std = dict()
         for key in Var:
             Std[key] = math.sqrt(Var[key])

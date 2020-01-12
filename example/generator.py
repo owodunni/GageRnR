@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Example showing how to use GaugeRnR."""
+"""Example showing how to use GageRnR."""
 from math import sqrt
-from GaugeRnR import Distribution, Settings, Generator
-from GaugeRnR import GaugeRnR
+from GageRnR import Distribution, Settings, Generator
+from GageRnR import GageRnR
 import numpy as np
 
 sigmaOp = 0.5
@@ -28,7 +28,7 @@ settings = Settings(
     measurments=measurements)
 
 gen = Generator(settings)
-g = GaugeRnR(gen.data)
+g = GageRnR(gen.data)
 g.calculate()
 print(g.summary())
 

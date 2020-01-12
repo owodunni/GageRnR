@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Module for generating GaugeRnR data."""
+"""Module for generating GageRnR data."""
 import numpy as np
 
 # y_ijk = u + pi + oj +(PO)ij+eijk

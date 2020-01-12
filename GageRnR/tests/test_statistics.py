@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""The GaugeRnR Tests."""
+"""The GageRnR Tests."""
 import unittest
-from GaugeRnR import Statistics, Component
+from GageRnR import Statistics, Component
 from .data import data
 import numpy as np
 
