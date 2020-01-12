@@ -6,7 +6,7 @@ with open('pip/requirements.txt') as f:
 
 setup(
     packages=find_packages(),
-    package_data={'': ['*.css']},
+    package_data={'': ['*.css', '*.html']},
     install_requires=requirements,
     entry_points={
         'console_scripts': [
