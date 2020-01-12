@@ -12,7 +12,7 @@ class Normality(Statistics):
     def __init__(self, data):
         super().__init__(data)
 
-    title = "Normality"
+    title = "Shapiro-Wilk Test"
 
     def calculate(self):
         """Calculate Normality."""

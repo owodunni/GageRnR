@@ -3,15 +3,15 @@
 from math import sqrt
 from GaugeRnR import Distribution, Settings, Generator
 from GaugeRnR import GaugeRnR
-from numpy import savetxt
+import numpy as np
 
 sigmaOp = 0.5
 sigmaP = 5
 sigmaPOP = 0.1
 sigmaMeas = 1
 
-numbO = 3
-numbP = 5
+numbO = 5
+numbP = 7
 numbMeas = 11
 
 print("sigmaTot: ", sqrt(sigmaOp**2 + sigmaP**2 + sigmaMeas**2 + sigmaPOP**2))
@@ -32,4 +32,4 @@ g = GaugeRnR(gen.data)
 g.calculate()
 print(g.summary())
 
-savetxt('data/data_mXop.csv', gen.data.reshape(numbMeas, numbO*numbP), delimiter=';')
+np.savetxt('data/data_opXm.csv', gen.data.reshape(numbMeas, numbO*numbP), delimiter=';')

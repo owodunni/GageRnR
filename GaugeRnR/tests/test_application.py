@@ -66,7 +66,7 @@ class MainTest(unittest.TestCase):
         self.assertTrue(os.path.exists('build/index.html'))
         self.assertTrue(os.path.exists('build/Operators Box Plot.html'))
         self.assertTrue(os.path.exists('build/Parts Box Plot.html'))
-        self.assertTrue(os.path.exists('build/Residual Linearity Plot.html'))
+        self.assertFalse(os.path.exists('build/Residual Linearity Plot.html'))
         self.assertTrue(os.path.exists('build/bootstrap.min.css'))
 
     def test_GenerateReportInNewFolder(self):
@@ -77,8 +77,20 @@ class MainTest(unittest.TestCase):
         self.assertTrue(os.path.exists('build/report/index.html'))
         self.assertTrue(os.path.exists('build/report/Operators Box Plot.html'))
         self.assertTrue(os.path.exists('build/report/Parts Box Plot.html'))
-        self.assertTrue(os.path.exists('build/report/Residual Linearity Plot.html'))
+        self.assertFalse(os.path.exists('build/report/Residual Linearity Plot.html'))
         self.assertTrue(os.path.exists('build/report/bootstrap.min.css'))
+
+    def test_GenerateReportWithGt(self):
+        main(['-f', "data/data_demoGRnR.csv",
+              "-s", "3,10,3",
+              "-a", "0,2,1",
+              "-o", 'build/gtReport',
+              "-g", "40,42,30,43,29,45,27.5,42,26,35"])
+        self.assertTrue(os.path.exists('build/gtReport/index.html'))
+        self.assertTrue(os.path.exists('build/gtReport/Operators Box Plot.html'))
+        self.assertTrue(os.path.exists('build/gtReport/Parts Box Plot.html'))
+        self.assertTrue(os.path.exists('build/gtReport/Residual Linearity Plot.html'))
+        self.assertTrue(os.path.exists('build/gtReport/bootstrap.min.css'))
 
     def test_FailToGenerateReport(self):
         self.assertRaises(

@@ -9,8 +9,8 @@ ResultNames = {
     Result.DF: 'DF',
     Result.SS: 'SS',
     Result.MS: 'MS',
-    Result.Var: 'Var (\u03C3\u00B2)',
-    Result.Std: 'Std (\u03C3)',
+    Result.Var: 'Var',
+    Result.Std: 'Std',
     Result.F: 'F-value',
     Result.P: 'P-value'}
 
