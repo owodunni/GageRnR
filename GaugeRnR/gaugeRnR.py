@@ -16,17 +16,7 @@ ResultNames = {
 
 
 class GaugeRnR(Statistics):
-    """Gauge R&R, which stands for gage repeatability and reproducibility,
-    is a statistical tool that measures the amount of variation in the measurement 
-    system arising from the measurement device and the people taking the measurement.
-    If the p value is less than 0.05, it means that the source of variation has a 
-    significant impact on the results. Unfortunately, all measurement data contains 
-    a certain percentage of variation. The variation is the difference between the 
-    true values and the observed values. The variation represents the amount of measurement error.
-    In addition to measurement error, is the actual product or process variation.
-    When we combine measurement error with product or process variation the resulting value 
-    represents the total variation. To assure that our measurement data is accurate we 
-    must determine if the amount of variation is acceptable"""
+    """Main class for calculating GaugeRnR."""
 
     GRR = 'GaugeRnR'
     title = "Gauge R&R"

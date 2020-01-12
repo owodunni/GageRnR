@@ -44,9 +44,7 @@ ResultNames = {
 
 
 class Statistics(object):
-    """To get a better feel for our measurement data we can plot it and show some caracteristic statistics 
-    of the data.
-    """
+
     title = "Statistics"
 
     def __init__(self, data):

@@ -113,22 +113,22 @@ class Application():
         rg = ReportGenerator(self.outputFolder)
 
         rg.addTitle(g.title)
-        rg.addDoc(g.__doc__)
+        rg.addDoc(g)
         rg.addTable(g.summary(tableFormat="html"))
 
         rg.addTitle(s.title)
-        rg.addDoc(s.__doc__)
+        rg.addDoc(s)
         rg.addTable(s.summary(tableFormat="html"))
         rg.addPlot(s.creatPartsBoxPlot(), 'Parts Box Plot')
         rg.addPlot(s.creatOperatorsBoxPlot(), 'Operators Box Plot')
 
         rg.addTitle(n.title)
-        rg.addDoc(n.__doc__)
+        rg.addDoc(n)
         rg.addTable(n.summary(tableFormat="html"))
 
         if hasattr(self, 'gt'):
             rg.addTitle(lin.title)
-            rg.addDoc(lin.__doc__)
+            rg.addDoc(lin)
             rg.addTable(lin.summary(tableFormat="html"))
             rg.addPlot(lin.creatLinearityPlot(), 'Residual Linearity Plot')
 

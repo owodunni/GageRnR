@@ -12,7 +12,7 @@ class ReportGenerator():
     </head>
     <body>
         <div class="container">
-            <div class="col-md-9">'''
+            <div class="col-md-10">'''
 
     def __init__(self, outputFolder):
         if not os.path.isdir(outputFolder):
@@ -25,16 +25,19 @@ class ReportGenerator():
     def addTitle(self, title):
         self.report += '\n<h1>' + title + '</h1>'
 
-    def addDoc(self, doc):
-        self.report += '\n<p style = "font-family:\"Segoe UI\",Arial,sans-serif;font-size:16px;">' +\
-            str(doc) + '</p>'
+    def getObjectDoc(self, obj):
+        return self.readResource(type(obj).__name__ + '.html')
+
+    def addDoc(self, obj):
+        doc = self.getObjectDoc(obj)
+        self.report += '\n' + doc
 
     def addTable(self, table):
         table = table.replace('<table>', '<table class="table table-striped">')
         self.report += '\n' + table
 
     def addPlot(self, plot, name):
-        self.report += '\n        <h2>' + name + '</h2>'
+        self.report += '\n<h2>' + name + '</h2>'
         plotUrl = name + '.html'
         plotly.offline.plot(
             plot,
@@ -59,3 +62,6 @@ src="''' + plotUrl + '''"></iframe>'''
         f = open(self.outputFolder + '/' + filename, 'w')
         f.write(data)
         f.close()
+
+    def readResource(self, filename):
+        return resource_string('GaugeRnR.resources', filename).decode("utf-8")

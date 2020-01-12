@@ -9,13 +9,6 @@ ResultNames = {
 
 
 class Normality(Statistics):
-    """For Gauge R&R to work it is important that our data is normal distibuted. If we don't have 
-    enough data the it might not be normal distributed. We can test if the data is normal distributed
-    using a Shapiro-Wilk Test. Small values of W are evidence of departure from normality. 
-    A P-value smaller then 0.05 indicates that the data is not Gaussian.
-    https://www.itl.nist.gov/div898/handbook/prc/section2/prc213.htm
-    https://machinelearningmastery.com/a-gentle-introduction-to-normality-tests-in-python/
-    """
     def __init__(self, data):
         super().__init__(data)
 

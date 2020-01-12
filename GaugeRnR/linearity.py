@@ -11,17 +11,6 @@ ResultNames = {
 
 
 class Linearity(Statistics):
-    """
-    Bias and linearity assess the accuracy of a gage.
-    Bias
-    Bias examines the difference between the observed average measurement and a reference value.
-    Bias indicates how accurate the gage is when compared to a reference value. 
-    Linearity
-    Linearity examines how accurate your measurements are through the expected range of the
-    measurements. Linearity indicates whether the gage has the same accuracy across all reference values. 
-    A P-value smaller then 0.05 indicates that a linear equation fitts well with the data.
-    """
-
     title = "Linearity and Bias"
 
     def __init__(self, data, partGt=None):
