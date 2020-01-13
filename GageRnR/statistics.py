@@ -40,7 +40,7 @@ class Result(Enum):
 
 ResultNames = {
     Result.Mean: 'Mean',
-    Result.Std: 'Std (\u03C3)'}
+    Result.Std: 'Std'}
 
 
 class Statistics(object):
