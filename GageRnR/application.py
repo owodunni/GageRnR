@@ -15,7 +15,7 @@ m1    m2    m3
 More info: https://github.com/owodunni/GageRnR
 
 Usage:
-    GageRnR -f FILE -s STRUCTURE [-a <AXES>] [-d <DELIMITER>] [-o <FOLDER>] [-g <PARTS>]
+    GageRnR -f FILE -s STRUCTURE [-a <AXES>] [-d <DELIMITER>] [-o <FOLDER>] [-g <PARTS>] [-m <SCALAR>]
     GageRnR -h | --help
     GageRnR -v | --version
 
@@ -33,6 +33,7 @@ Options:
     -d --delimiter=<DELIMITER>  Order of data axes [default: ;].
     -o --output=<FOLDER> Report output directory
     -g --groundTruth=<PARTS> Ground Truth data for parts
+    -m --multiply=<SCALAR> Multiplies the data with a scalar [default: 1].
     -h --help     Show this screen.
     -v --version  Show version.
 """
@@ -73,6 +74,7 @@ class Application():
         self.structure = toInt(arguments["--structure"])
         self.axes = toInt(arguments["--axes"])
         self.delimiter = str(arguments["--delimiter"])
+        self.scale = double(arguments["--multiply"])
 
         if(arguments["--groundTruth"] is not None):
             self.gt = toFloat(arguments["--groundTruth"])
@@ -93,6 +95,8 @@ class Application():
             structure=self.structure,
             axes=self.axes,
             delimiter=self.delimiter)
+
+        data *= self.scale
 
         g = GageRnR.GageRnR(data)
         g.calculate()
