@@ -3,7 +3,7 @@
 import numpy as np
 
 # y_ijk = u + pi + oj +(PO)ij+eijk
-# measurments: [o1:[p1:[m1, m2, m3],p2:[m1,m2,m3]],
+# measurements: [o1:[p1:[m1, m2, m3],p2:[m1,m2,m3]],
 #               o2:[p1:[m1, m2, m3],p2:[m1,m2,m3]]
 
 
@@ -24,12 +24,12 @@ class Settings:
             operators,
             parts,
             partOperator,
-            measurments):
+            measurements):
         self.operators = operators
         self.parts = parts
         self.partOperator = partOperator
-        self.measurments = measurments
-        self.size = [operators.number, parts.number, measurments.number]
+        self.measurements = measurements
+        self.size = [operators.number, parts.number, measurements.number]
 
 
 class Generator:
@@ -48,4 +48,4 @@ class Generator:
                     operators[i] + \
                     parts[j] + \
                     partOperator[index] + \
-                    self.settings.measurments.batch()
+                    self.settings.measurements.batch()

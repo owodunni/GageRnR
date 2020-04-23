@@ -83,7 +83,7 @@ class Application():
     def check(self):
         if not os.path.isfile(self.file):
             raise FileNotFoundError(self.file)
-        checkIntegerList("Strucuture", self.structure, 1)
+        checkIntegerList("Structure", self.structure, 1)
         checkIntegerList("Axes", self.axes)
 
     def run(self):
@@ -134,4 +134,4 @@ class Application():
 
         rg.generateReport()
 
-        print("Report writen to: " + self.outputFolder)
+        print("Report written to: " + self.outputFolder)

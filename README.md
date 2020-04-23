@@ -37,7 +37,7 @@ GageRnR -f data/data_mXop.csv -s 3,5,11 -o outDir
 ```
 This generates a html report that is stored in the outDir folder.
 
-Setting the axes parameter is usefull if the data is not structured correct:
+Setting the axes parameter is useful if the data is not structured correct:
 ```vim
 GageRnR -f data/data_opXm.csv -s 5,7,11 -a 2,1,0 -o outDir
 ```
@@ -55,7 +55,7 @@ GageRnR -h
 ```
 GageRnR.
 
-The input data should be structeted
+The input data should be structured
 in a 3d array n[i,j,k] where
 i = operator, j = part, k = measurement
 Stored to file this data would look:
@@ -99,7 +99,7 @@ The package can be used in the following way:
 from GageRnR import GageRnR
 import numpy as np
 
-# The input should be structeted in a 3d
+# The input should be structured in a 3d
 # numpy array n[i,j,k] where
 # i = operator, j = part, k = measurement
 # Example:
@@ -156,7 +156,7 @@ For more examples of how to use this library take a look at the [unit tests](htt
 
 ## Statistics
 
-The pacakge can generate the following statistics:
+The package can generate the following statistics:
 
 * GageRnR
 
@@ -173,10 +173,10 @@ The pacakge can generate the following statistics:
 
 * Mean, Standard Deviation and bar chart plots.
 
-    To get a better feel for our measurement data we can plot it togheter with a bar chart and show some caracteristic statistics of the data.
+    To get a better feel for our measurement data we can plot it together with a bar chart and show some characteristic statistics of the data.
 * Normality test
 
-    For Gauge R&R to work it is important that our data is normal distibuted. If we don't have enough data the it might not be normal distributed. We can test if the data is normal distributed using a Shapiro-Wilk Test. Small values of W are evidence of departure from normality. It is important that our parts are normally distributed. A P-value smaller then 0.05 indicates that the data is not Gaussian.
+    For Gauge R&R to work it is important that our data is normal distributed. If we don't have enough data the it might not be normal distributed. We can test if the data is normal distributed using a Shapiro-Wilk Test. Small values of W are evidence of departure from normality. It is important that our parts are normally distributed. A P-value smaller then 0.05 indicates that the data is not Gaussian.
 
     For more information take a look at:
 
