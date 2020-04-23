@@ -96,7 +96,7 @@ Options:
 The package can be used in the following way:
 
 ``` python
-from gageRnR import GageRnR
+from GageRnR import GageRnR
 import numpy as np
 
 # The input should be structeted in a 3d
@@ -133,13 +133,13 @@ This will result in the following table:
 | Operator              |    2 |  1.63  | 0.815 |      0.054 |     0.232 | 100.322   | 0.000     |
 | Part                  |    4 | 28.909 | 7.227 |      0.802 |     0.896 | 889.458   | 0.000     |
 | Operator by Part      |    8 |  0.065 | 0.008 |      0     |     0     | 0.142     | 0.996     |
-| Measurment            |   30 |  1.712 | 0.057 |      0.057 |     0.239 |           |           |
+| Measurement            |   30 |  1.712 | 0.057 |      0.057 |     0.239 |           |           |
 | Total                 |   44 | 32.317 | 0.734 |      0.913 |     0.956 |           |           |
 
 To access the result from the Gauge RnR data directly:
 
 ``` python
-from gageRnR import GageRnR, Component, Result
+from GageRnR import GageRnR, Component, Result
 
 .
 .
