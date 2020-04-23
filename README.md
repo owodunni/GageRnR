@@ -160,7 +160,7 @@ The pacakge can generate the following statistics:
 
 * GageRnR
 
-    Gauge R&R, which stands for gage repeatability and reproducibility, is a statistical tool that measures the amount of variation in the measurement system arising from the measurement device and the people taking the measurement. 
+    Gauge R&R, which stands for gage repeatability and reproducibility, is a statistical tool that measures the amount of variation in the measurement system arising from the measurement device and the people taking the measurement.
 
     Unfortunately, all measurement data contains a certain percentage of variation. The variation is the difference between the true values and the observed values. The variation represents the amount of measurement error. In addition to measurement error, is the actual product or process variation. When we combine measurement error with product or process variation the resulting value represents the total variation. To assure that our measurement data is accurate we must determine if the amount of variation is acceptable
 
@@ -170,7 +170,7 @@ The pacakge can generate the following statistics:
     * [anova-gage-rr-part-1](https://www.spcforexcel.com/knowledge/measurement-systems-analysis/anova-gage-rr-part-1)
     * [anova-gage-rr-part-2](https://www.spcforexcel.com/knowledge/measurement-systems-analysis/anova-gage-rr-part-2)
     * [Introduction to Statistical Quality Control 6th Edition](https://www.amazon.com/Introduction-Statistical-Quality-Control-Montgomery/dp/0470169923)
-    
+
 * Mean, Standard Deviation and bar chart plots.
 
     To get a better feel for our measurement data we can plot it togheter with a bar chart and show some caracteristic statistics of the data.
@@ -187,7 +187,7 @@ The pacakge can generate the following statistics:
     Bias and linearity assess the accuracy of a gage.
 
     * Bias examines the difference between the observed average measurement and a reference value.
-    Bias indicates how accurate the gage is when compared to a reference value. 
+    Bias indicates how accurate the gage is when compared to a reference value.
     * Linearity examines how accurate your measurements are through the expected range of the
     measurements. Linearity indicates whether the gage has the same accuracy across all reference values.
 
