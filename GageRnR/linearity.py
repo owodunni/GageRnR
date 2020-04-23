@@ -78,7 +78,7 @@ class Linearity(Statistics):
             np.array([float(res.params[1])]),
             np.array([float(res.pvalues[0])]))
 
-    def creatLinearityPlot(self):
+    def createLinearityPlot(self):
 
         X, Y = self.calculatePartResiduals()
         min = np.amin(X)

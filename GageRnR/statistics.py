@@ -81,7 +81,7 @@ class Statistics(object):
             headers=headers,
             tablefmt=tableFormat)
 
-    def creatOperatorsBoxPlot(self):
+    def createOperatorsBoxPlot(self):
         fig = go.Figure()
 
         for i in range(0, self.operators):
@@ -92,7 +92,7 @@ class Statistics(object):
                 notched=True))
         return fig
 
-    def creatPartsBoxPlot(self):
+    def createPartsBoxPlot(self):
         fig = go.Figure()
 
         for i in range(0, self.parts):
