@@ -1,6 +1,6 @@
 """GageRnR.
 
-The input data should be structeted
+The input data should be structured
 in a 3d array n[i,j,k] where
 i = operator, j = part, k = measurement
 Stored to file this data would look:
@@ -119,8 +119,8 @@ class Application():
         rg.addTitle(s.title)
         rg.addDoc(s)
         rg.addTable(s.summary(tableFormat="html"))
-        rg.addPlot(s.creatPartsBoxPlot(), 'Parts Box Plot')
-        rg.addPlot(s.creatOperatorsBoxPlot(), 'Operators Box Plot')
+        rg.addPlot(s.createPartsBoxPlot(), 'Parts Box Plot')
+        rg.addPlot(s.createOperatorsBoxPlot(), 'Operators Box Plot')
 
         rg.addTitle(n.title)
         rg.addDoc(n)
@@ -130,7 +130,7 @@ class Application():
             rg.addTitle(lin.title)
             rg.addDoc(lin)
             rg.addTable(lin.summary(tableFormat="html"))
-            rg.addPlot(lin.creatLinearityPlot(), 'Residual Linearity Plot')
+            rg.addPlot(lin.createLinearityPlot(), 'Residual Linearity Plot')
 
         rg.generateReport()
 
