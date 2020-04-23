@@ -1,6 +1,6 @@
 """GageRnR.
 
-The input data should be structeted
+The input data should be structured
 in a 3d array n[i,j,k] where
 i = operator, j = part, k = measurement
 Stored to file this data would look:
