@@ -32,7 +32,7 @@ class Linearity(Statistics):
         """Convert result to tabular."""
         if not hasattr(self, 'result'):
             raise Exception(
-                'Linearity.calcualte() should be run before calling summary()')
+                'Linearity.calculate() should be run before calling summary()')
 
         headers = ['Linearity Estimate',
                    ResultNames[Result.K],
@@ -99,7 +99,7 @@ class Linearity(Statistics):
         fig.update_layout(
             title="Part Residual vs Part Mean",
             xaxis_title="Part Mean",
-            yaxis_title="Part Residula",
+            yaxis_title="Part Residuals",
             xaxis=dict(range=[min - range/4, max + range/4])
         )
         return fig

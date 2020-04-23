@@ -29,7 +29,7 @@ class TestGageRnR(unittest.TestCase):
             operators=operator,
             parts=parts,
             partOperator=partOperator,
-            measurments=measurements)
+            measurements=measurements)
 
         seed(1)
         self.gen = Generator(settings)
