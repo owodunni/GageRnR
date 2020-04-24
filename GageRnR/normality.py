@@ -26,7 +26,7 @@ class Normality(Statistics):
         """Convert result to tabular."""
         if not hasattr(self, 'result'):
             raise Exception(
-                'Normality.calcualte() should be run before calling summary()')
+                'Normality.calculate() should be run before calling summary()')
 
         headers = ['Sources of Normality',
                    ResultNames[Result.W],

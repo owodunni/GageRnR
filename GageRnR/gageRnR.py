@@ -26,7 +26,7 @@ class GageRnR(Statistics):
 
         :param numpy.array data:
             The data tha we want to analyse using GageRnR.
-            The input should be structeted in a 3d array
+            The input should be structured in a 3d array
             n[i,j,k] where i = operator, j = part, k = measurement
         """
         super().__init__(data)
@@ -35,7 +35,7 @@ class GageRnR(Statistics):
         """Convert result to tabular."""
         if not hasattr(self, 'result'):
             raise Exception(
-                'GageRnR.calcualte() should be run before calling summary()')
+                'GageRnR.calculate() should be run before calling summary()')
 
         headers = ['Sources of Variance']
 

@@ -18,7 +18,7 @@ ComponentNames = {
     Component.OPERATOR: 'Operator',
     Component.PART: 'Part',
     Component.OPERATOR_BY_PART: 'Operator by Part',
-    Component.MEASUREMENT: 'Measurment',
+    Component.MEASUREMENT: 'Measurement',
     Component.TOTAL: 'Total'}
 
 
@@ -64,7 +64,7 @@ class Statistics(object):
         """Convert result to tabular."""
         if not hasattr(self, 'result'):
             raise Exception(
-                'Statistics.calcualte() should be run before calling summary()')
+                'Statistics.calculate() should be run before calling summary()')
 
         headers = ['Sources of Variance',
                    ResultNames[Result.Mean],
