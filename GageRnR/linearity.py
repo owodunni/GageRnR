@@ -71,12 +71,12 @@ class Linearity(Statistics):
     def estimateCoef(self, x, y):
         x = sm.add_constant(x, prepend=False)
         mod = sm.OLS(y, x)
-        res = mod.fit()
+        self.advancedRes = mod.fit()
 
         return (
-            np.array([float(res.params[0])]),
-            np.array([float(res.params[1])]),
-            np.array([float(res.pvalues[0])]))
+            np.array([float(self.advancedRes.params[0])]),
+            np.array([float(self.advancedRes.params[1])]),
+            np.array([float(self.advancedRes.pvalues[0])]))
 
     def createLinearityPlot(self):
 
