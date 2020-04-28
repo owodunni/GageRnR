@@ -12,5 +12,5 @@ class TestDataLoader(unittest.TestCase):
             file="data/data_demoGRnR.csv",
             structure=[3, 10, 3],
             axes=[0, 2, 1],
-            delimiter=';')
+            delimiter=',')
         self.assertEqual(data.shape, (3, 10, 3))
