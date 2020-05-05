@@ -91,19 +91,26 @@ class Statistics(object):
             headers=headers,
             tablefmt=tableFormat)
 
-    def createOperatorsBoxPlot(self):
-        fig = go.Figure()
-
+    def createOperatorsBoxData(self):
+        data = []
         for i in range(0, self.operators):
-            fig.add_trace(go.Box(
+            data.append(go.Box(
                 y=self.data[i, :, :].flatten(),
                 boxpoints='all',
                 name=self.labels["Operator"][i],
                 notched=True))
+        return data
+
+    def createOperatorsBoxPlot(self, fig=None):
+        if fig is None:
+            fig = go.Figure()
+
+        f
         return fig
 
-    def createPartsBoxPlot(self):
-        fig = go.Figure()
+    def createPartsBoxPlot(self, fig=None):
+        if fig is None:
+          fig = go.Figure()
 
         for i in range(0, self.parts):
             fig.add_trace(go.Box(
