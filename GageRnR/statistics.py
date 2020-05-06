@@ -101,23 +101,24 @@ class Statistics(object):
                 notched=True))
         return data
 
-    def createOperatorsBoxPlot(self, fig=None):
-        if fig is None:
-            fig = go.Figure()
-
-        f
+    def createOperatorsBoxPlot(self):
+        data = self.createOperatorsBoxData()
+        fig = go.Figure(data=data)
         return fig
 
-    def createPartsBoxPlot(self, fig=None):
-        if fig is None:
-          fig = go.Figure()
-
+    def createPartsBoxData(self):
+        data = []
         for i in range(0, self.parts):
-            fig.add_trace(go.Box(
+            data.append(go.Box(
                 y=self.data[:, i, :].flatten(),
                 boxpoints='all',
                 name=self.labels["Part"][i],
                 notched=True))
+        return data
+
+    def createPartsBoxPlot(self):
+        data = self.createPartsBoxData()
+        fig = go.Figure(data=data)
         return fig
 
     def addToTable(self, results, component, table, precision='.3f'):
