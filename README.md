@@ -60,12 +60,12 @@ in a 3d array n[i,j,k] where
 i = operator, j = part, k = measurement
 Stored to file this data would look:
 m1    m2    m3
-3.29; 3.41; 3.64  # p1 | o1
-2.44; 2.32; 2.42  # p2
-3.08; 3.25; 3.07  # p1 | o2
-2.53; 1.78; 2.32  # p2
-3.04; 2.89; 2.85  # p1 | o3
-1.62; 1.87; 2.04  # p2
+3.29, 3.41, 3.64  # p1 | o1
+2.44, 2.32, 2.42  # p2
+3.08, 3.25, 3.07  # p1 | o2
+2.53, 1.78, 2.32  # p2
+3.04, 2.89, 2.85  # p1 | o3
+1.62, 1.87, 2.04  # p2
 
 More info: https://github.com/owodunni/GageRnR
 
@@ -85,7 +85,7 @@ Options:
     -s --structure=STRUCTURE Data structure.
         Order should be operators, parts, measurements.
     -a --axes=<AXES>  Order of data axes [default: 0,1,2].
-    -d --delimiter=<DELIMITER>  Order of data axes [default: ;].
+    -d --delimiter=<DELIMITER>  Order of data axes [default: ,].
     -o --output=<FOLDER> Report output directory
     -g --groundTruth=<PARTS> Ground Truth data for parts
     -h --help     Show this screen.
