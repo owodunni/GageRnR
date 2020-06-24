@@ -4,3 +4,6 @@ tabulate
 docopt
 statsmodels
 plotly
+pytest
+pytest-cov
+flake8

@@ -47,11 +47,21 @@ class Statistics(object):
 
     title = "Statistics"
 
-    def __init__(self, data):
+    def __init__(self, data, labels=None):
         self.data = data
         self.parts = data.shape[1]
         self.operators = data.shape[0]
         self.measurements = data.shape[2]
+        if labels is None:
+            self.labels = {}
+        else:
+            self.labels = labels
+
+        if "Operator" not in self.labels:
+            self.labels["Operator"] = [("Operator %d" % x) for x in range(self.operators)]
+
+        if "Part" not in self.labels:
+            self.labels["Part"] = [("Part %d" % x) for x in range(self.parts)]
 
     def __str__(self):
         """Enum containing the measurements calculated by Statistics."""
@@ -88,7 +98,7 @@ class Statistics(object):
             fig.add_trace(go.Box(
                 y=self.data[i, :, :].flatten(),
                 boxpoints='all',
-                name="Operator " + str(i),
+                name=self.labels["Operator"][i],
                 notched=True))
         return fig
 
@@ -99,7 +109,7 @@ class Statistics(object):
             fig.add_trace(go.Box(
                 y=self.data[:, i, :].flatten(),
                 boxpoints='all',
-                name="Part " + str(i),
+                name=self.labels["Part"][i],
                 notched=True))
         return fig
 
