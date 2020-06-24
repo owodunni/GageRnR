@@ -93,10 +93,11 @@ class MainTest(unittest.TestCase):
         self.assertTrue(os.path.exists('build/gtReport/bootstrap.min.css'))
 
     def test_FailToGenerateReport(self):
+        forbiddenFolders = {'nt': "COM1", 'posix': "/build"}
         self.assertRaises(
-            PermissionError,
+            Exception,
             main, [
                 '-f', "data/data_demoGRnR.csv",
                 "-s", "3,10,3",
                 "-a", "0,2,1",
-                "-o", '/build'])
+                "-o", forbiddenFolders[os.name]])

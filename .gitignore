@@ -1,4 +1,6 @@
 GageRnR.egg-info
+htmlcov
+.coverage
 build
 dist
 __pycache__

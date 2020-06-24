@@ -19,3 +19,6 @@ clean:
 
 check:
 	twine check dist/*
+
+coverage:
+	pytest --pyargs GageRnR --cov-report html --cov=GageRnR --cov-fail-under 100 GageRnR/tests/ --junit-xml=build/test_results.xml
