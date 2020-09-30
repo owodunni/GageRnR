@@ -98,7 +98,8 @@ class Statistics(object):
                 y=self.data[i, :, :].flatten(),
                 boxpoints='all',
                 name=self.labels["Operator"][i],
-                notched=True))
+                notched=True,
+                boxmean='sd'))
         return data
 
     def createOperatorsBoxPlot(self):
@@ -113,7 +114,8 @@ class Statistics(object):
                 y=self.data[:, i, :].flatten(),
                 boxpoints='all',
                 name=self.labels["Part"][i],
-                notched=True))
+                notched=True,
+                boxmean='sd'))
         return data
 
     def createPartsBoxPlot(self):
