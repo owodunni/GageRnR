@@ -72,3 +72,9 @@ class TestStatistics(unittest.TestCase):
         s.calculate()
         s.summary()
         self.assertTrue(True)
+
+    def test_meanLabels(self):
+        s = Statistics(data, {"Operator": ["A", "B", "C]"],
+                              "Part": ["O", "P", "Q", "R", "S"]})
+        s.calculate()
+        self.assertTrue(True)
