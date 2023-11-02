@@ -25,7 +25,7 @@ settings = Settings(
     operators=operator,
     parts=parts,
     partOperator=partOperator,
-    measurments=measurements)
+    measurements=measurements)
 
 gen = Generator(settings)
 g = GageRnR(gen.data)

@@ -1,8 +1,8 @@
 """Module containing the algorithm for GageRnR."""
 import numpy as np
 import math
+import pandas as pd
 import scipy.stats as stats
-from tabulate import tabulate
 from .statistics import Statistics, Result, Component, ComponentNames
 
 ResultNames = {
@@ -54,10 +54,15 @@ class GageRnR(Statistics):
 
             table.append(innerTable)
 
-        return tabulate(
-            table,
-            headers=headers,
-            tablefmt=tableFormat)
+        try:
+            from tabulate import tabulate
+            return tabulate(
+                table,
+                headers=headers,
+                tablefmt=tableFormat)            
+        except (ImportError,Exception) as _:
+            pass
+        return str(pd.DataFrame(table,columns=headers).describe())
 
     def calculate(self):
         """Calculate GageRnR."""

@@ -1,8 +1,8 @@
 import numpy as np
-from tabulate import tabulate
 from .statistics import Statistics, Result, Component
 import statsmodels.api as sm
 import plotly.graph_objects as go
+import pandas as pd
 
 ResultNames = {
     Result.K: 'Linearity',
@@ -43,10 +43,15 @@ class Linearity(Statistics):
         results = [Result.K, Result.Bias, Result.P]
         self.addToTable(results, Component.TOTAL, table, precision)
 
-        return tabulate(
-            table,
-            headers=headers,
-            tablefmt=tableFormat)
+        try:
+            from tabulate import tabulate
+            return tabulate(
+                table,
+                headers=headers,
+                tablefmt=tableFormat)
+        except (Exception,ImportError) as _:
+            pass
+        return str(pd.DataFrame(table,columns=headers).describe())
 
     def calculatePartResiduals(self):
         means = np.repeat(
