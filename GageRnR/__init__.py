@@ -5,7 +5,6 @@ This module
 """
 from .gageRnR import GageRnR
 from .generator import Distribution, Settings, Generator
-from .__main__ import main
 from .dataLoader import DataLoader
 from .statistics import Statistics, Result, Component
 from .normality import Normality
@@ -17,7 +16,6 @@ __all__ = ['GageRnR',
            'Distribution',
            'Settings',
            'Generator',
-           'main',
            'DataLoader',
            'Statistics',
            'Normality',

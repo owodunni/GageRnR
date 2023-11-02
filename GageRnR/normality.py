@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.stats import shapiro
-from tabulate import tabulate
+import pandas as pd
 from .statistics import Statistics, Result, Component
 
 ResultNames = {
@@ -38,11 +38,16 @@ class Normality(Statistics):
         self.addToTable(results, Component.OPERATOR, table, precision)
         self.addToTable(results, Component.PART, table, precision)
 
-        return tabulate(
-            table,
-            headers=headers,
+        try:
+            from tabulate import tabulate        
+            return tabulate(
+                table,
+                headers=headers,
             tablefmt=tableFormat)
-
+        except (Exception,ImportError) as _:
+            pass
+        return str(pd.DataFrame(table,columns=headers).describe())
+    
     def calculateNormality(self):
         """Shapiro-Wilk Test"""
         W = dict()

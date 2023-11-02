@@ -37,7 +37,6 @@ Options:
     -h --help     Show this screen.
     -v --version  Show version.
 """
-from docopt import docopt
 import os.path
 
 import GageRnR
@@ -69,6 +68,7 @@ def checkIntegerList(name, values, minValue=0):
 class Application():
 
     def __init__(self, argv=None):
+        from docopt import docopt
         arguments = docopt(__doc__, argv, version=GageRnR.__version__)
         self.file = str(arguments["--file"])
         self.structure = toInt(arguments["--structure"])

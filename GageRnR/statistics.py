@@ -1,6 +1,6 @@
 from enum import Enum
 import numpy as np
-from tabulate import tabulate
+import pandas as pd
 import plotly.graph_objects as go
 
 
@@ -86,11 +86,16 @@ class Statistics(object):
         self.addToTable(results, Component.OPERATOR, table, precision)
         self.addToTable(results, Component.PART, table, precision)
 
-        return tabulate(
-            table,
-            headers=headers,
-            tablefmt=tableFormat)
-
+        try:
+            import tabulate as tabulate
+            return tabulate(
+                table,
+                headers=headers,
+                tablefmt=tableFormat)
+        except (Exception,ImportError) as _:
+            pass
+        return str(pd.DataFrame(table,columns=headers).describe())
+        
     def createOperatorsBoxData(self):
         data = []
         for i in range(0, self.operators):
