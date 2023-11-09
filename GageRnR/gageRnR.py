@@ -155,32 +155,47 @@ class GageRnR(Statistics):
     def calculateVar(self, MS):
         """Calculate GageRnR Variances."""
         Var = dict()
-
+        #  σ2_Repeatability = σ2_Equipment = MS_Measurement
+        #  Measurement called Equipment in industry.
         Var[Component.MEASUREMENT] = MS[Component.MEASUREMENT]
+        
+        #  σ2_Operator_by_Part = (MS_Operator_by_Part – σ2_Repeatability) / N_Trials
+        #  Operator also called Technician in industry. Trials also called repetitions.
         Var[Component.OPERATOR_BY_PART] = ((
             MS[Component.OPERATOR_BY_PART] - MS[Component.MEASUREMENT]) /
             self.measurements)
+
+        #  σ2_Operator = σ2_Reproducibility = (MS_Operators - MS_Operator_by_Part) / (N_Parts * N_Trials)
+        #  Trials also called repetitions.
         Var[Component.OPERATOR] = ((
             MS[Component.OPERATOR] - MS[Component.OPERATOR_BY_PART]) /
             (self.parts * self.measurements))
+
+        #  σ2_Parts = (MS_Parts - MS_Operator_by_Part) / (N_Operators * N_Trials)
         Var[Component.PART] = ((
             MS[Component.PART] - MS[Component.OPERATOR_BY_PART]) /
             (self.operators * self.measurements))
 
+        #  Variances less than Zero should be represented as Zero
         for key in Var:
             if Var[key] < 0:
                 Var[key] = 0
 
+        #  Total_Variance = σ2_Repeatability + σ2_Operator_by_Part + σ2_Operator + σ2_Parts
+        #  Total Variance also called TV
         Var[Component.TOTAL] = \
             Var[Component.OPERATOR] + \
             Var[Component.PART] + \
             Var[Component.OPERATOR_BY_PART] + \
             Var[Component.MEASUREMENT]
 
+        #  GRR is the Measurement System Variation for Repeatability and Reproducibility
+        #  GRR^2 = EV^2 + AV^2; Per AIAG
+        #  σ2_GRR = σ2_Repeatability + σ2_Operators
         Var[GageRnR.GRR] = \
             Var[Component.MEASUREMENT] + \
-            Var[Component.OPERATOR] + \
-            Var[Component.OPERATOR_BY_PART]
+            Var[Component.OPERATOR] # + \
+            # Var[Component.OPERATOR_BY_PART] ##  I cannot find any reference which supports this.
 
         return Var
 
