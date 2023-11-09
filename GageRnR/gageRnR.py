@@ -159,7 +159,7 @@ class GageRnR(Statistics):
         Var[Component.MEASUREMENT] = MS[Component.MEASUREMENT]
         Var[Component.OPERATOR_BY_PART] = ((
             MS[Component.OPERATOR_BY_PART] - MS[Component.MEASUREMENT]) /
-            self.parts)
+            self.measurements)
         Var[Component.OPERATOR] = ((
             MS[Component.OPERATOR] - MS[Component.OPERATOR_BY_PART]) /
             (self.parts * self.measurements))
