@@ -53,13 +53,13 @@ src="''' + plotUrl + '''"></iframe>'''
         </div>
     </body>
 </html>'''
-        self.write('index.html', self.report)
+        self.write('index.html', self.report, encoding="utf-8")
         self.write(
             'bootstrap.min.css',
-            importlib.resources.read_text('GageRnR.resources', 'bootstrap.min.css'))
+            importlib.resources.read_text('GageRnR.resources', 'bootstrap.min.css'), encoding="utf-8")
 
-    def write(self, filename, data):
-        f = open(self.outputFolder + '/' + filename, 'w')
+    def write(self, filename, data, encoding = "utf-8"):
+        f = open(self.outputFolder + '/' + filename, 'w', encoding=encoding)
         f.write(data)
         f.close()
 
