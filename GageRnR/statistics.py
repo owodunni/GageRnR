@@ -103,9 +103,12 @@ class Statistics(object):
                 boxmean='sd'))
         return data
 
-    def createOperatorsBoxPlot(self, hovertext = None):
+    def createOperatorsBoxPlot(self, hovertext = None, y_axis_range = None):
         data = self.createOperatorsBoxData(hovertext = hovertext)
         fig = go.Figure(data=data)
+        if isinstance(y_axis_range,list):
+            if len(y_axis_range) == 2:
+                fig.update(layout_yaxis_range = y_axis_range)
         return fig
 
     def createPartsBoxData(self,hovertext = None):
@@ -120,9 +123,12 @@ class Statistics(object):
                 boxmean='sd'))
         return data
 
-    def createPartsBoxPlot(self,hovertext = None):
-        data = self.createPartsBoxData(hovertext=hovertext)
+    def createPartsBoxPlot(self,hovertext = None, y_axis_range = None):
+        data = self.createPartsBoxData(hovertext=hovertext)    
         fig = go.Figure(data=data)
+        if isinstance(y_axis_range,list):
+            if len(y_axis_range) == 2:
+                fig.update(layout_yaxis_range = y_axis_range)
         return fig
 
     def addToTable(self, results, component, table, precision='.3f'):
