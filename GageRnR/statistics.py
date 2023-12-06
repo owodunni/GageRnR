@@ -70,7 +70,7 @@ class Statistics(object):
                 str([self.operators, self.parts, self.measurements])
         return self.summary()
 
-    def summary(self, tableFormat="fancy_grid", precision='.3f'):
+    def summary(self, tableFormat="fancy_grid", precision='.4f'):
         """Convert result to tabular."""
         if not hasattr(self, 'result'):
             raise Exception(
@@ -91,35 +91,37 @@ class Statistics(object):
             headers=headers,
             tablefmt=tableFormat)
 
-    def createOperatorsBoxData(self):
+    def createOperatorsBoxData(self, hovertext = None):
         data = []
         for i in range(0, self.operators):
             data.append(go.Box(
                 y=self.data[i, :, :].flatten(),
                 boxpoints='all',
                 name=self.labels["Operator"][i],
+                hovertext = hovertext[i,:,:].flatten() if hovertext is not None else None,
                 notched=True,
                 boxmean='sd'))
         return data
 
-    def createOperatorsBoxPlot(self):
-        data = self.createOperatorsBoxData()
+    def createOperatorsBoxPlot(self, hovertext = None):
+        data = self.createOperatorsBoxData(hovertext = hovertext)
         fig = go.Figure(data=data)
         return fig
 
-    def createPartsBoxData(self):
+    def createPartsBoxData(self,hovertext = None):
         data = []
         for i in range(0, self.parts):
             data.append(go.Box(
                 y=self.data[:, i, :].flatten(),
                 boxpoints='all',
+                hovertext = hovertext[:,i,:].flatten() if hovertext is not None else None,
                 name=self.labels["Part"][i],
                 notched=True,
                 boxmean='sd'))
         return data
 
-    def createPartsBoxPlot(self):
-        data = self.createPartsBoxData()
+    def createPartsBoxPlot(self,hovertext = None):
+        data = self.createPartsBoxData(hovertext=hovertext)
         fig = go.Figure(data=data)
         return fig
 
