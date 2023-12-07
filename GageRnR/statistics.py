@@ -103,12 +103,19 @@ class Statistics(object):
                 boxmean='sd'))
         return data
 
-    def createOperatorsBoxPlot(self, hovertext = None, y_axis_range = None):
+    def createOperatorsBoxPlot(self, hovertext = None, y_axis_range = None, hlines = None):
         data = self.createOperatorsBoxData(hovertext = hovertext)
         fig = go.Figure(data=data)
         if isinstance(y_axis_range,list):
             if len(y_axis_range) == 2:
                 fig.update(layout_yaxis_range = y_axis_range)
+
+        if isinstance(hlines,list):
+            fig.layout.xaxis2 = go.layout.XAxis(overlaying='x', range=[0, 2], showticklabels=False)        
+            for hline in hlines:
+                fig.add_scatter(x = [0, 2], y = [hline, hline], mode='lines', xaxis='x2',
+                    showlegend=False, line=dict(dash='dash', color = "firebrick", width = 2))
+
         return fig
 
     def createPartsBoxData(self,hovertext = None):
@@ -123,12 +130,19 @@ class Statistics(object):
                 boxmean='sd'))
         return data
 
-    def createPartsBoxPlot(self,hovertext = None, y_axis_range = None):
+    def createPartsBoxPlot(self,hovertext = None, y_axis_range = None, hlines = None):
         data = self.createPartsBoxData(hovertext=hovertext)    
         fig = go.Figure(data=data)
         if isinstance(y_axis_range,list):
             if len(y_axis_range) == 2:
                 fig.update(layout_yaxis_range = y_axis_range)
+
+        if isinstance(hlines,list):
+            fig.layout.xaxis2 = go.layout.XAxis(overlaying='x', range=[0, 2], showticklabels=False)        
+            for hline in hlines:
+                fig.add_scatter(x = [0, 2], y = [hline, hline], mode='lines', xaxis='x2',
+                    showlegend=False, line=dict(dash='dash', color = "firebrick", width = 2))
+        
         return fig
 
     def addToTable(self, results, component, table, precision='.3f'):
