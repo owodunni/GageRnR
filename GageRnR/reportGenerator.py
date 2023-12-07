@@ -1,6 +1,6 @@
 import os
 import plotly
-from pkg_resources import resource_string
+import importlib.resources
 
 
 class ReportGenerator():
@@ -53,15 +53,15 @@ src="''' + plotUrl + '''"></iframe>'''
         </div>
     </body>
 </html>'''
-        self.write('index.html', self.report)
+        self.write('index.html', self.report, encoding="utf-8")
         self.write(
             'bootstrap.min.css',
-            resource_string('GageRnR.resources', 'bootstrap.min.css').decode("utf-8"))
+            importlib.resources.read_text('GageRnR.resources', 'bootstrap.min.css'), encoding="utf-8")
 
-    def write(self, filename, data):
-        f = open(self.outputFolder + '/' + filename, 'w')
+    def write(self, filename, data, encoding = "utf-8"):
+        f = open(self.outputFolder + '/' + filename, 'w', encoding=encoding)
         f.write(data)
         f.close()
 
     def readResource(self, filename):
-        return resource_string('GageRnR.resources', filename).decode("utf-8")
+        return importlib.resources.read_text('GageRnR.resources', filename)

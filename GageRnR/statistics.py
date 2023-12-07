@@ -70,7 +70,7 @@ class Statistics(object):
                 str([self.operators, self.parts, self.measurements])
         return self.summary()
 
-    def summary(self, tableFormat="fancy_grid", precision='.3f'):
+    def summary(self, tableFormat="fancy_grid", precision='.4f'):
         """Convert result to tabular."""
         if not hasattr(self, 'result'):
             raise Exception(
@@ -91,36 +91,58 @@ class Statistics(object):
             headers=headers,
             tablefmt=tableFormat)
 
-    def createOperatorsBoxData(self):
+    def createOperatorsBoxData(self, hovertext = None):
         data = []
         for i in range(0, self.operators):
             data.append(go.Box(
                 y=self.data[i, :, :].flatten(),
                 boxpoints='all',
                 name=self.labels["Operator"][i],
+                hovertext = hovertext[i,:,:].flatten() if hovertext is not None else None,
                 notched=True,
                 boxmean='sd'))
         return data
 
-    def createOperatorsBoxPlot(self):
-        data = self.createOperatorsBoxData()
+    def createOperatorsBoxPlot(self, hovertext = None, y_axis_range = None, hlines = None):
+        data = self.createOperatorsBoxData(hovertext = hovertext)
         fig = go.Figure(data=data)
+        if isinstance(y_axis_range,list):
+            if len(y_axis_range) == 2:
+                fig.update(layout_yaxis_range = y_axis_range)
+
+        if isinstance(hlines,list):
+            fig.layout.xaxis2 = go.layout.XAxis(overlaying='x', range=[0, 2], showticklabels=False)        
+            for hline in hlines:
+                fig.add_scatter(x = [0, 2], y = [hline, hline], mode='lines', xaxis='x2',
+                    showlegend=False, line=dict(dash='dash', color = "firebrick", width = 2))
+
         return fig
 
-    def createPartsBoxData(self):
+    def createPartsBoxData(self,hovertext = None):
         data = []
         for i in range(0, self.parts):
             data.append(go.Box(
                 y=self.data[:, i, :].flatten(),
                 boxpoints='all',
+                hovertext = hovertext[:,i,:].flatten() if hovertext is not None else None,
                 name=self.labels["Part"][i],
                 notched=True,
                 boxmean='sd'))
         return data
 
-    def createPartsBoxPlot(self):
-        data = self.createPartsBoxData()
+    def createPartsBoxPlot(self,hovertext = None, y_axis_range = None, hlines = None):
+        data = self.createPartsBoxData(hovertext=hovertext)    
         fig = go.Figure(data=data)
+        if isinstance(y_axis_range,list):
+            if len(y_axis_range) == 2:
+                fig.update(layout_yaxis_range = y_axis_range)
+
+        if isinstance(hlines,list):
+            fig.layout.xaxis2 = go.layout.XAxis(overlaying='x', range=[0, 2], showticklabels=False)        
+            for hline in hlines:
+                fig.add_scatter(x = [0, 2], y = [hline, hline], mode='lines', xaxis='x2',
+                    showlegend=False, line=dict(dash='dash', color = "firebrick", width = 2))
+        
         return fig
 
     def addToTable(self, results, component, table, precision='.3f'):
